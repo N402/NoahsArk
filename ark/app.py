@@ -10,16 +10,19 @@ from ark.account.views import account_app
 def create_app(name=None, config=None):
     app = Flask(name or __name__)
 
+    app.config.from_object('ark.settings')
+
     if isinstance(config, dict):
         app.config.update(config)
-    elif config:
-        app.config.from_pyfile(os.path.abspath(config))
+
+    app.debug = bool(int(os.environ.get('DEBUG', False)))
 
     setup_database(app)
     setup_bcrypt(app)
 
     setup_error_pages(app)
     setup_jinja(app)
+    setup_config(app)
 
     app.register_blueprint(account_app)
 
@@ -50,3 +53,16 @@ def setup_jinja(app):
             app.add_template_filter(_ffunc, _fname)
 
     setup_filter(app)
+
+
+def setup_config(app):
+    configs = {
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:////tmp/ark.sqlite',
+    }
+    load_config(app, configs)
+
+
+def load_config(app, configs):
+    for name, default in configs.iteritems():
+        env = os.environ.get(name, default)
+        app.config[name] = env
