@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from ark.exts import setup_database, setup_bcrypt
+from ark.exts import setup_database, setup_bcrypt, setup_babel
 from ark.utils._time import friendly_time, format_datetime
 from ark.account.views import account_app
 
@@ -19,6 +19,7 @@ def create_app(name=None, config=None):
 
     setup_database(app)
     setup_bcrypt(app)
+    setup_babel(app)
 
     setup_error_pages(app)
     setup_jinja(app)
