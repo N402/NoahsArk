@@ -1,0 +1,26 @@
+{
+  "name": "NoahsArk",
+  "version": "0.0.3",
+  "description": "NoahsArk ========",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "gulp": "^3.8.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/N402/NoahsArk.git"
+  },
+  "author": "shonenada",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/N402/NoahsArk/issues"
+  },
+  "homepage": "https://github.com/N402/NoahsArk"
+}
