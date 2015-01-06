@@ -27,9 +27,10 @@ class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     hashed_password = db.Column(db.String(128))
-    nickname = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(128), unique=True)
     is_male = db.Column(db.Boolean, default=True)
+    avatar = db.Column(db.String(128), nullable=True)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(128))
     state = db.Column(db.Enum(*(USER_STATES.keys())), default='normal')
 
