@@ -1,7 +1,9 @@
 import uuid
 
-from flask.exts import db
-from flask.exts.bcrypt import hash_password, check_password
+from flask.ext.sqlalchemy import BaseQuery
+
+from ark.exts import db
+from ark.exts.bcrypt import hash_password, check_password
 
 
 class UserQuery(BaseQuery):
@@ -29,7 +31,7 @@ class Account(db.Model):
     email = db.Column(db.String(128), unique=True)
     is_male = db.Column(db.Boolean, default=True)
     salt = db.Column(db.String(128))
-    state = db.Column(db.Enum(USER_STATES.keys()), default='normal')
+    state = db.Column(db.Enum(*(USER_STATES.keys())), default='normal')
 
     def __init__(self, **kwargs):
         self.salt = uuid4().hex
