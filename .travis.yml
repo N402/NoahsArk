@@ -1,0 +1,23 @@
+language: python
+python:
+- '2.7'
+install:
+- pip install wheel
+- pip install -r requirements.txt
+- npm install
+script:
+- make dist
+notifications:
+  slack:
+    secure: E+0Cs4wVo6Bn65GleB8XwJLn7ro+gRFI+08LjG5HTRAdq2h7YvXoDMnD/X+9c9dO7AAOqpXgWjilJus1bVqxic0ZfsZYE8E97L2la5pqAT0KLCkLy/53l10XbP5fgiqLE+B0CJ8496/GbvJswZYpYHuyr1rRALpQgK/tGmkoV8o=
+deploy:
+  provider: releases
+  api_key:
+    secure: Z9uVB6XkdemPXmqMvuQYeWi2noGCQN3nZ57qoA+4QnTvutDA66/PHK/J8WRadFIVtUGYHHFO3RzxWlHQgArlUShSMsTrVEhd/bUSq1ioksEacm09y96Oyqv8fXj4ROfW2/FKXWZMUCeBDAyOklgrZ5Cusuf14LcU+xAghaSlVB4=
+  file:
+    - dist/ark-*.whl
+    - dist/ark-*.tar.gz
+  file_glob: true
+  on:
+    repo: N402/NoahsArk
+    tags: true
