@@ -58,3 +58,4 @@ target/
 bower_components/
 node_modules/
 ark/static/
+.tmp/
