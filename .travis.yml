@@ -15,8 +15,8 @@ deploy:
   api_key:
     secure: Z9uVB6XkdemPXmqMvuQYeWi2noGCQN3nZ57qoA+4QnTvutDA66/PHK/J8WRadFIVtUGYHHFO3RzxWlHQgArlUShSMsTrVEhd/bUSq1ioksEacm09y96Oyqv8fXj4ROfW2/FKXWZMUCeBDAyOklgrZ5Cusuf14LcU+xAghaSlVB4=
   file:
-    - dist/ark-*.whl
-    - dist/ark-*.tar.gz
+    - dist/NoahsArk-*.whl
+    - dist/NoahsArk-*.tar.gz
   file_glob: true
   on:
     repo: N402/NoahsArk
