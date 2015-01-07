@@ -21,3 +21,4 @@ deploy:
   on:
     repo: N402/NoahsArk
     tags: true
+    all_branches: true
