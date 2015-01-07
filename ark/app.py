@@ -4,6 +4,7 @@ from flask import Flask
 
 from ark.exts import setup_database, setup_bcrypt, setup_babel
 from ark.utils._time import friendly_time, format_datetime
+from ark.master.views import master_app
 from ark.account.views import account_app
 
 
@@ -25,6 +26,7 @@ def create_app(name=None, config=None):
     setup_jinja(app)
     setup_config(app)
 
+    app.register_blueprint(master_app)
     app.register_blueprint(account_app)
 
     return app
