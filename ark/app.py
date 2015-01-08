@@ -63,6 +63,7 @@ def init_jinja(app):
 def init_config(app):
     configs = {
         'SQLALCHEMY_DATABASE_URI': 'sqlite:////tmp/ark.sqlite',
+        'SECRET_KEY': None,
     }
     load_config(app, configs)
 

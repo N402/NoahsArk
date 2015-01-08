@@ -1,7 +1,7 @@
 from flask.ext.wtf import Form
-from flask.ext.html5 import EmailField
+from flask.ext.wtf.html5 import EmailField
 from wtforms import StringField, PasswordField, BooleanField, SelectField
-from wtforms.validators import InputRequired, Email, Length, EqualTo
+from wtforms.validators import InputRequired, Email, Length, EqualTo, Regexp
 from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
 
