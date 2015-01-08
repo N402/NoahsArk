@@ -7,8 +7,8 @@ from ark.exts.bcrypt import hash_password, check_password
 
 
 class UserQuery(BaseQuery):
-    def authenticate(self, username, raw_passwd):
-        user = self.filter(User.username == username).first()
+    def authenticate(self, email, raw_passwd):
+        user = self.filter(Account.email==email).first()
         if user and user.check_password(raw_passwd):
             return user
         return None
@@ -25,9 +25,9 @@ class Account(db.Model):
     }
 
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(128), unique=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     hashed_password = db.Column(db.String(128))
-    email = db.Column(db.String(128), unique=True)
     is_male = db.Column(db.Boolean, default=True)
     avatar = db.Column(db.String(128), nullable=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)

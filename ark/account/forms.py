@@ -2,7 +2,10 @@ from flask.ext.wtf import Form
 from flask.ext.html5 import EmailField
 from wtforms import StringField, PasswordField, BooleanField, SelectField
 from wtforms.validators import InputRequired, Email, Length, EqualTo
+from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
+
+from ark.account.models import Account
 
 
 EMAIL_RE = '(?:^[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+$)|(?:^$)'
@@ -41,6 +44,15 @@ class SignUpForm(Form):
             EqualTo('password')
         ])
 
+    def validate_email(form, field):
+        query_user = Account.query.filter(Account.email==field.data)
+        if query_user.count() > 0:
+            raise ValidationError(_(u'Email exists'))
+
+    def validate_username(form, field):
+        query_user = Account.query.filter(Account.username==field.data)
+        if query_user.count() > 0:
+            raise ValidationError(_(u'Username exists'))
 
 class SignInForm(Form):
     email = EmailField(

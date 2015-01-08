@@ -2,10 +2,11 @@ import os
 
 from flask import Flask
 
-from ark.exts import setup_database, setup_bcrypt, setup_babel
 from ark.utils._time import friendly_time, format_datetime
 from ark.master.views import master_app
 from ark.account.views import account_app
+from ark.exts import (setup_database, setup_bcrypt, setup_babel,
+                      setup_login_manager)
 
 
 def create_app(name=None, config=None):
@@ -21,10 +22,11 @@ def create_app(name=None, config=None):
     setup_database(app)
     setup_bcrypt(app)
     setup_babel(app)
+    setup_login_manager(app)
 
-    setup_error_pages(app)
-    setup_jinja(app)
-    setup_config(app)
+    init_error_pages(app)
+    init_jinja(app)
+    init_config(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
@@ -32,7 +34,7 @@ def create_app(name=None, config=None):
     return app
 
 
-def setup_error_pages(app):
+def init_error_pages(app):
     @app.errorhandler(403)
     def page_forbidden(error):
         return 'Forbidden', 403
@@ -46,7 +48,7 @@ def setup_error_pages(app):
         return 'Method not allow', 405
 
 
-def setup_jinja(app):
+def init_jinja(app):
     _jinja_filters = {
         'friendly_time': friendly_time,
         'date': format_datetime,
@@ -58,7 +60,7 @@ def setup_jinja(app):
     setup_filter(app)
 
 
-def setup_config(app):
+def init_config(app):
     configs = {
         'SQLALCHEMY_DATABASE_URI': 'sqlite:////tmp/ark.sqlite',
     }
