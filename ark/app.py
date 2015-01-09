@@ -6,27 +6,28 @@ from ark.utils._time import friendly_time, format_datetime
 from ark.master.views import master_app
 from ark.account.views import account_app
 from ark.exts import (setup_database, setup_bcrypt, setup_babel,
-                      setup_login_manager)
+                      setup_login_manager, setup_collect)
 
 
 def create_app(name=None, config=None):
     app = Flask(name or __name__)
 
     app.config.from_object('ark.settings')
+    init_config(app)
 
     if isinstance(config, dict):
         app.config.update(config)
 
     app.debug = bool(int(os.environ.get('DEBUG', False)))
 
+    init_error_pages(app)
+    init_jinja(app)
+
     setup_database(app)
     setup_bcrypt(app)
     setup_babel(app)
     setup_login_manager(app)
-
-    init_error_pages(app)
-    init_jinja(app)
-    init_config(app)
+    setup_collect(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
@@ -64,6 +65,8 @@ def init_config(app):
     configs = {
         'SQLALCHEMY_DATABASE_URI': 'sqlite:////tmp/ark.sqlite',
         'SECRET_KEY': None,
+        'COLLECT_STATIC_ROOT': None,
+        'COLLECT_STORAGE': 'flask.ext.collect.storage.file',
     }
     load_config(app, configs)
 
@@ -71,4 +74,10 @@ def init_config(app):
 def load_config(app, configs):
     for name, default in configs.iteritems():
         env = os.environ.get(name, default)
+        if env is None:
+            raise ConfigError('%s cannot be None' % name)
         app.config[name] = env
+
+
+class ConfigError(Exception):
+    pass
