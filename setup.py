@@ -21,7 +21,7 @@ setup(
     include_package_data=True,
     install_requires=install_requires,
     entry_points= {
-        'console_scripts': 'ark.management.execute_command_line'
+        'console_scripts': 'ark-admin = ark.management:execute_command_line'
     },
     classifiers=[
         'Private :: Do Not Upload',
