@@ -6,6 +6,7 @@ install:
 - pip install -r requirements.txt
 - npm install
 script:
+- bower install
 - make dist
 notifications:
   slack:
