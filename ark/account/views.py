@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask import url_for, redirect, request, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 
-from ark.account.forms import SignUpForm, SignInForm
+from ark.account.forms import SignUpForm, SignInForm, ChangePassword
 from ark.account.models import Account
 
 
@@ -66,3 +66,25 @@ def signout():
     next = request.args.get('next') or url_for('master.index')
     logout_user()
     return redirect(next) 
+
+
+@account_app.route('/profile')
+def profile():
+    pass
+
+
+@account_app.route('/profile/password')
+def password():
+    if current_user.is_anonymous():
+        return redirect(url_for('master.index'))
+
+    form = ChangePassword(request.form)
+
+    if form.validate_on_submit():
+        current_user.change_password(form.data('new_password'))
+        return jsonify(success=True)
+
+    if form.errors:
+        return jsonify(success=False, messages=form.errors)
+
+    return render_template('account/password.html')

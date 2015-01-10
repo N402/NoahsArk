@@ -1,10 +1,12 @@
 from flask.ext.wtf import Form
 from flask.ext.wtf.html5 import EmailField
+from flask.ext.login import current_user
 from wtforms import StringField, PasswordField, BooleanField, SelectField
 from wtforms.validators import InputRequired, Email, Length, EqualTo, Regexp
 from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
 
+from ark.exts.login import cure
 from ark.account.models import Account
 
 
@@ -68,3 +70,37 @@ class SignInForm(Form):
             Length(min=6, max=30),
         ])
     remember_me = BooleanField(label=_(u'remember me'))
+
+
+class SettingForm(Form):
+    username = StringField(
+        label=_(u'username'),
+        validators=[
+            InputRequired(),
+            Length(min=6, max=30),
+        ])
+
+
+class ChangePassword(Form):
+    old_password = PasswordField(
+        label=_(u'old password'),
+        validators=[
+            InputRequired(),
+            Length(min=6, max=30),
+        ],
+    )
+    new_password = PasswordField(
+        label=_(u'new password'),
+        validators=[
+            InputRequired(),
+            Length(min=6, max=30),
+        ])
+    confirm_password = PasswordField(
+        label=_(u'confirm password'),
+        validators=[
+            EqualTo('new_password')
+        ])
+
+    def validate_old_password(form, field):
+        if not current_user.check_password(field.data):
+            raise ValidationError(_(u'old password is wrong'))
