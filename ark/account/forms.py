@@ -6,7 +6,6 @@ from wtforms.validators import InputRequired, Email, Length, EqualTo, Regexp
 from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
 
-from ark.exts.login import cure
 from ark.account.models import Account
 
 
