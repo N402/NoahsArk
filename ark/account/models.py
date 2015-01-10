@@ -33,7 +33,11 @@ class Account(db.Model):
     avatar = db.Column(db.String(128), nullable=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(128))
+    is_superuser = db.Column(db.Boolean, default=False)
     state = db.Column(db.Enum(*(USER_STATES.keys())), default='normal')
+
+    goals = db.relationship(
+        'Goal', uselist=True, backref=db.backref('user', uselist=False))
 
     def __init__(self, **kwargs):
         self.salt = uuid4().hex
@@ -68,3 +72,15 @@ class Account(db.Model):
         if refresh:
             self.salt = uuid4().hex
         return '<%s|%s>' % (self.salt, raw_password)
+
+    def is_authenticated(self):
+        return self.state in ('normal', 'inactive')
+
+    def is_active(self):
+        return self.state == 'normal'
+
+    def is_anonymous(self):
+        return (self.email is None)
+
+    def get_id(self):
+        return self.id

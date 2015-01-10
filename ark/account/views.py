@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 from flask import url_for, redirect, request, jsonify
-from flask.ext.login import login_user, logout_user, current_user
+from flask.ext.login import (login_user, logout_user,
+                             current_user, login_required)
 
 from ark.account.forms import SignUpForm, SignInForm, ChangePassword
 from ark.account.models import Account
@@ -22,7 +23,7 @@ def signin():
         is_remember_me = form.form.get('remember_me', 'f') == 'y'
         user = Account.query.authenticate(email, password)
         if user:
-            login_user(user)
+            login_user(user, remember=is_remember_me)
             return jsonify(success=True)
         else:
             return jsonify(success=False)
@@ -62,6 +63,7 @@ def signup():
 
 
 @account_app.route('/signout')
+@login_required
 def signout():
     next = request.args.get('next') or url_for('master.index')
     logout_user()
@@ -69,15 +71,14 @@ def signout():
 
 
 @account_app.route('/profile')
+@login_required
 def profile():
     pass
 
 
 @account_app.route('/profile/password')
+@login_required
 def password():
-    if current_user.is_anonymous():
-        return redirect(url_for('master.index'))
-
     form = ChangePassword(request.form)
 
     if form.validate_on_submit():

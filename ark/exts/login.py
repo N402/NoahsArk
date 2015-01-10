@@ -12,3 +12,4 @@ def load_user(uid):
 
 def setup_login_manager(app):
     login_manager.init_app(app)
+    login_manager.login_view = 'account.signin'
