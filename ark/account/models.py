@@ -16,6 +16,9 @@ class UserQuery(BaseQuery):
 
 
 class Account(db.Model):
+
+    __tablename__ = 'account'
+
     query_class = UserQuery
 
     USER_STATES = {
@@ -38,6 +41,11 @@ class Account(db.Model):
 
     goals = db.relationship(
         'Goal', uselist=True, backref=db.backref('user', uselist=False))
+    activities = db.relationship(
+        'AccountActivityLog',
+        uselist=True,
+        backref=db.backref('user', uselist=False)
+    )
 
     def __init__(self, **kwargs):
         self.salt = uuid4().hex
@@ -84,3 +92,31 @@ class Account(db.Model):
 
     def get_id(self):
         return self.id
+
+    def get_last_signin_time(self):
+        pass
+
+
+class AccountActivityLog(db.Model):
+
+    __tablename__ = 'account_activity_log'
+
+    ACTIVITY_ACTIONS = {
+        'signin': 'SignIn',
+        'signout': 'SignOut',
+    }
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignerKey('account.id'))
+    action = db.Column(db.Enum(*(ACTIVITY_ACTIONS.keys())))
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class AccountScoreLog(db.Model):
+
+    __tablename__ = 'account_score_log'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    score = db.Column(db.Integer)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
