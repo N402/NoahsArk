@@ -1,5 +1,7 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, TextField, DateTimeField
+from flask.ext.wtf.file import FileField
+from wtforms import StringField, DateTimeField
+from wtforms.validators import InputRequired, Length
 
 
 class CreateGoalForm(Form):
@@ -7,13 +9,30 @@ class CreateGoalForm(Form):
         label=_(u'title'),
         validators=[
             InputRequired(),
+            Length(min=1, max=100),
         ]
     )
-    content = TextField(
-        label=_(u'content'),
+    description = StringField(
+        label=_(u'description'),
+        validators=[
+            InputRequired(),
+            Length(min=5, max=200),
+        ]
+    )
+    image = FileField(
+        label=_('image'),
         validators=[
             InputRequired(),
         ]
     )
-    start_at = DateTimeField(label=_(u'start at'))
-    end_at = DateTimeField(label=_(u'end at'))
+
+
+class GoalActivityForm(Form):
+    activity = StringField(
+        label=_('Activity'),
+        validators=[
+            InputRequired(),
+            Length(min=5, max=200),
+        ]
+    )
+    image = FileField(label=_('image'))
