@@ -16,7 +16,7 @@ class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text)
+    description = db.Column(db.Text) 
     created = db.Column(db.DateTime, default=datetime.utcnow)
     start_at = db.Column(db.DateTime)
     end_at = db.Column(db.DateTime)
