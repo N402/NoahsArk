@@ -118,7 +118,7 @@ class AccountActivityLog(db.Model):
     }
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignerKey('account.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     action = db.Column(db.Enum(*(ACTIVITY_ACTIONS.keys())))
     created = db.Column(db.DateTime, default=datetime.utcnow)
 

@@ -6,7 +6,7 @@ from ark.utils._time import friendly_time, format_datetime
 from ark.master.views import master_app
 from ark.account.views import account_app
 from ark.exts import (setup_database, setup_bcrypt, setup_babel,
-                      setup_login_manager, setup_collect)
+                      setup_login_manager, setup_collect, setup_oauth)
 
 
 def create_app(name=None, config=None):
@@ -28,6 +28,7 @@ def create_app(name=None, config=None):
     setup_babel(app)
     setup_login_manager(app)
     setup_collect(app)
+    setup_oauth(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)

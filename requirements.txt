@@ -3,6 +3,7 @@ Flask-Babel==0.9
 Flask-Bcrypt==0.6.0
 Flask-Collect==1.2.1
 Flask-Login==0.2.11
+Flask-OAuthlib==0.8.0
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.0
 Flask-WTF==0.10.3
@@ -10,6 +11,7 @@ Flask==0.10.1
 itsdangerous==0.24
 Jinja2==2.7.3
 MarkupSafe==0.23
+oauthlib==0.7.2
 py-bcrypt==0.4
 pytz==2014.10
 speaklater==1.3
