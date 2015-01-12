@@ -40,11 +40,22 @@ class Account(db.Model):
     state = db.Column(db.Enum(*(USER_STATES.keys())), default='normal')
 
     goals = db.relationship(
-        'Goal', uselist=True, backref=db.backref('user', uselist=False))
+        'Goal',
+        uselist=True,
+        backref=db.backref('user', uselist=False),
+        lazy='dynamic'
+    )
     activities = db.relationship(
         'AccountActivityLog',
         uselist=True,
-        backref=db.backref('user', uselist=False)
+        backref=db.backref('user', uselist=False),
+        lazy='dynamic',
+    )
+    score_logs = db.relationship(
+        'AccountScoreLog',
+        uselist=True,
+        backref=db.backref('user', uselist=False),
+        lazy='dynamic',
     )
 
     def __init__(self, **kwargs):
@@ -93,8 +104,8 @@ class Account(db.Model):
     def get_id(self):
         return self.id
 
-    def get_last_signin_time(self):
-        pass
+    def get_score(self):
+        return sum([each.score for each in self.score_logs])
 
 
 class AccountActivityLog(db.Model):
@@ -116,7 +127,18 @@ class AccountScoreLog(db.Model):
 
     __tablename__ = 'account_score_log'
 
+    ACTION_TYPES = {
+        'signin': 'SignIn',
+        'signup': 'SignUp',
+        'update': 'Update',
+        'finish': 'Finish',
+        'create': 'Create',
+        'restore': 'Restore',
+        'called': 'Called'
+    }
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     score = db.Column(db.Integer)
+    actioin = db.Column(db.Enum(*(ACTION_TYPES.keys())))
     created = db.Column(db.DateTime, default=datetime.utcnow)
