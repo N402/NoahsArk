@@ -76,6 +76,7 @@ gulp.task 'coffee', ['collect'], ->
 gulp.task 'browser-sync', ->
   browserSync
     port: 5500
+    open: false
     server:
       baseDir: '.tmp/wwwroot'
       routes:
