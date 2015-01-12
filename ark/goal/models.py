@@ -25,19 +25,9 @@ class Goal(db.Model):
     state = db.Column(db.Enum(*(GOAL_STATES.keys())), default='ready')
 
 
-class GoalDescriptionModifyLog(db.Model):
+class GoalActivity(db.Model):
 
-    __tablename__ = 'goal_description_modify_log'
-
-    id = db.Column(db.Integer, primary_key=True)
-    goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
-    origin_description = db.Column(db.String(300))
-    created = db.Column(db.DateTime, default=datetime.utcnow)
-
-
-class GoalActivityLog(db.Model):
-
-    __tablename__ = 'goal_activity_log'
+    __tablename__ = 'goal_activity'
 
     id = db.Column(db.Integer, primary_key=True)
     goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
@@ -54,3 +44,4 @@ class GoalLikeLog(db.Model):
     goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    is_deleted = db.Column(db.Boolean, default=False)
