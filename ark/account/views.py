@@ -6,7 +6,8 @@ from ark.exts import db
 from ark.exts.oauth.weibo import weibo_oauth
 from ark.account.forms import SignUpForm, SignInForm, ChangePassword
 from ark.account.models import Account
-from ark.account.services import signin_user,  signout_user, signup_user
+from ark.account.services import (signin_user,  signout_user,
+                                  signup_user, add_signin_score)
 
 
 account_app = Blueprint('account', __name__)
@@ -22,7 +23,7 @@ def signin():
     if form.validate_on_submit():
         email = form.data['email'].strip()
         password = form.data['password'].strip() 
-        is_remember_me = form.form.get('remember_me', 'f') == 'y'
+        is_remember_me = form.data.get('remember_me', 'f') == 'y'
         user = Account.query.authenticate(email, password)
         if user:
             add_signin_score(user)
@@ -30,6 +31,7 @@ def signin():
             return jsonify(success=True)
         else:
             return jsonify(success=False)
+
     if form.errors:
         return jsonify(success=False, messages=form.errors)
 
@@ -76,7 +78,8 @@ def oauth_authorized(site):
                 request.args.get('error_reason'),
                 request.args.get('error_description'),
             )
-        session['weibo_token'] = (resp['access_token'],)
+        session['weibo_token'] = (resp['access_token'], '')
+        print resp
         return redirect(url_for('account.oauth', site='weibo'))
 
 
@@ -91,7 +94,7 @@ def signup():
         email = form.data['email'].strip()
         username = form.data['username'].strip()
         password = form.data['password'].strip()
-        is_male = form.data['is_mail']
+        is_male = form.data['is_male']
 
         user = Account(
             email=email,
@@ -111,7 +114,7 @@ def signup():
     return render_template('account/signup.html', form=form)
 
 
-@account_app.route('/signout')
+@account_app.route('/account/signout')
 @login_required
 def signout():
     next = request.args.get('next') or url_for('master.index')

@@ -1,10 +1,11 @@
-import uuid
+from uuid import uuid4
 from datetime import datetime
 
 from flask.ext.sqlalchemy import BaseQuery
 
 from ark.exts import db
 from ark.exts.bcrypt import hash_password, check_password
+from ark.goal.models import Goal
 
 
 class UserQuery(BaseQuery):
@@ -42,19 +43,19 @@ class Account(db.Model):
     goals = db.relationship(
         'Goal',
         uselist=True,
-        backref=db.backref('user', uselist=False),
+        backref='user',
         lazy='dynamic'
     )
     activities = db.relationship(
         'AccountActivityLog',
         uselist=True,
-        backref=db.backref('user', uselist=False),
+        backref='user',
         lazy='dynamic',
     )
     score_logs = db.relationship(
         'AccountScoreLog',
         uselist=True,
-        backref=db.backref('user', uselist=False),
+        backref='user',
         lazy='dynamic',
     )
 
@@ -81,7 +82,7 @@ class Account(db.Model):
 
     def change_password(self, raw_password):
         raw_str = self.mix_with_salt(raw_password, refresh=True)
-        self.hashed_password = hashed_password(raw_str)
+        self.hashed_password = hash_password(raw_str)
 
     def check_password(self, raw_password):
         raw_str = self.mix_with_salt(raw_password)
@@ -140,5 +141,5 @@ class AccountScoreLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     score = db.Column(db.Integer)
-    actioin = db.Column(db.Enum(*(ACTION_TYPES.keys())))
+    action = db.Column(db.Enum(*(ACTION_TYPES.keys())))
     created = db.Column(db.DateTime, default=datetime.utcnow)

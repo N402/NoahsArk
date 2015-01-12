@@ -31,7 +31,7 @@ class SignUpForm(Form):
         label=_(u'email'),
         validators=[
             InputRequired(message=_(u'please input your email')),
-            Regexp(regex=EmailField, message=_(u'your email is invalid'))]
+            Regexp(regex=EMAIL_RE, message=_(u'your email is invalid'))]
     )
     password = PasswordField(
         label=_(u'password'),
@@ -60,7 +60,7 @@ class SignInForm(Form):
         label=_(u'email'),
         validators=[
             InputRequired(message=_(u'please input your email')),
-            Regexp(regex=EmailField, message=_(u'your email is invalid'))]
+            Regexp(regex=EMAIL_RE, message=_(u'your email is invalid'))]
     )
     password = PasswordField(
         label=_(u'password'),

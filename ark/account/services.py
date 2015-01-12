@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from flask.ext.login import login_user, logout_user
 
@@ -20,7 +20,7 @@ ACTION_SCORE = {
 def add_action_score(user, action, check_today=False):
     if check_today:
         now = datetime.utcnow()
-        today_date = now.strptime('%y-%m-%d')
+        today_date = date.today()
         today_end = today_date + timedelta(days=1)
         logs = (user.score_logs.filter(AccountScoreLog.action==action,
                                        AccountScoreLog.created>=today_date,
@@ -68,15 +68,15 @@ def sub_called_score(user):
     add_action_score(user, 'called')
 
 
-def signin_user(user, is_remember_me=False):
+def signin_user(user, remember=False):
     log_sign(user, 'signin')
     add_signin_score(user)
-    login_user(user, is_remember_me)
+    login_user(user, remember)
 
 
 def signout_user(user):
     log_sign(user, 'signout')
-    logout_user(user)
+    logout_user()
 
 
 def signup_user(user):
