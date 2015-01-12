@@ -1,6 +1,9 @@
+import os
 from datetime import datetime
 
-from flask import Blueprint, render_template, redirect, request, abort
+from werkzeug import secure_filename
+from flask import Blueprint, render_template, redirect, request, abort, jsonify
+from flask import current_app
 from flask.ext.login import current_user, login_required
 
 from ark.exts import db
@@ -31,16 +34,19 @@ def view_goal(username, id):
     return render_template('goal/goal.html', goal=goal)
 
 
-@goal_app.route('/goals/create')
+@goal_app.route('/goals/create', methods=['GET', 'POST'])
 @login_required
 def create():
-    form = CreateGoalForm(request.form)
+    form = CreateGoalForm()
 
     if form.validate_on_submit():
+        filename = secure_filename(form.image.data.filename)
+        form.image.data.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
         goal = Goal(
+            user_id=current_user.id,
             title=form.data['title'],
-            content=form.data['content'],
-            #TODO: image_url
+            description=form.data['description'],
+            image_url='/static/upload/' + filename
         )
         db.session.add(goal)
         db.session.commit()
@@ -50,10 +56,10 @@ def create():
     if form.errors:
         return jsonify(success=False, messages=form.errors)
 
-    return render_template('goal/create.html')
+    return render_template('goal/create.html', form=form)
 
 
-@goals_app.route('/goals/<id>/cancel', methods=['DELETE'])
+@goal_app.route('/goals/<id>/cancel', methods=['DELETE'])
 @login_required
 def cancel(id):
     goal = Goal.query.get_or_404(id)
@@ -72,7 +78,7 @@ def cancel(id):
     return jsonify(success=True)
 
 
-@goals_app.route('/goals/<id>/finish', methods=['PATCH'])
+@goal_app.route('/goals/<id>/finish', methods=['PATCH'])
 @login_required
 def finish(id):
     goal = Goal.query.get_or_404(id)
@@ -92,7 +98,7 @@ def finish(id):
     return jsonify(success=True)
 
 
-@goals_app.route('/goals/<id>/like', methods=['POST', 'DELETE'])
+@goal_app.route('/goals/<id>/like', methods=['POST', 'DELETE'])
 def like(id):
     goal = Goal.query.get_or_404(id)
     if goal.user is current_user:
@@ -115,7 +121,7 @@ def like(id):
         return jsonify(success=True)
 
 
-@goals_app.route('/goals/<id>/update', methods=['GET', 'PATCH'])
+@goal_app.route('/goals/<id>/update', methods=['GET', 'PATCH'])
 def update(id):
     goal = Goal.query.get_or_404(id)
 

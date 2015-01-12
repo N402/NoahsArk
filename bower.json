@@ -16,5 +16,7 @@
   ],
   "dependencies": {
     "normalize.css": "~3.0.2"
-  }
+    "plupload": "~2.1.2",
+    "js-sdk": "git://github.com/qiniu/js-sdk#~1.0.3-beta"
+  },
 }
