@@ -3,9 +3,11 @@ import os
 from flask import Flask
 
 from ark.utils._time import friendly_time, format_datetime
+from ark.utils.filters import gender
 from ark.master.views import master_app
 from ark.account.views import account_app
 from ark.goal.views import goal_app
+from ark.dashboard.views import dashboard_app
 from ark.exts import (setup_database, setup_bcrypt, setup_babel,
                       setup_login_manager, setup_collect, setup_oauth)
 
@@ -34,6 +36,7 @@ def create_app(name=None, config=None):
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
     app.register_blueprint(goal_app)
+    app.register_blueprint(dashboard_app)
 
     return app
 
@@ -56,6 +59,7 @@ def init_jinja(app):
     _jinja_filters = {
         'friendly_time': friendly_time,
         'date': format_datetime,
+        'gender': gender,
     }
     def setup_filter(app):
         for _fname, _ffunc in _jinja_filters.iteritems():
