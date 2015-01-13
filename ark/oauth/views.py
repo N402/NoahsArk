@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, session, redirect, url_for
 
-from ark.oauth.services import oauth_signin, oauth_authorize
+from ark.oauth.services import do_oauth, oauth_authorize
 
 
 oauth_app = Blueprint('oauth', __name__)
@@ -11,7 +11,7 @@ ALLOW_SERVICE = ('weibo',)
 def oauth(service):
     if service not in ALLOW_SERVICE:
         return abort(404)
-    return oauth_signin(service)
+    return do_oauth(service)
 
 
 @oauth_app.route('/oauth/<service>/authorized')

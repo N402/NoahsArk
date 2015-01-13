@@ -21,7 +21,7 @@ weibo_oauth = oauth2.remote_app(
 
 @weibo_oauth.tokengetter
 def get_weibo_oauth_token():
-    return session.get('token_token')
+    return session.get('oauth_token')
 
 
 def change_weibo_header(uri, headers, body):

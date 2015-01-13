@@ -152,7 +152,7 @@ class AccountOAuth(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     oauth_uid = db.Column(db.Integer)
     service = db.Column(db.Enum(*OAUTH_SERVICES))
-    account = db.relationship('Account', uselist=False, lazy='dynamic')
+    account = db.relationship('Account', uselist=False)
 
 
 class AccountActivityLog(db.Model):

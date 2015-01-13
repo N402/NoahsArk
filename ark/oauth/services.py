@@ -6,11 +6,13 @@ from ark.account.models import Account, AccountOAuth
 from ark.account.services import get_oauth_user, signin_user
 
 
-def oauth_signin(service):
-    if service == 'weibo':
-        _weibo_oauth_signin()
+def do_oauth(service):
+    if 'oauth_token' not in session:
         callback_url = _get_callback_url(service)
         return weibo_oauth.authorize(callback_url)
+
+    if service == 'weibo':
+        return _weibo_oauth()
 
 
 def oauth_authorize(service):
@@ -28,15 +30,15 @@ def oauth_authorize(service):
 def _weibo_oauth_signup(uid, username, gender, avatar_url):
     account = Account(
         username=username, is_male=(gender=='m'), avatar_url=avatar_url)
-    account_oauth = AccountOAuth(
-        account_id=account.id, oauth_uid=uid, service='weibo')
+    account_oauth = AccountOAuth(oauth_uid=uid, service='weibo')
+    account_oauth.account = account
     db.session.add(account)
     db.session.add(account_oauth)
     db.session.commit()
-    return account_oauth
+    return account
 
 
-def _weibo_oauth_signin():
+def _weibo_oauth():
     if 'oauth_token' in session:
         oauth_token = session['oauth_token'][0]
         resp = weibo_oauth.get('account/get_uid.json')
@@ -44,11 +46,14 @@ def _weibo_oauth_signin():
         oauth_account = get_oauth_user('weibo', uid)
         if not oauth_account:
             resp = weibo_oauth.get('users/show.json?uid=%s' % uid)
-            name = resp.name
-            gender = resp.gender
-            avatar_url = resp.avatar_large
-            oauth_account = _weibo_oauth_signup(uid, name, gender, avatar_url)
-        signin_user(oauth_account.account, remember=True)
+            name = resp.data['name']
+            gender = resp.data['gender']
+            avatar_url = resp.data['avatar_large']
+            account = _weibo_oauth_signup(uid, name, gender, avatar_url)
+        else:
+            account = oauth_account.account
+        signin_user(account, remember=True)
+        return redirect(url_for('master.index'))
 
 
 def _get_callback_url(service):

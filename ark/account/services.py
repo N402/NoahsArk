@@ -19,7 +19,7 @@ ACTION_SCORE = {
 
 
 def get_oauth_user(service, oauth_uid):
-    account = AccountOAuth.query.filter(service=service, oauth_uid=oauth_uid)
+    account = AccountOAuth.query.filter(service==service, oauth_uid==oauth_uid)
     if account.count() > 0:
         return account.first()
     return None
