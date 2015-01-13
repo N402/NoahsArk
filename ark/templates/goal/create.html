@@ -2,28 +2,29 @@
 <html>
   <head>
     <title>chaser</title>
-    <script src="{{ url_for('static', filename='components/plupload/js/moxie.js') }}"></script>
-    <script src="{{ url_for('static', filename='components/plupload/js/plupload.dev.js') }}"></script>
-    <script src="{{ url_for('static', filename='components/js-sdk/src/qiniu.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/master/upload.js')}}"></script>
   </head>
   <body>
     <div id="container">
-      <form id="createGoalForm" action="{{ url_for('goal.create') }}" method="POST" enctype="multipart/form-data">
+      <form id="createGoalForm" name="createGoalForm" action="{{ url_for('goal.create') }}" method="POST">
         {{ form.csrf_token }}
+        <section>
         {{ form.title.label }}
         {{ form.title() }}
+        </section>
+        <section>
         {{ form.description.label }}
         {{ form.description() }}
-        <button id="upload_btn" type="button">upload</button>
-        {{ form.image.label }}
-        {{ form.image() }}
-        <button>{{ _('Create') }}</button>
+        </section>
+        <section>
+        {{ form.image_url(style="display:none") }}
+        <button type="button" id="upbtn">上传</button>
+        <img src="" id="preview" width="500" />
+        </section>
+        <button type="button" onclick="upload()">{{ _('Create') }}</button>
       </form>
     </div>
-    <script>
-      var upload = get_uploader('upload_btn');
-    </script>
+    <script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='components/js-sdk/src/qiniu.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/goal/create.js')}}"></script>
   </body>
 </html>
-

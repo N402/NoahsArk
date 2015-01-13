@@ -40,13 +40,11 @@ def create():
     form = CreateGoalForm()
 
     if form.validate_on_submit():
-        filename = secure_filename(form.image.data.filename)
-        form.image.data.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
         goal = Goal(
             user_id=current_user.id,
             title=form.data['title'],
             description=form.data['description'],
-            image_url='/static/upload/' + filename
+            image_url=form.data['image_url'],
         )
         db.session.add(goal)
         db.session.commit()

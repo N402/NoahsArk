@@ -1,5 +1,4 @@
 from flask.ext.wtf import Form
-from flask.ext.wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, TextAreaField, DateTimeField
 from wtforms.validators import InputRequired, Length
 from flask.ext.babel import lazy_gettext as _
@@ -20,7 +19,7 @@ class CreateGoalForm(Form):
             Length(min=5, max=200),
         ]
     )
-    image = FileField(_('image'), validators=[FileRequired()])
+    image_url = StringField(_('image'), validators=[InputRequired()])
 
 
 class GoalActivityForm(Form):
@@ -31,4 +30,4 @@ class GoalActivityForm(Form):
             Length(min=5, max=200),
         ]
     )
-    image = FileField(label=_('image'))
+    image_url = StringField(label=_('image'))

@@ -1,6 +1,6 @@
-get_uploader = (upload_btn) -> Qiniu.uploader
+uploader = Qiniu.uploader
     runtimes: 'html5,flash,html4'
-    browse_button: upload_btn
+    browse_button: 'upbtn'
     uptoken_url: '/uptoken'
     save_key: true
     domain: 'https://dn-ichaser-upload.qbox.me'
@@ -15,14 +15,16 @@ get_uploader = (upload_btn) -> Qiniu.uploader
     init:
       'FilesAdded': (up, files) ->
         plupload.each files, (file) ->
-          #
+          document.getElementById('preview').src = window.URL.createObjectURL file.getNative()
       'BeforeUpload': (up, file) ->
-        #
       'UploadProgress': (up, file) ->
-        #
       'FileUploaded': (up, file, info) ->
-        #
+        infoObj = JSON.parse info
+        document.getElementById('image_url').value = infoObj.key
       'Error': (up, err, errTip) ->
-        #
       'UploadComplete': () ->
-        #
+        document.getElementById('createGoalForm').submit()
+
+
+upload = ->
+  uploader.start()
