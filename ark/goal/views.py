@@ -41,7 +41,7 @@ def create():
 
     if form.validate_on_submit():
         goal = Goal(
-            user_id=current_user.id,
+            account_id=current_user.id,
             title=form.data['title'],
             description=form.data['description'],
             image_url=form.data['image_url'],
@@ -103,7 +103,7 @@ def like(id):
         return jsonify(success=False, messages=_('Cannot like your goal'))
 
     if request.method == 'POST':
-        like_log = GoalLikeLog(goal_id=id, user_id=current_user.id)
+        like_log = GoalLikeLog(goal_id=id, account_id=current_user.id)
         db.session.add(like_log)
         db.session.commit()
         return jsonify(success=True)
@@ -111,7 +111,7 @@ def like(id):
     if request.methos == 'DELETE':
         log_id = request.form['log_id']
         log = GoalLikeLog.query.get_or_404(log_id)
-        if not log.user_id is current_user.id:
+        if not log.account_id is current_user.id:
             return abort(404)
         log.is_deleted = True
         db.session.add(log)

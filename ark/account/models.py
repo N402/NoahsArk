@@ -142,6 +142,18 @@ class Account(db.Model):
         self.change_gender(gender)
 
 
+class AccountOAuth(db.Model):
+
+    __tablename__ = 'account_oauth'
+
+    OAUTH_SERVICES = ('weibo',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    oauth_uid = db.Column(db.Integer)
+    service = db.Column(db.Enum(*OAUTH_SERVICES))
+
+
 class AccountActivityLog(db.Model):
 
     __tablename__ = 'account_activity_log'
@@ -152,7 +164,7 @@ class AccountActivityLog(db.Model):
     }
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     action = db.Column(db.Enum(*(ACTIVITY_ACTIONS.keys())))
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -172,7 +184,7 @@ class AccountScoreLog(db.Model):
     }
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('account.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     score = db.Column(db.Integer)
     action = db.Column(db.Enum(*(ACTION_TYPES.keys())))
     created = db.Column(db.DateTime, default=datetime.utcnow)
