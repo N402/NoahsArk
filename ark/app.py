@@ -76,7 +76,6 @@ def init_config(app):
         'SECRET_KEY': None,
         'COLLECT_STATIC_ROOT': None,
         'COLLECT_STORAGE': 'flask.ext.collect.storage.file',
-        'UPLOAD_FOLDER': None,
     }
     load_config(app, configs)
 
