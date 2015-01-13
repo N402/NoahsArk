@@ -51,6 +51,7 @@ class Account(db.Model):
         uselist=True,
         backref='user',
         lazy='dynamic',
+        order_by='desc(AccountActivityLog.created)'
     )
     score_logs = db.relationship(
         'AccountScoreLog',
@@ -76,13 +77,21 @@ class Account(db.Model):
 
         if 'is_male' in kwargs:
             is_male = kwargs.pop('is_male')
-            self.is_male = (is_male == True)
+            self.is_male = is_male in ('True', True)
+        elif 'gender' in kwargs:
+            gender = kwargs.pop('gender')
+            self.change_gender(gender)
 
         db.Model.__init__(self, **kwargs)
 
     def change_password(self, raw_password):
         raw_str = self.mix_with_salt(raw_password, refresh=True)
         self.hashed_password = hash_password(raw_str)
+
+    def change_gender(self, gender):
+        if not gender in ('male', 'female'):
+            return False
+        self.gender = (gender == 'male')
 
     def check_password(self, raw_password):
         raw_str = self.mix_with_salt(raw_password)
@@ -99,6 +108,15 @@ class Account(db.Model):
     def is_active(self):
         return self.state == 'normal'
 
+    def delete(self):
+        self.state = 'delete'
+
+    def activate(self):
+        self.state = 'normal'
+
+    def froze(self):
+        self.state = 'frozen'
+
     def is_anonymous(self):
         return (self.email is None)
 
@@ -107,6 +125,21 @@ class Account(db.Model):
 
     def get_score(self):
         return sum([each.score for each in self.score_logs])
+
+    def get_last_signin(self):
+        last_signin = self.activities.limit(1).first()
+        return last_signin.created
+
+    @property
+    def gender(self):
+        if self.is_male:
+            return u'male'
+        else:
+            return u'female'
+
+    @gender.setter
+    def gender(self, gender):
+        self.change_gender(gender)
 
 
 class AccountActivityLog(db.Model):

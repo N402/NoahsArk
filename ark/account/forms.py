@@ -19,11 +19,11 @@ class SignUpForm(Form):
             InputRequired(),
             Length(min=6, max=30),
         ])
-    is_male = SelectField(
+    gender = SelectField(
         label=_(u'gender'),
         choices=[
-            ('True', _('boy')),
-            ('False', _('girl'))
+            ('male', _('male')),
+            ('female', _('female'))
         ],
         validators=[InputRequired()]
     )
@@ -54,6 +54,7 @@ class SignUpForm(Form):
         query_user = Account.query.filter(Account.username==field.data)
         if query_user.count() > 0:
             raise ValidationError(_(u'Username exists'))
+
 
 class SignInForm(Form):
     email = EmailField(
