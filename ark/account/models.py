@@ -5,6 +5,7 @@ from flask.ext.sqlalchemy import BaseQuery
 
 from ark.exts import db
 from ark.exts.bcrypt import hash_password, check_password
+from ark.utils.avatar import random_avatar
 from ark.goal.models import Goal
 
 
@@ -34,7 +35,7 @@ class Account(db.Model):
     username = db.Column(db.String(30), nullable=False, unique=True)
     hashed_password = db.Column(db.String(128))
     is_male = db.Column(db.Boolean, default=True)
-    avatar_url = db.Column(db.String(128), nullable=True)
+    avatar_url = db.Column(db.String(128), default=random_avatar)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(128))
     is_superuser = db.Column(db.Boolean, default=False)

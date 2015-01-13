@@ -57,5 +57,7 @@ target/
 *.sqlite
 bower_components/
 node_modules/
-ark/static/
+ark/static/styles
+ark/static/scripts
+ark/static/components
 .tmp/

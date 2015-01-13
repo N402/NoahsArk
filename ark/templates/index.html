@@ -17,4 +17,19 @@
 <center>
   <h1>chaser</h1>
   <p>chasing your dream.</p>
+  {% if current_user.is_authenticated %}
+  <hr style="margin: 60px 0px 30px;" />
+  <img src="{{ current_user.avatar_url }}" class="avatar" />
+  <div style="padding: 20px;">
+    Hi, {{ current_user.username }}
+  </div>
+  <style>
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 90px;
+      border: solid #fff 6px;
+    }
+  </style>
+  {% endif %}
 </center>
