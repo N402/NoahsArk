@@ -75,12 +75,9 @@ gulp.task 'coffee', ['collect'], ->
 
 gulp.task 'browser-sync', ->
   browserSync
-    port: 5500
+    port: argv.port + 100
+    proxy: "127.0.0.1:#{argv.port}"
     open: false
-    server:
-      baseDir: '.tmp/wwwroot'
-      routes:
-        "/static": "#{project.dest}"
 
 gulp.task 'clean:collect', (done) ->
   del [

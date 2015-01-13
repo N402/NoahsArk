@@ -19,7 +19,7 @@ def create_app(name=None, config=None):
     if isinstance(config, dict):
         app.config.update(config)
 
-    app.debug = bool(int(os.environ.get('DEBUG', False)))
+    app.debug = bool(int(os.environ.get('ARK_DEBUG', False)))
 
     init_error_pages(app)
     init_jinja(app)
