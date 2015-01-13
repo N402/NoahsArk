@@ -1,0 +1,29 @@
+{% extends 'dashboard/base.html' %}
+{% block main %}
+<table class="accounts">
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Email</td>
+      <td>Username</td>
+      <td>Gender</td>
+      <td>SignUp</td>
+      <td>Last Signin</td>
+      <td>OP</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for account in accounts %}
+    <tr>
+      <td>{{ account.id }}</td>
+      <td>{{ account.email }}</td>
+      <td>{{ account.username }}</td>
+      <td>{{ account.is_male | gender }}</td>
+      <td>{{ account.created | date('%Y-%m-%d') }}</td>
+      <td>{{ account.get_last_signin() | date('%Y-%m-%d') }}</td>
+      <td><a href="{{ url_for('dashboard.account', uid=account.id) }}">Edit</a> Delete</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %}
+{% block main %}
+<form action="{{ url_for('dashboard.account', uid=account.id) }}" method="POST">
+  {{ form.csrf_token }}
+  <section>
+    {{ form.username.label }}
+    {{ form.username() }}
+  </section>
+  <section>
+    <label>email</label>
+    <input type="text" disabled="disabled" value="{{ account.email }}" readonly="readonly" />
+  </section>
+  <section>
+    {{ form.password.label }}
+    {{ form.password() }}
+  </section>
+  <section>
+    {{ form.gender.label }}
+    {{ form.gender() }}
+  </section>
+  <button>Submit</button>
+</form>
+{% endblock %}

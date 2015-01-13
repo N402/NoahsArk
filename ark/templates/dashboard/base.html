@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>iChaser - dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='components/normalize.css/normalize.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard/base.css') }}" type="text/css" />
+  </head>
+  <body>
+    <div id="container">
+      {% block body %}
+      <div class="navbar">
+        <ul>
+          <li><a href="{{ url_for('dashboard.index') }}">index</a></li>
+          <li><a href="{{ url_for('dashboard.accounts') }}">accounts</a></li>
+          <li><a href="{{ url_for('dashboard.goals') }}">goals</a></li>
+        </ul>
+      </div>
+      <div class="main">
+        {% block main %}
+        {% endblock %}
+      </div>
+      {% endblock %}
+    </div>
+  </body>
+</html>
