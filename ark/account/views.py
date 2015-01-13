@@ -79,7 +79,6 @@ def oauth_authorized(site):
                 request.args.get('error_description'),
             )
         session['weibo_token'] = (resp['access_token'], '')
-        print resp
         return redirect(url_for('account.oauth', site='weibo'))
 
 
@@ -94,13 +93,13 @@ def signup():
         email = form.data['email'].strip()
         username = form.data['username'].strip()
         password = form.data['password'].strip()
-        is_male = form.data['is_male']
+        gender = form.data['gender']
 
         user = Account(
             email=email,
             username=username,
             password=password,
-            is_male=(is_male == 'True')
+            gender=gender,
         )
         db.session.add(user)
         signup_user(user)
@@ -122,7 +121,7 @@ def signout():
     return redirect(next) 
 
 
-@account_app.route('/profile')
+@account_app.route('/account/profile')
 @login_required
 def profile():
     pass
