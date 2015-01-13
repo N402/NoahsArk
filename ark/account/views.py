@@ -63,7 +63,7 @@ def signup():
         return jsonify(success=True)
 
     if form.errors:
-        return jsonify(success=False)
+        return jsonify(success=False, messages=form.errors)
 
     return render_template('account/signup.html', form=form)
 
