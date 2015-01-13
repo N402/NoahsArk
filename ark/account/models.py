@@ -30,11 +30,11 @@ class Account(db.Model):
     }
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(128), unique=True)
+    email = db.Column(db.String(128), nullable=True, unique=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     hashed_password = db.Column(db.String(128))
     is_male = db.Column(db.Boolean, default=True)
-    avatar = db.Column(db.String(128), nullable=True)
+    avatar_url = db.Column(db.String(128), nullable=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(128))
     is_superuser = db.Column(db.Boolean, default=False)
@@ -152,6 +152,7 @@ class AccountOAuth(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     oauth_uid = db.Column(db.Integer)
     service = db.Column(db.Enum(*OAUTH_SERVICES))
+    account = db.relationship('Account', uselist=False, lazy='dynamic')
 
 
 class AccountActivityLog(db.Model):

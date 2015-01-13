@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, date
 from flask.ext.login import login_user, logout_user
 
 from ark.exts import db
+from ark.account.models import AccountOAuth
 from ark.account.models import AccountScoreLog, AccountActivityLog
 
 
@@ -15,6 +16,13 @@ ACTION_SCORE = {
     'restore': -10,
     'called': -1,
 }
+
+
+def get_oauth_user(service, oauth_uid):
+    account = AccountOAuth.query.filter(service=service, oauth_uid=oauth_uid)
+    if account.count() > 0:
+        return account.first()
+    return None
 
 
 def add_action_score(user, action, check_today=False):
