@@ -61,3 +61,4 @@ ark/static/styles
 ark/static/scripts
 ark/static/components
 .tmp/
+.DS_Store
