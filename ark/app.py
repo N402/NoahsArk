@@ -24,6 +24,10 @@ def create_app(name=None, config=None):
 
     app.debug = bool(int(os.environ.get('ARK_DEBUG', False)))
 
+    if app.config.get('SENTRY_DSN'):
+        from raven.contrib.flask import Sentry
+        sentry = Sentry(app)
+
     init_error_pages(app)
     init_jinja(app)
 
@@ -76,6 +80,7 @@ def init_config(app):
         'SECRET_KEY': None,
         'COLLECT_STATIC_ROOT': None,
         'COLLECT_STORAGE': 'flask.ext.collect.storage.file',
+        'SENTRY_DSN': '',
     }
     load_config(app, configs)
 
