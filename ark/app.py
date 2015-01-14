@@ -67,11 +67,21 @@ def init_jinja(app):
         'date': format_datetime,
         'gender': gender,
     }
+    _jinja_global = {
+        'site_title': 'iChaser',
+        'site_keyword': 'iChaser',
+        'site_description': 'iChaser',
+    }
     def setup_filter(app):
         for _fname, _ffunc in _jinja_filters.iteritems():
             app.add_template_filter(_ffunc, _fname)
 
+    def setup_global(app):
+        for _fname, _var in _jinja_global.iteritems():
+            app.jinja_env.globals[_fname] = _var
+
     setup_filter(app)
+    setup_global(app)
 
 
 def init_config(app):
