@@ -151,7 +151,7 @@ class AccountOAuth(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
-    oauth_uid = db.Column(db.Integer)
+    oauth_uid = db.Column(db.String(32))
     service = db.Column(db.Enum(*OAUTH_SERVICES))
     account = db.relationship('Account', uselist=False)
 

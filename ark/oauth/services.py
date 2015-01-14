@@ -30,7 +30,7 @@ def oauth_authorize(service):
 def _weibo_oauth_signup(uid, username, gender, avatar_url):
     account = Account(
         username=username, is_male=(gender=='m'), avatar_url=avatar_url)
-    account_oauth = AccountOAuth(oauth_uid=uid, service='weibo')
+    account_oauth = AccountOAuth(oauth_uid=str(uid), service='weibo')
     account_oauth.account = account
     db.session.add(account)
     db.session.add(account_oauth)
@@ -43,7 +43,7 @@ def _weibo_oauth():
         oauth_token = session['oauth_token'][0]
         resp = weibo_oauth.get('account/get_uid.json')
         uid = resp.data['uid']
-        oauth_account = get_oauth_user('weibo', uid)
+        oauth_account = get_oauth_user('weibo', str(uid))
         if not oauth_account:
             resp = weibo_oauth.get('users/show.json?uid=%s' % uid)
             name = resp.data['name']
