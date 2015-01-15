@@ -7,8 +7,6 @@ from hashlib import sha1, md5
 from base64 import urlsafe_b64encode
 from datetime import datetime, timedelta
 
-from flask.ext.login import current_user
-
 
 def hmac_sha1(data):
     access_secret = os.environ['ARK_QINIU_ACCESS_SECRET']
@@ -22,26 +20,24 @@ def calc_ts(s):
     return calendar.timegm(deadline.timetuple())
 
 
-def gen_key(uid=None, filename=None):
-    uid = str(uid or current_user.id)
-    hash_uid = md5(uid).hexdigest()
+def hash_save_key(uid=None, filename=None):
+    hash_uid = md5(str(uid)).hexdigest()
     key = filename.split('.', 1)[0] if filename else uuid4().hex
     return '%s/%s$(ext)' % (hash_uid, key)
 
 
-def gen_encoded_policy(uid=None, filename=None):
+def gen_encoded_policy(data):
     scope = os.environ['ARK_QINIU_BUCKET']
     deadline = calc_ts(60 * 10)
-    returnBody = '{"name": $(fname), "key": $(key)}'
-    data = {
+    policy  = {
         'scope': scope,
         'deadline': deadline,
-        'saveKey': gen_key(uid, filename),
         'mimeLimit': 'image/*',
         'fsizeLimit': 1024 * 1024 * 3,
-        'returnBody': returnBody,
+        'returnBody': '{"name": $(fname), "key": $(key)}',
     }
-    return urlsafe_b64encode(json.dumps(data))
+    policy.update(data)
+    return urlsafe_b64encode(json.dumps(policy))
 
 
 def gen_encoded_sign(policy):
@@ -50,8 +46,8 @@ def gen_encoded_sign(policy):
     return encoded_sign
 
 
-def gen_upload_token(uid=None, filename=None):
-    encoded_policy = gen_encoded_policy(uid, filename)
+def gen_upload_token(data):
+    encoded_policy = gen_encoded_policy(data)
     encoded_sign = gen_encoded_sign(encoded_policy)
     return "%s:%s:%s" % (os.environ['ARK_QINIU_ACCESS_KEY'],
                          encoded_sign,
