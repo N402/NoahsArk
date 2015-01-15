@@ -81,6 +81,12 @@ class SettingForm(Form):
         ])
 
 
+class AvatarForm(Form):
+    avatar_url = StringField(
+        label=_('avatar'),
+        validators=[InputRequired(),],)
+
+
 class ChangePassword(Form):
     old_password = PasswordField(
         label=_(u'old password'),

@@ -1,0 +1,20 @@
+{%- extends 'layout.html' %}
+{%- block main %}
+<div id="container">
+  <form id="avatarForm" name="avatarForm" action="{{ url_for('account.avatar') }}" method="POST">
+    {{ form.csrf_token }}
+    <section>
+    {{ form.avatar_url(style="display:none") }}
+    <img src="" id="preview" width="500" />
+    <br />
+    <button type="button" id="browerBtn">浏览</button>
+    </section>
+    <button type="button" id="uploadBtn">{{ _('Upload') }}</button>
+  </form>
+</div>
+<script src="{{ url_for('static', filename='components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/qiniu-js-sdk/src/qiniu.js') }}"></script>
+<script src="{{ url_for('static', filename='components/jcrop/js/jquery.Jcrop.min.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/account/avatar.js')}}"></script>
+{%- endblock %}

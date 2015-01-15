@@ -3,7 +3,8 @@ from flask import url_for, redirect, request, jsonify
 from flask.ext.login import current_user, login_required
 
 from ark.exts import db
-from ark.account.forms import SignUpForm, SignInForm, ChangePassword
+from ark.account.forms import (
+    SignUpForm, SignInForm, ChangePassword, AvatarForm)
 from ark.account.models import Account
 from ark.account.services import (signin_user,  signout_user,
                                   signup_user, add_signin_score)
@@ -79,7 +80,23 @@ def signout():
 @account_app.route('/account/profile')
 @login_required
 def profile():
-    pass
+    return render_template('account/profile.html')
+
+
+@account_app.route('/account/avatar', methods=['GET', 'POST'])
+@login_required
+def avatar():
+    form = AvatarForm(request.form)
+
+    if form.validate_on_submit():
+        current_user.avatar_url = form.data['avatar_url']
+        db.session.add(current_user)
+        db.session.commit()
+        return jsonify(success=True)
+
+    if form.errors:
+        return jsonify(success=False, messages=form.errors)
+    return render_template('account/avatar.html', form=form)
 
 
 @account_app.route('/profile/password')
