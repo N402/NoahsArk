@@ -29,60 +29,60 @@ dreams = [
   avatar: '/static/images/avatars/9.png'
   text: '做一件不敢做的事'
 ,
+  avatar: 'http://tp3.sinaimg.cn/1650783422/180/5715179049/1'
+  text: '我們的目標是星辰大海'
+,
   avatar: 'http://tp2.sinaimg.cn/1787684317/180/40047241448/1'
   text: '管它做什麼，再不做就沒機會做了'
 ]
 
-isOver = (lhp, rhp) ->
-  lhpRect = lhp.getBoundingClientRect()
-  rhpRect = rhp.getBoundingClientRect()
-  console.log lhpRect, rhpRect
-  ((lhpRect.top > rhpRect.top and lhpRect.bottom < rhpRect.bottom) or
-   (lhpRect.left > rhpRect.left and lhpRect.right < rhpRect.right))
+scales = [
+  [0, 1], [0.5, 1.73], [1.73, 0.5],
+  [1, 0], [1.73, -0.5], [0.5, -1.73],
+  [0, -1], [-0.5, -1.73], [-1.73, -0.5],
+  [-1, 0], [-1.73, 0.5], [-0.5, 1.73],
+]
+
+randomScale = ->
+  idx = Math.floor Math.random() * scales.length
+  scales.splice(idx, 1)[0]
+
+logoCenter = ->
+  rect = $('#logo')[0].getBoundingClientRect()
+  [ (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2]
+
+logoSize = ->
+  rect = $('#logo')[0].getBoundingClientRect()
+  [rect.width, rect.height]
 
 generateChaser = (avatar, text) ->
   $('<div class="chaser"><div class="avatar"><img src="' + avatar + '" /></div><div class="board">' + text + '</div></div>')
 
+fixCenter = (ele) ->
+  halfHeight = ele.height() / 2
+  halfWidth = ele.width() / 2
+  ele.css 'margin-left', -halfWidth
+  ele.css 'margin-top', -halfHeight
+
+putPosition = (ele) ->
+  [scaleX, scaleY, ] = randomScale()
+  [centerX, centerY] = logoCenter()
+  [width, height] = logoSize()
+  ele.css 'left', centerX + scaleX * width / 2 + getRandomInt(-10, 40)
+  ele.css 'top', centerY - scaleY * height + getRandomInt(-10, 20)
+
 getRandomInt = (min, max) ->
   Math.floor(Math.random() * (max - min)) + min
-
-randomPosition = (ele) ->
-  x = getRandomInt(0, document.body.clientWidth / 3)
-  y = getRandomInt(0, document.body.scrollHeight / 3)
-  if getRandomInt(0, 2) > 0
-    ele.css 'margin-left', x
-  else
-    ele.css 'margin-left', -x
-  if getRandomInt(0, 2) > 0
-    ele.css 'margin-top', y
-  else
-    ele.css 'margin-top', -y
-
-rePotision = (ele) ->
-  ele.removeClass 'popOut'
-  randomPosition ele
-  ele.addClass 'popOut'
 
 start = ->
   chasers = $('#chasers')
   $.each dreams, (idx, data) ->
     ele = generateChaser data.avatar, data.text
-    randomPosition ele
     setTimeout ->
       chasers.append ele
+      fixCenter ele
+      putPosition ele
       ele.addClass 'popOut'
-    , idx * getRandomInt 300, 500
-
-check = ->
-  interval = setInterval ->
-    flag = true
-    $.each $('.chaser'), (idx, ele) ->
-      if isOver ele, $('#logo')[0]
-        rePotision $(ele)
-        flag = false
-    if flag
-      cleanInterval interval
-  , 1
+    , idx * (getRandomInt 200, 350)
 
 start()
-check()
