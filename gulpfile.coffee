@@ -2,6 +2,7 @@ gulp = require 'gulp'
 browserSync = require 'browser-sync'
 stylus = require 'gulp-stylus'
 coffee = require 'gulp-coffee'
+plumber = require 'gulp-plumber'
 rename = require 'gulp-rename'
 nib = require 'nib'
 uglify = require 'gulp-uglify'
@@ -66,6 +67,7 @@ gulp.task 'coffee', ['collect'], ->
   options =
     bare: true
   stream = gulp.src "#{project.tmp}/**/*.{#{scripts.exts.join(',')}}"
+    .pipe plumber()
     .pipe coffee options
   unless argv.debug
     stream = stream.pipe uglify()
