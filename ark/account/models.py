@@ -35,6 +35,7 @@ class Account(db.Model):
     username = db.Column(db.String(30), nullable=False, unique=True)
     hashed_password = db.Column(db.String(128))
     is_male = db.Column(db.Boolean, default=True)
+    whatsup = db.Column(db.String(60))
     avatar_url = db.Column(db.String(128), default=random_avatar)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     salt = db.Column(db.String(128))
