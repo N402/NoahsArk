@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request
 from flask.ext.login import login_required, current_user
 
 from ark.utils.qiniu import gen_upload_token, hash_save_key, encodedEntryURI
+from ark.account.forms import SignInForm, SignUpForm
 
 
 master_app = Blueprint('master', __name__)
@@ -9,7 +10,10 @@ master_app = Blueprint('master', __name__)
 
 @master_app.route('/')
 def index():
-    return render_template('index.html')
+    sign_in_form = SignInForm()
+    sign_up_form = SignUpForm()
+    return render_template(
+        'index.html', sign_in_form=sign_in_form, sign_up_form=sign_up_form)
 
 
 @master_app.route('/uptoken')
