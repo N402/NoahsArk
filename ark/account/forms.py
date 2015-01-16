@@ -39,11 +39,6 @@ class SignUpForm(Form):
             InputRequired(),
             Length(min=6, max=30),
         ])
-    confirm_password = PasswordField(
-        label=_(u'confirm password'),
-        validators=[
-            EqualTo('password')
-        ])
 
     def validate_email(form, field):
         query_user = Account.query.filter(Account.email==field.data)
