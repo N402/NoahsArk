@@ -26,6 +26,12 @@ def hash_save_key(uid=None, filename=None):
     return '%s/%s$(ext)' % (hash_uid, key)
 
 
+def encodedEntryURI(key, bucket=None):
+    bucket = bucket or os.environ['ARK_QINIU_BUCKET']
+    entry = '%s:%s' % (bucket, key)
+    return urlsafe_b64encode(entry)
+
+
 def gen_encoded_policy(data):
     scope = os.environ['ARK_QINIU_BUCKET']
     deadline = calc_ts(60 * 10)
