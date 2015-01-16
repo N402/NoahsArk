@@ -2,15 +2,34 @@
 {%- block static %}
 <link rel="stylesheet" href="{{ url_for('static', filename='components/normalize.css/normalize.css') }}" type="text/css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/master/index.css') }}" type="text/css" />
-
 {%- endblock %}
+
 {%- block main %}
 <div class="mask"></div>
-<div class="wrapper">
-  <div class="logo" id="logo">iChaser</div>
-  <div class="ask">毕业前必须做些什么？</div>
-</div>
 <div class="main">
+  <div class="wrapper" id="logo-container">
+    <div class="logo" id="logo">iChaser</div>
+    <div class="ask" id="ask">毕业前必须做些什么？</div>
+    <div class="sign-container signin-container">
+      <form action="{{ url_for('account.signin') }}" id="signin-form" method="post">
+        {{ sign_in_form.csrf_token }}
+        <section>{{ sign_in_form.email(placeholder=sign_in_form.email.label.text) }}</section>
+        <section>{{ sign_in_form.password(placeholder=sign_in_form.password.label.text) }}</section>
+        <section><button type="submit">登录</button></section>
+        <section><a href="javascript:void(0)" class="sign-btn">注册</a></section>
+      </form>
+    </div>
+    <div class="sign-container signup-container">
+      <form action="{{ url_for('account.signup') }}" id="signup-form">
+        {{ sign_up_form.csrf_token }}
+        <section>{{ sign_up_form.username(placeholder=sign_up_form.username.label.text) }}</section>
+        <section>{{ sign_up_form.email(placeholder=sign_up_form.email.label.text) }}</section>
+        <section>{{ sign_up_form.password(placeholder=sign_up_form.password.label.text) }}</section>
+        <section><button>注册</button></section>
+        <section><a href="javascript:void(0)" class="sign-btn">登录</a></section>
+      </form>
+    </div>
+  </div>
   <div class="chasers" id="chasers"></div>
   <div class="pic-copyright"><a href="http://yiwenvision.lofter.com/post/19a2f6_54a29ee" target="_blank">图片来自 Yiwen</a></div>
 </div>
