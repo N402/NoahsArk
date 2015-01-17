@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, jsonify, request
+from flask import (Blueprint, render_template,
+                   jsonify, request, redirect, url_for)
 from flask.ext.login import login_required, current_user
 
 from ark.utils.qiniu import gen_upload_token, hash_save_key, encodedEntryURI
@@ -10,6 +11,9 @@ master_app = Blueprint('master', __name__)
 
 @master_app.route('/')
 def index():
+    if not current_user.is_anonymous():
+        return redirect(url_for('account.profile'))
+
     sign_in_form = SignInForm()
     sign_up_form = SignUpForm()
     return render_template(
