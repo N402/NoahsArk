@@ -53,7 +53,7 @@ def _weibo_oauth():
         else:
             account = oauth_account.account
         signin_user(account, remember=True)
-        return redirect(url_for('master.index'))
+        return redirect(url_for('account.profile'))
 
 
 def _get_callback_url(service):
