@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template
 from flask import url_for, redirect, request, jsonify
 from flask.ext.login import current_user, login_required
+from flask.ext.babel import gettext
 
 from ark.exts import db
+from ark.utils.helper import jsonify_lazy
 from ark.account.forms import (
     SignUpForm, SignInForm, ChangePassword, AvatarForm)
 from ark.account.models import Account
@@ -16,24 +18,30 @@ account_app = Blueprint('account', __name__)
 @account_app.route('/account/signin', methods=['GET', 'POST'])
 def signin():
     if not current_user.is_anonymous():
-        return redirect(url_for('master.index'))
+        return redirect(url_for('account.profile'))
 
     form = SignInForm(request.form)
 
     if form.validate_on_submit():
-        email = form.data['email'].strip()
-        password = form.data['password'].strip() 
-        is_remember_me = form.data.get('remember_me', 'f') == 'y'
+        email = form.data['signin_email'].strip()
+        password = form.data['signin_password'].strip() 
+        is_remember_me = form.data.get('remember_me', 'y') == 'y'
         user = Account.query.authenticate(email, password)
         if user:
             add_signin_score(user)
             signin_user(user, remember=is_remember_me)
             return jsonify(success=True)
         else:
-            return jsonify(success=False)
+            #TODO: refactor
+            return jsonify_lazy(
+                success=False,
+                messages={
+                    'email': [unicode(gettext(u'email or password is wrong'))]})
 
     if form.errors:
-        return jsonify(success=False, messages=form.errors)
+        return jsonify_lazy(success=False,
+                            status="errors",
+                            messages=form.errors)
 
     return render_template('account/signin.html', form=form)
 
@@ -41,7 +49,7 @@ def signin():
 @account_app.route('/account/signup', methods=['GET', 'POST'])
 def signup():
     if not current_user.is_anonymous():
-        return redirect(url_for('master.index'))
+        return redirect(url_for('account.profile'))
 
     form = SignUpForm(request.form)
 
@@ -64,7 +72,9 @@ def signup():
         return jsonify(success=True)
 
     if form.errors:
-        return jsonify(success=False, messages=form.errors)
+        return jsonify_lazy(success=False,
+                            status="errors",
+                            messages=form.errors)
 
     return render_template('account/signup.html', form=form)
 

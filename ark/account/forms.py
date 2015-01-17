@@ -52,13 +52,13 @@ class SignUpForm(Form):
 
 
 class SignInForm(Form):
-    email = EmailField(
+    signin_email = EmailField(
         label=_(u'email'),
         validators=[
             InputRequired(message=_(u'please input your email')),
             Regexp(regex=EMAIL_RE, message=_(u'your email is invalid'))]
     )
-    password = PasswordField(
+    signin_password = PasswordField(
         label=_(u'password'),
         validators=[
             InputRequired(),

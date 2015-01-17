@@ -39,9 +39,9 @@ $ ->
 
   coords = [
     [-20, -290], [180, -250], [290, -140],
-    [440, -50], [290, 80], [240, 190],
+    [440, -50], [490, 80], [290, 190],
     [20, 240], [-190, 240], [-360, 90],
-    [-350, -10], [-440, -120], [-280, -250],
+    [-490, -10], [-440, -120], [-280, -250],
   ]
 
   getRandomInt = (min, max) ->
@@ -73,9 +73,6 @@ $ ->
     ele.css 'left', centerX + coordX + getRandomInt(-10, 10)
     ele.css 'top', centerY + coordY + getRandomInt(-10, 10)
 
-  $('.sign-btn').click ->
-    $('.sign-container').fadeToggle()
-
   showChasers = ->
     chasers = $('#chasers')
     $.each dreams, (idx, data) ->
@@ -91,3 +88,92 @@ $ ->
       , idx * (getRandomInt 100, 150)
 
   showChasers()
+
+  $('.sign-btn').click ->
+    $('.sign-container').fadeToggle()
+    $('form input').tooltipster 'hide'
+
+  $('button').click ->
+    $('form input').tooltipster 'hide'
+
+  $('#signin-form').ajaxForm
+    success: (resp) ->
+      if resp.success
+        location.href = '/account/profile'
+      else
+        for field, msg of resp.messages
+          $("##{field}").tooltipster 'update', msg?.join ','
+          $("##{field}").tooltipster 'show'
+
+  $('#signup-form').ajaxForm
+    success: (resp) ->
+      if resp.success
+        location.href = '/'
+      else
+        for field, msg of resp.messages
+          $("##{field}").tooltipster 'update', msg?.join ','
+          $("##{field}").tooltipster 'show'
+
+  $('#signin-form input').tooltipster
+    trigger: 'custom'
+    onlyOne: false
+    position: 'right'
+
+  $('#signup-form input').tooltipster
+    trigger: 'custom'
+    onlyOne: false
+    position: 'right'
+
+  $('#signin-form').validate
+    rules:
+      email:
+        required: true
+        email: true
+      password:
+        required: true
+        minlength: 6
+        maxlength: 30
+    messages:
+      email:
+        email: '请输入正确的邮箱'
+        required: '请输入邮箱'
+      password:
+        required: '请输入密码'
+        minlength: '密码不能少于 6 位字符'
+        maxlength: '密码不能多于 30 位字符'
+    errorPlacement: (error, element) ->
+      $(element).tooltipster 'update', $(error).text()
+      $(element).tooltipster 'show'
+    success: (label, element) ->
+      $(element).tooltipster 'hide'
+    submitHandler: (form) ->
+      $(form).ajaxSubmit()
+
+  $('#signin-form').validate
+    rules:
+      username:
+        required: true
+      email:
+        required: true
+        email: true
+      password:
+        required: true
+        minlength: 6
+        maxlength: 30
+    messages:
+      email:
+        required: '请输入邮箱'
+        email: '请输入正确的邮箱'
+      username:
+        required: '请输入用户名'
+      password:
+        required: '请输入密码'
+        minlength: '密码不能少于 6 位字符'
+        maxlength: '密码不能多于 30 位字符'
+    errorPlacement: (error, element) ->
+      $(element).tooltipster 'update', $(error).text()
+      $(element).tooltipster 'show'
+    success: (label, element) ->
+      $(element).tooltipster 'hide'
+    submitHandler: (form) ->
+      $(form).ajaxSubmit()
