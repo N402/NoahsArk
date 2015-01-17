@@ -5,6 +5,7 @@ from ark.exts import collect
 from ark.management.syncdb import Syncdb 
 from ark.management.destroy import Destroy 
 from ark.management.superuser import CreateSuperUser
+from ark.management.export import ExportCommand
 
 
 application = create_app('ark')
@@ -15,6 +16,7 @@ manager.add_command('runserver', Server())
 manager.add_command('syncdb', Syncdb)
 manager.add_command('destroy', Destroy)
 manager.add_command('superuser', CreateSuperUser)
+manager.add_command('export', ExportCommand)
 
 
 def execute_command_line():
