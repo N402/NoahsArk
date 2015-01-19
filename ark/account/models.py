@@ -128,9 +128,13 @@ class Account(db.Model):
     def get_score(self):
         return sum([each.score for each in self.score_logs])
 
-    def get_last_signin(self):
+    @property
+    def last_signin(self):
         last_signin = self.activities.limit(1).first()
-        return last_signin.created
+        if last_signin:
+            return last_signin.created
+        else:
+            return None
 
     @property
     def gender(self):
@@ -142,6 +146,10 @@ class Account(db.Model):
     @gender.setter
     def gender(self, gender):
         self.change_gender(gender)
+
+    def get_timezone(self):
+        #TODO
+        return None
 
 
 class AccountOAuth(db.Model):
