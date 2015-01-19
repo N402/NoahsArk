@@ -57,13 +57,11 @@ def signup():
         email = form.data['email'].strip()
         username = form.data['username'].strip()
         password = form.data['password'].strip()
-        gender = form.data['gender']
 
         user = Account(
             email=email,
             username=username,
             password=password,
-            gender=gender,
         )
         db.session.add(user)
         signup_user(user)

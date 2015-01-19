@@ -19,14 +19,6 @@ class SignUpForm(Form):
             InputRequired(),
             Length(min=6, max=30),
         ])
-    gender = SelectField(
-        label=_(u'gender'),
-        choices=[
-            ('male', _('male')),
-            ('female', _('female'))
-        ],
-        validators=[InputRequired()]
-    )
     email = EmailField(
         label=_(u'email'),
         validators=[
