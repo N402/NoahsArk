@@ -7,8 +7,8 @@ from ark.exts import oauth2
 
 weibo_oauth = oauth2.remote_app(
     'weibo',
-    consumer_key=os.environ['ARK_WEIBO_CONSUMER_KEY'],
-    consumer_secret=os.environ['ARK_WEIBO_CONSUMER_SECRET'],
+    consumer_key=os.environ.get('ARK_WEIBO_CONSUMER_KEY', ''),
+    consumer_secret=os.environ.get('ARK_WEIBO_CONSUMER_SECRET', ''),
     request_token_params={'scope': 'email,statuses_to_me_read'},
     base_url='https://api.weibo.com/2/',
     authorize_url='https://api.weibo.com/oauth2/authorize',
