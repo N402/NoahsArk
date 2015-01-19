@@ -1,5 +1,5 @@
 {% extends 'dashboard/base.html' %}
-{% block main %}
+{% block content %}
 <form action="{{ url_for('dashboard.account', uid=account.id) }}" method="POST">
   {{ form.csrf_token }}
   <section>

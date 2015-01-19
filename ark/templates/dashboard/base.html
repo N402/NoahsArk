@@ -1,25 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
     <title>iChaser - dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='components/normalize.css/normalize.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard/base.css') }}" type="text/css" />
   </head>
   <body>
-    <div id="container">
-      {% block body %}
-      <div class="navbar">
-        <ul>
-          <li><a href="{{ url_for('dashboard.index') }}">index</a></li>
-          <li><a href="{{ url_for('dashboard.accounts') }}">accounts</a></li>
-          <li><a href="{{ url_for('dashboard.goals') }}">goals</a></li>
-        </ul>
+
+    <div class="container">
+      <div class="header">
+        <h1>iChaser Dashboard</h1>
+        <div class="pull-right nav">
+          <span class="current-user">{{ current_user.username }}</span>
+          <a href="{{ url_for('master.index') }}">Sign Out</a>
+        </div>
       </div>
+
       <div class="main">
         {% block main %}
+        <div class="pull-left menu">
+          <ul class="nav">
+            <li><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('dashboard.accounts') }}">Accounts</a></li>
+            <li><a href="{{ url_for('dashboard.goals') }}">Goals</a></li>
+            <li><a href="{{ url_for('dashboard.goals') }}">Activities</a></li>
+          </ul>
+        </div>
+        <div class="content">
+          <h2 class="title">
+            {% block title %}{% endblock %}
+          </h2>
+          {% block content %}{% endblock %}
+        </div>
         {% endblock %}
       </div>
-      {% endblock %}
+
+      <div class="footer">
+        iChasers &copy; 2015
+      </div>
     </div>
+
   </body>
 </html>
