@@ -23,16 +23,16 @@ def accounts():
 
 
 @dashboard_app.route('/dashboard/accounts/<uid>',
-                     methods=['GET', 'PATCH', 'DELETE'])
+                     methods=['GET', 'PUT', 'DELETE'])
 def account(uid):
     account = Account.query.get_or_404(uid)
     form = EditAccountForm(obj=account)
-    if request.method == 'PATCH':
+    if request.method == 'PUT':
         if form.validate_on_submit():
             if form.data.get('username'):
                 account.username = form.data.get('username')
             if form.data.get('gender'):
-                account.change_gender(gender)
+                account.change_gender(form.data.get('gender'))
             if form.data.get('password'):
                 account.change_password(form.data.get('password'))
             db.session.add(account)

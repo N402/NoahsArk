@@ -16,6 +16,19 @@ a
   color #333
   text-decoration none
 
+.hide
+  display none
+
+.pull-left
+  float left
+
+.pull-right
+  float right
+
+.center
+  margin 0 auto
+  text-align center
+
 .container
   margin 0 auto
   width 1280px
@@ -49,12 +62,6 @@ a
   height 30px
   line-height 30px
   text-indent 1em
-
-.pull-left
-  float left
-
-.pull-right
-  float right
 
 .main
   overflow hidden
@@ -91,3 +98,76 @@ a
       margin-bottom 20px
       border-bottom 1px solid #ddd
       padding-bottom 20px
+
+.btn-group
+  padding-left 60px
+  padding-top 20px
+
+  .btn
+    font-size 16px
+    display inline-block
+    width 160px
+    height 40px
+    text-align center
+    color #fff
+    line-height 40px
+    border none
+    background #999
+    border-radius 4px
+    box-shadow  0 3px 0 #777
+
+  .btn-success
+    background #38c2a8
+    box-shadow  0 3px 0 #31a592
+
+.table-container
+  width 100%
+
+  table
+    width 100%
+
+    thead
+      background #e5e5e5
+      th
+        height 30px
+        line-height 30px
+
+    tbody
+      tr
+        border-bottom 1px solid #ddd
+      td
+        text-align center
+        height 30px
+        line-height 30px
+
+.form-container
+  width 500px
+
+  section
+    margin 20px
+    label
+      width 100px
+      display inline-block
+      text-align right
+      padding-right 20px
+    input
+      border 0px
+      border-bottom 1px solid #aaa
+      padding 5px 10px
+      width 300px
+    input[disabled="disabled"]
+      border-bottom 1px dashed #aaa
+      cursor crosshair
+      color #ccc
+
+.info-bar
+  padding 10px 20px
+  background #eee
+
+.info-bar.success
+  background #49b5b5
+  color #fff
+
+.info-bar.danger
+  background #b54949
+  color #fff

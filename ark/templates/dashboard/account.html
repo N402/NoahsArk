@@ -1,23 +1,40 @@
 {% extends 'dashboard/base.html' %}
-{% block content %}
-<form action="{{ url_for('dashboard.account', uid=account.id) }}" method="POST">
-  {{ form.csrf_token }}
-  <section>
-    {{ form.username.label }}
-    {{ form.username() }}
-  </section>
-  <section>
-    <label>email</label>
-    <input type="text" disabled="disabled" value="{{ account.email }}" readonly="readonly" />
-  </section>
-  <section>
-    {{ form.password.label }}
-    {{ form.password() }}
-  </section>
-  <section>
-    {{ form.gender.label }}
-    {{ form.gender() }}
-  </section>
-  <button>Submit</button>
-</form>
+
+{% block title %}Account{% endblock %}
+
+{% block styles %}
 {% endblock %}
+
+{% block content %}
+<div id="info-container" class="info-bar" style="display: none"></div>
+<div class="form-container">
+  <form action="{{ url_for('dashboard.account', uid=account.id) }}" id="accountEditForm">
+    {{ form.csrf_token }}
+    <section>
+      {{ form.username.label }}
+      {{ form.username() }}
+    </section>
+    <section class="disabled">
+      <label>email</label>
+      <input type="text" disabled="disabled" value="{{ account.email }}" readonly="readonly" />
+    </section>
+    <section>
+      {{ form.password.label }}
+      {{ form.password() }}
+    </section>
+    <section>
+      {{ form.gender.label }}
+      {{ form.gender() }}
+    </section>
+    <section class="btn-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <a href="{{ url_for('dashboard.accounts') }}" class="btn">Cancel</a>
+    </section>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='scripts/master/account.js') }}"></script>
+{% endblock %}
+
