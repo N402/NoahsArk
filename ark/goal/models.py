@@ -25,6 +25,13 @@ class Goal(db.Model):
     state = db.Column(db.Enum(*(GOAL_STATES.keys())), default='ready')
 
     image = db.relationship('GoalFile', uselist=False)
+    author = db.relationship('Account', uselist=False, backref='goal')
+    activities = db.relationship(
+        'GoalActivity',
+        uselist=True,
+        backref='goal',
+        lazy='dynamic'
+    )
 
 
 class GoalActivity(db.Model):

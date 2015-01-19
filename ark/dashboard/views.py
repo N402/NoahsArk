@@ -3,6 +3,7 @@ from flask import Flask, Blueprint, render_template, request, jsonify
 from ark.exts import db
 from ark.exts.login import su_required
 from ark.account.models import Account
+from ark.goal.models import Goal
 from ark.dashboard.forms import EditAccountForm
 
 
@@ -52,4 +53,12 @@ def account(uid):
 @dashboard_app.route('/dashboard/goals')
 @su_required
 def goals():
-    return render_template('dashboard/goals.html')
+    goals = Goal.query.all()
+    return render_template('dashboard/goals.html', goals=goals)
+
+
+@dashboard_app.route('/dashboard/goal/<gid>')
+@su_required
+def goal(gid):
+    goal = Goal.qurey.get_or_404(gid)
+    return goal

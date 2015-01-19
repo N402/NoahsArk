@@ -1,0 +1,30 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Goals{% endblock %}
+
+{% block content %}
+<div class="table-container">
+  <table class="goals">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{{ _('Title') }}</th>
+        <th>{{ _('Author') }}</th>
+        <th>{{ _('Added At') }}</th>
+        <th>{{ _('Operations') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for goal in goals %}
+      <tr>
+        <td>{{ goal.id }}</td>
+        <td>{{ goal.title }}</td>
+        <td>{{ goal.author.username }}</td>
+        <td>{{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
+        <td>Delete</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
