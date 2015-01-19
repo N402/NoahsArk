@@ -36,6 +36,8 @@ def account(uid):
                 account.change_gender(form.data.get('gender'))
             if form.data.get('password'):
                 account.change_password(form.data.get('password'))
+            if form.data.get('is_superuser'):
+                account.is_superuser = (form.data.get('is_superuser') == 'True')
             db.session.add(account)
             db.session.commit()
             return jsonify(success=True)

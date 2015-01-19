@@ -6,11 +6,15 @@ from flask.ext.babel import lazy_gettext as _
 
 class EditAccountForm(Form):
 
-    username = StringField(_(u'username'),
+    username = StringField(_(u'Username'),
                            validators=[InputRequired(),
                                        Length(min=6, max=30)])
-    gender = SelectField(_(u'gender'),
+    gender = SelectField(_(u'Gender'),
                           choices=[
-                              ('male', _('male')),
-                              ('female', _('female')),])
-    password = PasswordField(_('password'),)
+                              ('male', _('Male')),
+                              ('female', _('Female')),])
+    password = PasswordField(_('Password'),)
+    is_superuser = SelectField(_('Superuser'),
+                               choices=[
+                                   ('True', _('Yes')),
+                                   ('False', _('No'))])
