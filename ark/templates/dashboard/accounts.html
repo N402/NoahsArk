@@ -8,12 +8,12 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Email</th>
-        <th>Username</th>
-        <th>Gender</th>
-        <th>SignUp</th>
-        <th>Last Signin</th>
-        <th>OP</th>
+        <th>{{ _('Email') }}</th>
+        <th>{{ _('Username') }}</th>
+        <th>{{ _('Gender') }}</th>
+        <th>{{ _('SignUp') }}</th>
+        <th>{{ _('Last Signin') }}</th>
+        <th>{{ _('Operations') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +25,10 @@
         <td>{{ account.is_male | gender }}</td>
         <td>{{ account.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
         <td>{{ account.last_signin | format_datetime('Y-M-d HH:mm:SS') }}</td>
-        <td><a href="{{ url_for('dashboard.account', uid=account.id) }}">Edit</a> Delete</td>
+        <td>
+          <a href="{{ url_for('dashboard.account', uid=account.id) }}">{{ _('Edit') }}</a>
+          <a href="#">{{ _('Delete') }}</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

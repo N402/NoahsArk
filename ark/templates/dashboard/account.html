@@ -1,6 +1,6 @@
 {% extends 'dashboard/base.html' %}
 
-{% block title %}Account{% endblock %}
+{% block title %}{{ _('Account') }}{% endblock %}
 
 {% block styles %}
 {% endblock %}
@@ -15,7 +15,7 @@
       {{ form.username() }}
     </section>
     <section class="disabled">
-      <label>email</label>
+      <label>{{ _('Email') }}</label>
       <input type="text" disabled="disabled" value="{{ account.email }}" readonly="readonly" />
     </section>
     <section>
@@ -27,7 +27,7 @@
       {{ form.gender() }}
     </section>
     <section class="btn-group">
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-success">{{ _('Submit') }}</button>
       <a href="{{ url_for('dashboard.accounts') }}" class="btn">Cancel</a>
     </section>
   </form>

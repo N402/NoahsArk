@@ -24,10 +24,10 @@
         {% block main %}
         <div class="pull-left menu">
           <ul class="nav">
-            <li><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('dashboard.accounts') }}">Accounts</a></li>
-            <li><a href="{{ url_for('dashboard.goals') }}">Goals</a></li>
-            <li><a href="{{ url_for('dashboard.goals') }}">Activities</a></li>
+            <li><a href="{{ url_for('dashboard.index') }}">{{ _('Dashboard') }}</a></li>
+            <li><a href="{{ url_for('dashboard.accounts') }}">{{ _('Accounts') }}</a></li>
+            <li><a href="{{ url_for('dashboard.goals') }}">{{ _('Goals') }}</a></li>
+            <li><a href="{{ url_for('dashboard.goals') }}">{{ _('Activities') }}</a></li>
           </ul>
         </div>
         <div class="content">
