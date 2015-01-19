@@ -4,6 +4,8 @@ from datetime import datetime
 
 
 def format_datetime(date, fmt=None):
+    if not date:
+        return ''
     if fmt:
         return date.strftime(fmt)
     else:

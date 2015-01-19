@@ -86,6 +86,8 @@ def init_jinja(app):
 
 def init_config(app):
     configs = {
+        'BABEL_DEFAULT_LOCALE': 'zh',
+        'BABEL_DEFAULT_TIMEZONE': 'Asia/Shanghai',
         'SQLALCHEMY_DATABASE_URI': 'sqlite:////tmp/ark.sqlite',
         'SECRET_KEY': None,
         'COLLECT_STATIC_ROOT': None,
