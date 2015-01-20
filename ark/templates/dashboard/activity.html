@@ -8,41 +8,34 @@
 {% block content %}
 <div id="info-container" class="info-bar" style="display: none"></div>
 <div class="form-container">
-  <form action="{{ url_for('dashboard.goal', gid=goal.id) }}" id="goalEditForm">
+  <form action="{{ url_for('dashboard.activity', aid=activity.id) }}" id="activityEditForm">
     {{ form.csrf_token }}
     <section>
-      <label>{{ _('Title') }}</label>
-      <span class="field-content">{{ goal.title }}</span>
+      <label>{{ _('Goal') }}</label>
+      <span class="field-content">{{ activity.goal.title }}</span>
     </section>
     <section>
       <label>{{ _('Author') }}</label>
       <span class="field-content">
-        {{ goal.author.username }}
-        <a href="{{ url_for('dashboard.account', uid=goal.author.id) }}" target="_blank">[{{ _('Edit') }}]</a>
-      </span>
-    </section>
-    <section>
-      <label>{{ _('State') }}</label>
-      <span class="field-content">
-        {{ goal.state | goal_state }}
+        {{ activity.goal.author.username }}
       </span>
     </section>
     <section>
       <label>{{ _('Created At') }}</label>
       <span class="field-content">
-        {{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}
+        {{ activity.created | format_datetime('Y-M-d HH:mm:SS') }}
       </span>
     </section>
     <section>
-      <label>{{ _('Description') }}</label>
+      <label>{{ _('Activity') }}</label>
       <span>
-        <textarea disabled="disabled">{{ goal.description }}</textarea>
+        <textarea disabled="disabled">{{ activity.activity }}</textarea>
       </span>
     </section>
     <section>
       <label>{{ _('Image') }}</label>
       <span class="image-content">
-        <img src="{{ goal.image.file_url }}" width="500" />
+        <img src="{{ activity.image.file_url }}" width="500" />
       </span>
     </section>
     <section>
@@ -51,7 +44,7 @@
     </section>
     <section class="btn-group">
       <button type="submit" class="btn btn-lg btn-success">{{ _('Submit') }}</button>
-      <a href="{{ url_for('dashboard.goals') }}" class="btn btn-lg">Cancel</a>
+      <a href="{{ url_for('dashboard.activities') }}" class="btn btn-lg">Cancel</a>
     </section>
   </form>
 </div>

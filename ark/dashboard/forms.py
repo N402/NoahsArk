@@ -26,7 +26,12 @@ class AccountEditForm(Form):
 
 
 class GoalEditForm(Form):
+    is_deleted = SelectField(_('Is Deleted'),
+                             choices=(('True', _('Yes')),
+                                      ('False', _('No'))))
 
+
+class GoalActivityEditForm(Form):
     is_deleted = SelectField(_('Is Deleted'),
                              choices=(('True', _('Yes')),
                                       ('False', _('No'))))

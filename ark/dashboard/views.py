@@ -4,7 +4,8 @@ from ark.exts import db
 from ark.exts.login import su_required
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
-from ark.dashboard.forms import AccountEditForm, GoalEditForm
+from ark.dashboard.forms import (
+    AccountEditForm, GoalEditForm, GoalActivityEditForm)
 
 
 dashboard_app = Blueprint('dashboard', __name__)
@@ -88,7 +89,21 @@ def activities():
     return render_template('dashboard/activities.html', pagination=pagination)
 
 
-@dashboard_app.route('/dashboard/activity/<aid>')
+@dashboard_app.route('/dashboard/activity/<aid>', methods=('GET', 'PUT'))
 @su_required
 def activity(aid):
-    return 'tet'
+    activity = GoalActivity.query.get_or_404(aid)
+    form = GoalActivityEditForm(obj=activity)
+    if request.method == 'PUT':
+        if form.validate_on_submit():
+            is_deleted = (form.data.get('is_deleted') == 'True')
+            activity.is_deleted = is_deleted
+            db.session.add(activity)
+            db.session.commit()
+            return jsonify(success=True)
+
+        if form.errors:
+            return jsonify(success=False, messages=form.errors)
+            
+    return render_template('dashboard/activity.html',
+                            activity=activity, form=form)
