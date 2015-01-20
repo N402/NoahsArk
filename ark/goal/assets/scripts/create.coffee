@@ -20,6 +20,7 @@ uploader = Qiniu.uploader
       'UploadProgress': (up, file) ->
       'FileUploaded': (up, file, info) ->
         infoObj = JSON.parse info
+        document.getElementById('image_name').value = infoObj.name
         document.getElementById('image_url').value = infoObj.key
       'Error': (up, err, errTip) ->
       'UploadComplete': () ->
