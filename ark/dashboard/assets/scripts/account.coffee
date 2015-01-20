@@ -10,6 +10,7 @@ $('#accountEditForm').ajaxForm
       $('#info-container').html 'Success'
       $('#info-container').addClass 'success'
       $('#info-container').show()
+      window.scrollTo 0, 0
     else
       for field, msg of resp.messages
         $("##{field}").tooltipster 'update', msg?.join ','
