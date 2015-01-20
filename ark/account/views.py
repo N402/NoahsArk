@@ -36,7 +36,8 @@ def signin():
             return jsonify_lazy(
                 success=False,
                 messages={
-                    'email': [unicode(gettext(u'email or password is wrong'))]})
+                    'signin_email': [
+                        unicode(gettext(u'email or password is wrong'))]})
 
     if form.errors:
         return jsonify_lazy(success=False,

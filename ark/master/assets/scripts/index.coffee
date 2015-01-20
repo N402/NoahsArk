@@ -142,8 +142,11 @@ $ ->
         minlength: '密码不能少于 6 位字符'
         maxlength: '密码不能多于 30 位字符'
     errorPlacement: (error, element) ->
-      $(element).tooltipster 'update', $(error).text()
-      $(element).tooltipster 'show'
+      if $(error).text()
+        $(element).tooltipster 'update', $(error).text()
+        $(element).tooltipster 'show'
+      else
+        $(element).tooltipster 'hide'
     success: (label, element) ->
       $(element).tooltipster 'hide'
     submitHandler: (form) ->
