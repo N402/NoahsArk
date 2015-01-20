@@ -19,16 +19,17 @@ class CreateGoalForm(Form):
             Length(min=5, max=200),
         ]
     )
-    image_url = StringField(_('Image URL'), validators=[InputRequired()])
     image_name = StringField(_('Image Name'))
+    image_url = StringField(_('Image URL'), validators=[InputRequired()])
 
 
 class GoalActivityForm(Form):
-    activity = StringField(
+    activity = TextAreaField(
         label=_('Activity'),
         validators=[
             InputRequired(),
             Length(min=5, max=200),
         ]
     )
+    image_name = StringField(_('Image Name'))
     image_url = StringField(label=_('image'))

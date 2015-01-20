@@ -126,16 +126,23 @@ def like(id):
         return jsonify(success=True)
 
 
-@goal_app.route('/goals/<id>/update', methods=['GET', 'PATCH'])
-def update(id):
-    goal = Goal.query.get_or_404(id)
+@goal_app.route('/goals/<gid>/activity', methods=['GET', 'POST'])
+def activity(gid):
+    goal = Goal.query.get_or_404(gid)
 
     form = GoalActivityForm(request.form)
 
     if form.validate_on_submit():
-        activtiy = GoalActivity(
-            activtiy=form.data['activtiy'], image_url=image)
-        db.session.add(activtiy)
+        url = get_url(form.data['image_url'])
+        image = GoalFile(
+            account_id=current_user.id,
+            name=form.data['image_name'],
+            file_url=url,
+        )
+        activity = GoalActivity(activity=form.data['activity'])
+        activity.image = image
+        activity.goal = goal
+        db.session.add(activity)
         db.session.commit()
         add_update_activity_score(current_user)
         return jsonify(success=True)
@@ -143,4 +150,4 @@ def update(id):
     if form.errors:
         return jsonify(success=False, messages=form.errors)
 
-    return render_template('goal/update.html')
+    return render_template('goal/activity.html', form=form, goal=goal)

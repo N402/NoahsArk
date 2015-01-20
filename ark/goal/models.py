@@ -32,7 +32,6 @@ class Goal(db.Model):
     activities = db.relationship(
         'GoalActivity',
         uselist=True,
-        backref='goal',
         lazy='dynamic'
     )
 
@@ -44,11 +43,12 @@ class GoalActivity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
     image_file_id = db.Column(db.Integer, db.ForeignKey('goal_file.id'))
-    content = db.Column(db.String(300))
+    activity = db.Column(db.String(300))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean, default=False)
 
     image = db.relationship('GoalFile', uselist=False)
+    goal = db.relationship('Goal', uselist=False)
 
 
 class GoalLikeLog(db.Model):
