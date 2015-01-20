@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('Activity Manage') }}{% endblock %}
+
+{% block content %}
+<div class="table-container">
+  <table class="goals">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{{ _('Goal') }}</th>
+        <th>{{ _('Author') }}</th>
+        <th>{{ _('Description') }}</th>
+        <th>{{ _('Created At') }}</th>
+        <th>{{ _('Operations') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for activity in pagination.items %}
+      <tr>
+        <td>{{ activity.id }}</td>
+        <td>{{ activity.goal.title }}</td>
+        <td>{{ activity.goal.author.username }}</td>
+        <td>{{ activity.activity }}</td>
+        <td>{{ activity.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
+        <td><a href="{{ url_for('dashboard.activity', aid=activity.id) }}" class="btn btn-info">Detail</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {{ paginator.render(pagination, 'dashboard.activity') | safe }}
+</div>
+{% endblock %}

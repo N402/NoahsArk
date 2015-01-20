@@ -1,0 +1,62 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('Activity Manage') }}{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<div id="info-container" class="info-bar" style="display: none"></div>
+<div class="form-container">
+  <form action="{{ url_for('dashboard.goal', gid=goal.id) }}" id="goalEditForm">
+    {{ form.csrf_token }}
+    <section>
+      <label>{{ _('Title') }}</label>
+      <span class="field-content">{{ goal.title }}</span>
+    </section>
+    <section>
+      <label>{{ _('Author') }}</label>
+      <span class="field-content">
+        {{ goal.author.username }}
+        <a href="{{ url_for('dashboard.account', uid=goal.author.id) }}" target="_blank">[{{ _('Edit') }}]</a>
+      </span>
+    </section>
+    <section>
+      <label>{{ _('State') }}</label>
+      <span class="field-content">
+        {{ goal.state | goal_state }}
+      </span>
+    </section>
+    <section>
+      <label>{{ _('Created At') }}</label>
+      <span class="field-content">
+        {{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}
+      </span>
+    </section>
+    <section>
+      <label>{{ _('Description') }}</label>
+      <span>
+        <textarea disabled="disabled">{{ goal.description }}</textarea>
+      </span>
+    </section>
+    <section>
+      <label>{{ _('Image') }}</label>
+      <span class="image-content">
+        <img src="{{ goal.image.file_url }}" width="500" />
+      </span>
+    </section>
+    <section>
+      {{ form.is_deleted.label }}
+      {{ form.is_deleted() }}
+    </section>
+    <section class="btn-group">
+      <button type="submit" class="btn btn-lg btn-success">{{ _('Submit') }}</button>
+      <a href="{{ url_for('dashboard.goals') }}" class="btn btn-lg">Cancel</a>
+    </section>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='scripts/dashboard/activity.js') }}"></script>
+{% endblock %}

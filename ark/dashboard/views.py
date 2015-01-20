@@ -3,7 +3,7 @@ from flask import Flask, Blueprint, render_template, request, jsonify
 from ark.exts import db
 from ark.exts.login import su_required
 from ark.account.models import Account
-from ark.goal.models import Goal
+from ark.goal.models import Goal, GoalActivity
 from ark.dashboard.forms import AccountEditForm, GoalEditForm
 
 
@@ -78,3 +78,17 @@ def goal(gid):
             return jsonify(success=False, messages=form.errors)
             
     return render_template('dashboard/goal.html', goal=goal, form=form)
+
+
+@dashboard_app.route('/dashboard/activities')
+@su_required
+def activities():
+    page = int(request.args.get('page', 1))
+    pagination = GoalActivity.query.paginate(page)
+    return render_template('dashboard/activities.html', pagination=pagination)
+
+
+@dashboard_app.route('/dashboard/activity/<aid>')
+@su_required
+def activity(aid):
+    return 'tet'
