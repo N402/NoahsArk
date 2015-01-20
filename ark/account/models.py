@@ -7,7 +7,7 @@ from ark.exts import db
 from ark.exts.bcrypt import hash_password, check_password
 from ark.utils.avatar import random_avatar
 from ark.goal.models import Goal
-from ark.notification.models import Notification
+from ark.notification.models import Notification, ReadMark
 
 
 class UserQuery(BaseQuery):
@@ -43,6 +43,9 @@ class Account(db.Model):
     is_superuser = db.Column(db.Boolean, default=False)
     state = db.Column(db.Enum(*(USER_STATES.keys())), default='normal')
 
+    read_ts = db.relationship(
+        'ReadMark', uselist=False,
+        backref=db.backref('account', uselist=False))
     goals = db.relationship(
         'Goal',
         uselist=True,
@@ -128,6 +131,10 @@ class Account(db.Model):
 
     def get_score(self):
         return sum([each.score for each in self.score_logs])
+
+    def unread_notifications(self):
+        return (self.notifications
+                .filter(Notification.created > self.read_ts.read_ts).all())
 
     @property
     def last_signin(self):
