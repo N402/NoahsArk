@@ -9,8 +9,8 @@ from ark.account.views import account_app
 from ark.goal.views import goal_app
 from ark.oauth.views import oauth_app
 from ark.dashboard.views import dashboard_app
-from ark.exts import (setup_database, setup_bcrypt, setup_babel,
-                      setup_login_manager, setup_collect, setup_oauth)
+from ark.exts import (setup_babel, setup_bcrypt, setup_cache, setup_collect,
+                      setup_database, setup_login_manager, setup_oauth)
 
 
 def create_app(name=None, config=None):
@@ -31,11 +31,12 @@ def create_app(name=None, config=None):
     init_error_pages(app)
     init_jinja(app)
 
-    setup_database(app)
-    setup_bcrypt(app)
     setup_babel(app)
-    setup_login_manager(app)
+    setup_bcrypt(app)
+    setup_cache(app)
     setup_collect(app)
+    setup_database(app)
+    setup_login_manager(app)
     setup_oauth(app)
 
     app.register_blueprint(master_app)
@@ -93,6 +94,17 @@ def init_config(app):
         'COLLECT_STATIC_ROOT': None,
         'COLLECT_STORAGE': 'flask.ext.collect.storage.file',
         'SENTRY_DSN': '',
+        'CACHE_TYPE': '',
+        'CACHE_DEFAULT_TIMEOUT': '',
+        'CACHE_THRESHOLD': '',
+        'CACHE_KEY_PREFIX': 'ark_cache_',
+        'CACHE_MEMCACHED_SERVERS': '',
+        'CACHE_MEMCACHED_USERNAME': '',
+        'CACHE_MEMCACHED_PASSWORD': '',
+        'CACHE_REDIS_HOST': '',
+        'CACHE_REDIS_PORT': '',
+        'CACHE_REDIS_PASSWORD': '',
+        'CACHE_REDIS_DB': '',
     }
     load_config(app, configs)
 
@@ -102,7 +114,8 @@ def load_config(app, configs):
         env = os.environ.get(name, default)
         if env is None:
             raise ConfigError('%s cannot be None' % name)
-        app.config[name] = env
+        if not env == '':
+            app.config[name] = env
 
 
 class ConfigError(Exception):
