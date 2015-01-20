@@ -1,3 +1,4 @@
+{%- import 'dashboard/inc/paginator.jinja' as paginator %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,9 +32,7 @@
           </ul>
         </div>
         <div class="content">
-          <h2 class="title">
-            {%- block title %}{%- endblock %}
-          </h2>
+          <h2 class="title">{%- block title %}{%- endblock %}</h2>
           {%- block content %}{%- endblock %}
         </div>
         {% endblock %}

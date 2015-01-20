@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for account in accounts %}
+      {% for account in pagination.items %}
       <tr>
         <td>{{ account.id }}</td>
         <td>{{ account.email }}</td>
@@ -26,12 +26,12 @@
         <td>{{ account.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
         <td>{{ account.last_signin | format_datetime('Y-M-d HH:mm:SS') }}</td>
         <td>
-          <a href="{{ url_for('dashboard.account', uid=account.id) }}">{{ _('Edit') }}</a>
-          <a href="#">{{ _('Delete') }}</a>
+          <a href="{{ url_for('dashboard.account', uid=account.id) }}" class="btn btn-info">{{ _('Edit') }}</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  {{ paginator.render(pagination, 'dashboard.accounts') | safe }}
 </div>
 {% endblock %}

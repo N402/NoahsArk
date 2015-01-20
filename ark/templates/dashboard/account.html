@@ -26,9 +26,21 @@
       {{ form.gender.label }}
       {{ form.gender() }}
     </section>
+    <section>
+      {{ form.state.label }}
+      {{ form.state() }}
+    </section>
+    <section>
+      {{ form.is_superuser.label }}
+    {%- if current_user == account %}
+      {{ form.is_superuser(disabled="disabled") }} (Cannot edit yourself)
+    {%- else %}
+      {{ form.is_superuser() }}
+    {%- endif %}
+    </section>
     <section class="btn-group">
-      <button type="submit" class="btn btn-success">{{ _('Submit') }}</button>
-      <a href="{{ url_for('dashboard.accounts') }}" class="btn">Cancel</a>
+      <button type="submit" class="btn btn-lg btn-success">{{ _('Submit') }}</button>
+      <a href="{{ url_for('dashboard.accounts') }}" class="btn btn-lg">Cancel</a>
     </section>
   </form>
 </div>

@@ -15,16 +15,17 @@
       </tr>
     </thead>
     <tbody>
-      {% for goal in goals %}
+      {% for goal in pagination.items %}
       <tr>
         <td>{{ goal.id }}</td>
         <td>{{ goal.title }}</td>
         <td>{{ goal.author.username }}</td>
         <td>{{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
-        <td>Delete</td>
+        <td><a href="#" class="btn btn-danger">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  {{ paginator.render(pagination, 'dashboard.goals') | safe }}
 </div>
 {% endblock %}
