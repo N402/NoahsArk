@@ -10,12 +10,8 @@
       {{ form.username }}
       {{ form.email.label }}
       {{ form.email() }}
-      {{ form.gender.label }}
-      {{ form.gender() }}
       {{ form.password.label }}
       {{ form.password() }}
-      {{ form.confirm_password.label }}
-      {{ form.confirm_password() }}
       <button>{{ _('Sign Up') }}</button>
       {{ _('Have account?') }}, <a href="{{url_for('account.signup')}}">{{ _('Sign In') }}</a>
     </form>
