@@ -23,6 +23,7 @@ class Goal(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow)
     operate_at = db.Column(db.DateTime)
     state = db.Column(db.Enum(*(GOAL_STATES.keys())), default='ready')
+    is_deleted = db.Column(db.Boolean, default=False)
 
     image = db.relationship('GoalFile', uselist=False)
     author = db.relationship('Account', uselist=False, backref='goal')
@@ -43,6 +44,7 @@ class GoalActivity(db.Model):
     image_file_id = db.Column(db.Integer, db.ForeignKey('goal_file.id'))
     content = db.Column(db.String(300))
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    is_deleted = db.Column(db.Boolean, default=False)
 
     image = db.relationship('GoalFile', uselist=False)
 
@@ -67,3 +69,4 @@ class GoalFile(db.Model):
     file_url = db.Column(db.String(500))
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    is_deleted = db.Column(db.Boolean, default=False)
