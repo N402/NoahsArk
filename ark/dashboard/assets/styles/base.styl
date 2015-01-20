@@ -19,6 +19,9 @@ a
 .hide
   display none
 
+.align-right
+  text-align right
+
 .pull-left
   float left
 
@@ -163,9 +166,13 @@ a
       tr
         border-bottom 1px solid #ddd
       td
-        text-align center
         height 30px
         line-height 30px
+        max-width 250px
+        text-align center
+        vertical-align top
+        word-wrap break-word
+        word-break break-all
 
 .form-container
   section
@@ -204,6 +211,9 @@ a
       border 1px dashed #ccc
       img
         border-radius 4px
+    select[multiple=""]
+      padding 4px
+      width 400px
 
 .info-bar
   padding 10px 20px
@@ -216,3 +226,6 @@ a
 .info-bar.danger
   background #b54949
   color #fff
+
+.topbar
+  margin 20px
