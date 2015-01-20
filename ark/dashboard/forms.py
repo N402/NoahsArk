@@ -14,6 +14,11 @@ class EditAccountForm(Form):
                               ('male', _('Male')),
                               ('female', _('Female')),])
     password = PasswordField(_('Password'),)
+    state = SelectField(_('State'),
+                        choices=(('normal', _('Normal')),
+                                 ('frozen', _('Frozen')),
+                                 ('deleted', _('Deleted')),
+                                 ('inactive', _('Inactive')),))
     is_superuser = SelectField(_('Superuser'),
                                choices=[
                                    ('True', _('Yes')),
