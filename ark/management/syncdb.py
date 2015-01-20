@@ -9,6 +9,7 @@ class Syncdb(Command):
         with app.test_request_context():
             from ark.account.models import *
             from ark.goal.models import *
+            from ark.notification.models import *
             print 'Creating Database'
             db.create_all()
             print 'Done'

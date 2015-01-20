@@ -7,6 +7,7 @@ from ark.exts import db
 from ark.exts.bcrypt import hash_password, check_password
 from ark.utils.avatar import random_avatar
 from ark.goal.models import Goal
+from ark.notification.models import Notification
 
 
 class UserQuery(BaseQuery):
@@ -59,6 +60,12 @@ class Account(db.Model):
         'AccountScoreLog',
         uselist=True,
         backref='user',
+        lazy='dynamic',
+    )
+    notifications = db.relationship(
+        'Notification',
+        uselist=True,
+        foreign_keys='Notification.account_id',
         lazy='dynamic',
     )
 
