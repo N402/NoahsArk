@@ -19,12 +19,14 @@ def index():
 @dashboard_app.route('/dashboard/accounts')
 @su_required
 def accounts():
-    accounts = Account.query.all()
-    return render_template('dashboard/accounts.html', accounts=accounts)
+    page = int(request.args.get('page', 1))
+    pagination = Account.query.paginate(page)
+    return render_template('dashboard/accounts.html', pagination=pagination)
 
 
 @dashboard_app.route('/dashboard/accounts/<uid>',
-                     methods=['GET', 'PUT', 'DELETE'])
+                     methods=['GET', 'PUT'])
+@su_required
 def account(uid):
     account = Account.query.get_or_404(uid)
     form = EditAccountForm(obj=account)
@@ -36,6 +38,8 @@ def account(uid):
                 account.change_gender(form.data.get('gender'))
             if form.data.get('password'):
                 account.change_password(form.data.get('password'))
+            if form.data.get('state'):
+                account.state = form.data.get('state')
             if form.data.get('is_superuser'):
                 account.is_superuser = (form.data.get('is_superuser') == 'True')
             db.session.add(account)
@@ -45,9 +49,6 @@ def account(uid):
         if form.errors:
             return jsonify(success=False, messages=form.errors)
 
-    elif request.method == 'DELETE':
-        account.delete()
-
     return render_template('dashboard/account.html',
                            account=account, form=form)
 
@@ -55,8 +56,9 @@ def account(uid):
 @dashboard_app.route('/dashboard/goals')
 @su_required
 def goals():
-    goals = Goal.query.all()
-    return render_template('dashboard/goals.html', goals=goals)
+    page = int(request.args.get('page', 1))
+    pagination = Goal.query.paginate(page)
+    return render_template('dashboard/goals.html', pagination=pagination)
 
 
 @dashboard_app.route('/dashboard/goal/<gid>')
