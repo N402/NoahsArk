@@ -7,6 +7,7 @@ from flask import current_app
 from flask.ext.login import current_user, login_required
 
 from ark.exts import db
+from ark.utils.qiniu import get_url
 from ark.account.services import (add_create_goal_score,
    add_update_activity_score)
 from ark.goal.models import Goal, GoalActivity, GoalFile
@@ -40,10 +41,11 @@ def create():
     form = CreateGoalForm()
 
     if form.validate_on_submit():
+        url = get_url(form.data['image_url'])
         image = GoalFile(
             account_id=current_user.id,
             name=form.data['image_name'],
-            file_url=form.data['image_url'],
+            file_url=url,
         )
         goal = Goal(
             account_id=current_user.id,
