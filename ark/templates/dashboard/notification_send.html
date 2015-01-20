@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('Notification Manage') }}{% endblock %}
+
+{% block content %}
+<div id="info-container" class="info-bar" style="display: none"></div>
+<div class="form-container">
+  <form action="{{ url_for('dashboard.notification_send') }}" id="notificationSendForm">
+    {{ form.csrf_token }}
+    <section>
+      {{ form.receivers.label }}
+      {{ form.receivers() }}
+    </section>
+    <section>
+      {{ form.content.label }}
+      {{ form.content() }}
+    </section>
+    <section class="btn-group">
+      <button type="submit" class="btn btn-lg btn-success">{{ _('Submit') }}</button>
+      <a href="{{ url_for('dashboard.notifications') }}" class="btn btn-lg">Cancel</a>
+    </section>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='scripts/dashboard/notification.js') }}"></script>
+{% endblock %}

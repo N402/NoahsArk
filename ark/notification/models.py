@@ -20,6 +20,7 @@ class Notification(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     content = db.Column(db.Text())
     created = db.Column(db.DateTime(), default=datetime.utcnow)
+    send_to_all = db.Column(db.Boolean, default=False)
     
     sender = db.relationship(
         'Account', foreign_keys='Notification.sender_id', uselist=False,)

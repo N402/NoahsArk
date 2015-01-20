@@ -1,7 +1,10 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, PasswordField, SelectField
+from wtforms import StringField, PasswordField, SelectField, TextAreaField
 from wtforms.validators import InputRequired, Length
+from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from flask.ext.babel import lazy_gettext as _
+
+from ark.account.models import Account
 
 
 class AccountEditForm(Form):
@@ -35,3 +38,12 @@ class GoalActivityEditForm(Form):
     is_deleted = SelectField(_('Is Deleted'),
                              choices=(('True', _('Yes')),
                                       ('False', _('No'))))
+
+
+class NotificationSendForm(Form):
+    content = TextAreaField(label=_('Content'), validators=[InputRequired()])
+    receivers = QuerySelectMultipleField(
+        label=_('Receivers'),
+        query_factory=lambda: Account.query.filter(Account.state!='deleted').all(),
+        get_label=lambda x: x.username,
+    )

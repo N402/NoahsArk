@@ -1,11 +1,13 @@
 from flask import Flask, Blueprint, render_template, request, jsonify
+from flask.ext.login import current_user
 
 from ark.exts import db
 from ark.exts.login import su_required
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
+from ark.notification.models import Notification
 from ark.dashboard.forms import (
-    AccountEditForm, GoalEditForm, GoalActivityEditForm)
+    AccountEditForm, GoalEditForm, GoalActivityEditForm, NotificationSendForm)
 
 
 dashboard_app = Blueprint('dashboard', __name__)
@@ -108,3 +110,38 @@ def activity(aid):
             
     return render_template('dashboard/activity.html',
                             activity=activity, form=form)
+
+
+@dashboard_app.route('/dashboard/notifications')
+@su_required
+def notifications():
+    page = int(request.args.get('page', 1))
+    pagination = Notification.query.paginate(page)
+    return render_template(
+        'dashboard/notifications.html', pagination=pagination)
+
+
+@dashboard_app.route('/dashboard/notification/send', methods=('GET', 'POST'))
+@su_required
+def notification_send():
+    form = NotificationSendForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            receivers = form.data['receivers']
+            send_to_all = False
+            if not receivers:
+                receivers = Account.query.filter(Account.state!='normal').all()
+                send_to_all = True
+            content = form.data['content']
+            notification = Notification(
+                content=content, receivers=receivers, sender=current_user)
+            notification.send_to_all = send_to_all
+            db.session.add(notification)
+            db.session.commit()
+            return jsonify(success=True)
+
+        if form.errors:
+            return jsonify(success=False, messages=form.errors)
+
+    return render_template(
+        'dashboard/notification_send.html', form=form)

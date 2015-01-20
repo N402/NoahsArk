@@ -1,0 +1,44 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('Notification Manage') }}{% endblock %}
+
+{% block content %}
+<div class="topbar align-right">
+  <a href="{{ url_for('dashboard.notification_send') }}" class="btn btn-info">{{ _('Send') }}</a>
+</div>
+
+<div class="table-container">
+  <table class="notifications">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{{ _('Sender') }}</th>
+        <th>{{ _('Receivers') }}</th>
+        <th>{{ _('Content') }}</th>
+        <th>{{ _('Send Time') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for notification in pagination.items %}
+      <tr>
+        <td>{{ notification.id }}</td>
+        <td>{{ notification.sender.username }}</td>
+        <td>
+          {%- if notification.send_to_all %}
+          {{ _('All Accounts') }}
+          {%- else %}
+          {%- for each in notification.receivers[:10] %}
+            {{ each.username }}
+          {%- endfor %}
+          {%- if (notification.receivers | length) > 10 %} ...{%- endif %}
+          {%- endif %}
+        </td>
+        <td>{{ notification.content | truncate(100, True) }}</td>
+        <td>{{ notification.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {{ paginator.render(pagination, 'dashboard.notifications') | safe }}
+</div>
+{% endblock %}
