@@ -62,12 +62,6 @@ class Account(db.Model):
         backref='user',
         lazy='dynamic',
     )
-    notifications = db.relationship(
-        'Notification',
-        uselist=True,
-        foreign_keys='Notification.account_id',
-        lazy='dynamic',
-    )
 
     def __init__(self, **kwargs):
         self.salt = uuid4().hex
