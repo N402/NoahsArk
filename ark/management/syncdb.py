@@ -10,6 +10,7 @@ class Syncdb(Command):
             from ark.account.models import *
             from ark.goal.models import *
             from ark.notification.models import *
+            from ark.ranking.models import *
             print 'Creating Database'
             db.create_all()
             print 'Done'
