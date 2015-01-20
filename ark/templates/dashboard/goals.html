@@ -1,6 +1,6 @@
 {% extends 'dashboard/base.html' %}
 
-{% block title %}Goals{% endblock %}
+{% block title %}{{ _('Goal Manage') }}{% endblock %}
 
 {% block content %}
 <div class="table-container">
@@ -21,7 +21,7 @@
         <td>{{ goal.title }}</td>
         <td>{{ goal.author.username }}</td>
         <td>{{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
-        <td><a href="#" class="btn btn-danger">Delete</a></td>
+        <td><a href="{{ url_for('dashboard.goal', gid=goal.id) }}" class="btn btn-info">Detail</a></td>
       </tr>
       {% endfor %}
     </tbody>

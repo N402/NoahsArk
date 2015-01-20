@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from flask.ext.babel import lazy_gettext as _
+
 from ark.exts import db
 
 
@@ -8,11 +10,11 @@ class Goal(db.Model):
     __tablename__ = 'goal'
 
     GOAL_STATES = {
-        'ready': 'ready',
-        'doing': 'Doing',
-        'canceled': 'Canceled',
-        'finished': 'Finished',
-        'expired': 'Expired',
+        'ready': _('Ready'),
+        'doing': _('Doing'),
+        'canceled': _('Canceled'),
+        'finished': _('Finished'),
+        'expired': _('Expired'),
     }
 
     id = db.Column(db.Integer, primary_key=True)

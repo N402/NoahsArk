@@ -9,6 +9,7 @@ from ark.account.views import account_app
 from ark.goal.views import goal_app
 from ark.oauth.views import oauth_app
 from ark.dashboard.views import dashboard_app
+from ark.goal.models import Goal
 from ark.exts import (setup_babel, setup_bcrypt, setup_cache, setup_collect,
                       setup_database, setup_login_manager, setup_oauth)
 
@@ -67,6 +68,7 @@ def init_jinja(app):
         'friendly_time': friendly_time,
         'date': format_datetime,
         'gender': gender,
+        'goal_state': (lambda state: Goal.GOAL_STATES[state]),
     }
     _jinja_global = {
         'site_title': 'iChaser',

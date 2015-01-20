@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, Length
 from flask.ext.babel import lazy_gettext as _
 
 
-class EditAccountForm(Form):
+class AccountEditForm(Form):
 
     username = StringField(_(u'Username'),
                            validators=[InputRequired(),
@@ -23,3 +23,10 @@ class EditAccountForm(Form):
                                choices=[
                                    ('True', _('Yes')),
                                    ('False', _('No'))])
+
+
+class GoalEditForm(Form):
+
+    is_deleted = SelectField(_('Is Deleted'),
+                             choices=(('True', _('Yes')),
+                                      ('False', _('No'))))

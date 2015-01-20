@@ -65,11 +65,10 @@ a
 
 .main
   overflow hidden
-  background #fff
+  background #38c2a8
   .menu
+    padding-top 20px
     width 150px
-    min-height 80vh
-    background #38c2a8
 
     ul.nav li
       a
@@ -90,8 +89,10 @@ a
         background #31a592
 
   .content
+    min-height 50vh
     margin-left 150px
     padding 30px
+    background #fff
 
     .title
       font-size 28px
@@ -167,24 +168,42 @@ a
         line-height 30px
 
 .form-container
-  width 500px
-
   section
     margin 20px
     label
       width 100px
+      vertical-align top
       display inline-block
       text-align right
       padding-right 20px
     input
+      display inline-block
       border 0px
       border-bottom 1px solid #aaa
       padding 5px 10px
       width 300px
-    input[disabled="disabled"]
+    input[disabled="disabled"],
       border-bottom 1px dashed #aaa
       cursor crosshair
       color #ccc
+    textarea
+      padding 10px
+      border 1px solid #ccc
+      width 500px
+      height 100px
+    textarea[disabled="disabled"]
+      border 1px dashed #ccc
+    span.field-content
+      width 500px
+      display inline-block
+      padding 0 10px 4px 10px
+      border-bottom 1px dashed #ccc
+    span.image-content
+      display inline-block
+      padding 10px
+      border 1px dashed #ccc
+      img
+        border-radius 4px
 
 .info-bar
   padding 10px 20px

@@ -4,6 +4,7 @@ import json
 import calendar
 from uuid import uuid4
 from hashlib import sha1, md5
+from urlparse import urljoin
 from base64 import urlsafe_b64encode
 from datetime import datetime, timedelta
 
@@ -58,3 +59,10 @@ def gen_upload_token(data):
     return "%s:%s:%s" % (os.environ['ARK_QINIU_ACCESS_KEY'],
                          encoded_sign,
                          encoded_policy)
+
+
+def get_url(key, base_url=None):
+    base_url = base_url or os.environ['ARK_QINIU_BASE_URL']
+    if not base_url.endswith('/'):
+        base_url = '%s/' % base_url
+    return urljoin(base_url, key)
