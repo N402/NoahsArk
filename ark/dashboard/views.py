@@ -21,7 +21,7 @@ def index():
 @su_required
 def accounts():
     page = int(request.args.get('page', 1))
-    pagination = Account.query.paginate(page)
+    pagination = Account.query.filter(Account.state!='deleted').paginate(page)
     return render_template('dashboard/accounts.html', pagination=pagination)
 
 
@@ -58,7 +58,7 @@ def account(uid):
 @su_required
 def goals():
     page = int(request.args.get('page', 1))
-    pagination = Goal.query.paginate(page)
+    pagination = Goal.query.filter(Goal.is_deleted==False).paginate(page)
     return render_template('dashboard/goals.html', pagination=pagination)
 
 
@@ -85,7 +85,8 @@ def goal(gid):
 @su_required
 def activities():
     page = int(request.args.get('page', 1))
-    pagination = GoalActivity.query.paginate(page)
+    pagination = (GoalActivity.query
+                  .filter(GoalActivity.is_deleted==False).paginate(page))
     return render_template('dashboard/activities.html', pagination=pagination)
 
 
