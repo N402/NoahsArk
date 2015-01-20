@@ -35,6 +35,14 @@ class Goal(db.Model):
         lazy='dynamic'
     )
 
+    @property
+    def last_activity(self):
+        last_activity = self.activities.limit(1).first()
+        if last_activity:
+            return last_activity.created
+        else:
+            return None
+
 
 class GoalActivity(db.Model):
 
