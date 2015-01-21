@@ -1,0 +1,35 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('Chasers Manage') }}{% endblock %}
+
+{% block content %}
+<div class="table-container">
+  <table class="chasers">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{{ _('Email') }}</th>
+        <th>{{ _('Username') }}</th>
+        <th>{{ _('Score') }}</th>
+        <th>{{ _('Ranking') }}</th>
+        <th>{{ _('Operations') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for chaser in pagination.items %}
+      <tr>
+        <td>{{ chaser.id }}</td>
+        <td>{{ chaser.email }}</td>
+        <td>{{ chaser.username }}</td>
+        <td>{{ chaser.get_total_score() }}</td>
+        <td>{{ loop.index }}</td>
+        <td>
+            <a href="javascript:void()" data-id="{{ chaser.id }}" class="btn btn-info">{{ _('Ban') }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {{ paginator.render(pagination, 'dashboard.chasers') | safe }}
+</div>
+{% endblock %}

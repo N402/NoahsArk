@@ -142,6 +142,7 @@ def activity(gid):
         activity = GoalActivity(activity=form.data['activity'])
         activity.image = image
         activity.goal = goal
+        activity.author = current_user
         db.session.add(activity)
         db.session.commit()
         add_update_activity_score(current_user)

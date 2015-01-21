@@ -1,13 +1,14 @@
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
+from sqlalchemy.ext.hybrid import hybrid_property
 
-from ark.exts import db
+from ark.exts import db, cache
 from ark.exts.bcrypt import hash_password, check_password
 from ark.utils.avatar import random_avatar
-from ark.goal.models import Goal
+from ark.goal.models import Goal, GoalActivity
 from ark.notification.models import Notification, ReadMark
 
 
@@ -32,6 +33,11 @@ class Account(db.Model):
         'inactive': 'Inactive',
     }
 
+    CREDIT_SCORES = 1
+    LIKE_SCORE = 100
+    GOAL_SCORE = 10
+    UPDATE_SCORE = -10
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), nullable=True, unique=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
@@ -50,7 +56,7 @@ class Account(db.Model):
     goals = db.relationship(
         'Goal',
         uselist=True,
-        backref='user',
+        backref=db.backref('author', uselist=False),
         lazy='dynamic'
     )
     activities = db.relationship(
@@ -130,12 +136,36 @@ class Account(db.Model):
     def get_id(self):
         return self.id
 
-    def get_score(self):
-        return sum([each.score for each in self.score_logs])
-
     def unread_notifications(self):
         return (self.notifications
                 .filter(Notification.created > self.read_ts.read_ts).all())
+
+    def get_like_count(self):
+        return sum([each.likes.count() for each in self.goals])
+
+    def get_last_update(self):
+        last_update = self.updates.limit(1).first()
+        return last_update
+
+    def get_last_update_ts(self):
+        last_update = self.updates.limit(1).first()
+        if last_update:
+            return last_update.created
+        return None
+
+    def get_last_update_diff_day(self):
+        last_update_ts = self.get_last_update_ts()
+        if last_update_ts:
+            delta = datetime.utcnow() - last_update_ts
+            return delta.days
+        return 0
+
+    @cache.memoize(3600)
+    def get_total_score(self):
+        return (self.credit * self.CREDIT_SCORES +
+                self.get_like_count() * self.LIKE_SCORE +
+                self.goals.count() * self.GOAL_SCORE +
+                self.get_last_update_diff_day() * self.UPDATE_SCORE)
 
     @property
     def last_signin(self):
@@ -144,6 +174,10 @@ class Account(db.Model):
             return last_signin.created
         else:
             return None
+
+    @property
+    def credit(self):
+        return sum([each.score for each in self.score_logs])
 
     @property
     def gender(self):

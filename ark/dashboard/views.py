@@ -145,3 +145,17 @@ def notification_send():
 
     return render_template(
         'dashboard/notification_send.html', form=form)
+
+
+@dashboard_app.route('/dashboard/chasers')
+@su_required
+def chasers():
+    page = int(request.args.get('page', 1))
+    pagination = Account.query.paginate(page)
+    return render_template('dashboard/chasers.html', pagination=pagination)
+
+
+@dashboard_app.route('/dashboard/chasers/ban')
+@su_required
+def chasers_ban():
+    return render_template('dashboard/chasers_ban.html')
