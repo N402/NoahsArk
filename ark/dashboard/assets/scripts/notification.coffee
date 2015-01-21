@@ -62,9 +62,10 @@ $('#receivers').change (event) ->
   $.each selected, (idx, each) ->
     return if each in selectedReceivers
     selectedReceivers.push each
-    $('#receivers-box').append
+    $('#receivers-box').append(
       $("<span class='receiver'>#{$("#receivers option[value='#{each}']").text()}</span>").append
         $("<span class='close-btn'>x</span>").click ->
           $("#receivers option[value='#{each}']").prop('selected', false)
           $(this).parent().remove()
           selectedReceivers.splice selectedReceivers.indexOf(each), 1
+    )
