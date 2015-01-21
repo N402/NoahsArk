@@ -21,6 +21,7 @@
     "jcrop": "~0.9.12",
     "jquery-form": "~3.46.0",
     "jquery-validation": "~1.13.1",
-    "tooltipster": "~3.3.0"
+    "tooltipster": "~3.3.0",
+    "devbridge-autocomplete": "~1.2.16"
   }
 }
