@@ -1,6 +1,7 @@
 from uuid import uuid4
 from datetime import datetime
 
+from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
 
 from ark.exts import db
@@ -147,9 +148,9 @@ class Account(db.Model):
     @property
     def gender(self):
         if self.is_male:
-            return u'male'
+            return _('Male')
         else:
-            return u'female'
+            return _('Female')
 
     @gender.setter
     def gender(self, gender):
