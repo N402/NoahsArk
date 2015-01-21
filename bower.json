@@ -21,6 +21,7 @@
     "jcrop": "~0.9.12",
     "jquery-form": "~3.46.0",
     "jquery-validation": "~1.13.1",
+    "qiniu-js-sdk": "https://github.com/qiniu/js-sdk.git#b1b624902e221157130fd9999b12ae9ef71b8007",
     "tooltipster": "~3.3.0",
     "devbridge-autocomplete": "~1.2.16"
   }
