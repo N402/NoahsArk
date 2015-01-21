@@ -194,6 +194,9 @@ class Account(db.Model):
         #TODO
         return None
 
+    def __repr__(self):
+        return "<%s %s>" % (self.__class__.__name__, self.id)
+
 
 class AccountOAuth(db.Model):
 
