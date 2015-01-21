@@ -40,3 +40,31 @@ $('#notificationSendForm').validate
     $(element).tooltipster 'hide'
   submitHandler: (form) ->
     $(form).ajaxSubmit()
+
+$('#receiver').autocomplete
+  lookup: ({value: one.label, data: one.value} for one in $('#receivers')[0].options)
+  autoSelectFirst: true
+  onSelect: (item) ->
+    $(this).attr('data', item.data)
+
+$('#receiver').on 'keypress', (event) ->
+  if event.keyCode in [13, 32]
+    event.preventDefault()
+    $("#receivers option[value='#{$('#receiver').attr('data')}']").prop('selected', true)
+    $('#receiver').val('')
+    $('#receiver').attr('data', '')
+    $('#receivers').change()
+
+selectedReceivers = []
+
+$('#receivers').change (event) ->
+  selected = $(this).val()
+  $.each selected, (idx, each) ->
+    return if each in selectedReceivers
+    selectedReceivers.push each
+    $('#receivers-box').append
+      $("<span class='receiver'>#{$("#receivers option[value='#{each}']").text()}</span>").append
+        $("<span class='close-btn'>x</span>").click ->
+          $("#receivers option[value='#{each}']").prop('selected', false)
+          $(this).parent().remove()
+          selectedReceivers.splice selectedReceivers.indexOf(each), 1
