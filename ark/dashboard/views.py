@@ -6,7 +6,7 @@ from ark.exts.login import su_required
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
 from ark.notification.models import Notification
-from ark.ranking.models import RankingBan
+from ark.ranking.models import AccountRankingBan, GoalRankingBan
 from ark.dashboard.forms import (
     AccountEditForm, GoalEditForm, GoalActivityEditForm, NotificationSendForm)
 
@@ -177,10 +177,36 @@ def chaser_cache(aid):
 def chasers_ban(aid):
     account = Account.query.get_or_404(aid)
     if request.method == 'POST':
-        ban = RankingBan(account_id=account.id, operator_id=current_user.id)
+        ban = AccountRankingBan(
+            account_id=account.id, operator_id=current_user.id)
         db.session.add(ban)
     elif request.method == 'DELETE':
-        bans = account.bans.filter(RankingBan.is_deleted==False).all()
+        bans = account.bans.filter(AccountRankingBan.is_deleted==False).all()
+        for each in bans:
+            each.is_deleted = True
+            db.session.add(each)
+    db.session.commit()
+    return jsonify(success=True)
+
+
+@dashboard_app.route('/dashboard/ranking')
+@su_required
+def ranking():
+    page = int(request.args.get('page', 1))
+    pagination = Goal.query.order_by(Goal.score).paginate(page)
+    return render_template('dashboard/ranking.html', pagination=pagination)
+
+
+@dashboard_app.route('/dashboard/ranking/<gid>/ban',
+                     methods=('POST', 'DELETE'))
+@su_required
+def ranking_ban(gid):
+    goal = Goal.query.get_or_404(gid)
+    if request.method == 'POST':
+        ban = GoalRankingBan(goal_id=goal.id, operator_id=current_user.id)
+        db.session.add(ban)
+    elif request.method == 'DELETE':
+        bans = goal.bans.filter(GoalRankingBan.is_deleted==False).all()
         for each in bans:
             each.is_deleted = True
             db.session.add(each)

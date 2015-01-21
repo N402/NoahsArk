@@ -1,8 +1,12 @@
 from datetime import datetime
 
 from flask.ext.babel import lazy_gettext as _
+from sqlalchemy import func, select
+from sqlalchemy.ext.hybrid import hybrid_property
 
-from ark.exts import db
+from ark import settings
+from ark.exts import db, cache
+from ark.ranking.models import GoalRankingBan
 
 
 class Goal(db.Model):
@@ -28,21 +32,77 @@ class Goal(db.Model):
     is_deleted = db.Column(db.Boolean, default=False)
 
     image = db.relationship('GoalFile', uselist=False)
-    likes = db.relationship('GoalLikeLog', uselist=True,
-                            backref='goal', lazy='dynamic')
-    activities = db.relationship(
-        'GoalActivity',
-        uselist=True,
-        lazy='dynamic'
-    )
+    likes = db.relationship('GoalLikeLog', uselist=True, lazy='dynamic',
+                            backref=db.backref('goal', uselist=False))
+    activities = db.relationship('GoalActivity', uselist=True, lazy='dynamic',
+                                 backref=db.backref('goal', uselist=False))
 
-    @property
+    @hybrid_property
     def last_activity(self):
         last_activity = self.activities.limit(1).first()
         if last_activity:
-            return last_activity.created
-        else:
-            return None
+            return last_activity
+        return None
+
+    @last_activity.expression
+    def last_activity(cls):
+        return (select([GoalActivity]).where(GoalActivity.goal_id==cls.id)
+                .order_by(GoalActivity.created.desc())
+                .limit(1).label('last_activity'))
+
+    @hybrid_property
+    def last_activity_interval(self):
+        if not self.last_activity:
+            return 0
+        delta = datetime.utcnow() - self.last_activity.created
+        return delta.days
+
+    @last_activity_interval.expression
+    def last_activity_interval(cls):
+        return (select([func.datediff('NOW()', GoalActivity.created)])
+                .where(GoalActivity.goal_id==cls.id)
+                .order_by(GoalActivity.created.desc())
+                .limit(1).label('last_activity_interval'))
+
+    @hybrid_property
+    def like_count(self):
+        return self.likes.filter(GoalLikeLog.is_deleted==False).count()
+
+    @like_count.expression
+    def like_count(cls):
+        return (select([func.count(GoalLikeLog.id)])
+                .where(GoalLikeLog.goal_id==cls.id)
+                .where(GoalLikeLog.is_deleted==False).label('like_count'))
+
+    @hybrid_property
+    def activity_count(self):
+        return self.activities.filter(GoalActivity.is_deleted==False).count()
+
+    @activity_count.expression
+    def activity_count(cls):
+        return (select([func.count(GoalActivity.id)])
+                .where(GoalActivity.goal_id==cls.id)
+                .where(GoalActivity.is_deleted==False)
+                .label('activity_count'))
+
+    @hybrid_property
+    def score(self):
+        return (self.like_count * settings.GOAL_LIKE_SOCRE +
+                self.activity_count * settings.GOAL_UPDATE_SCORE +
+                self.last_activity_interval * settings.GOAL_UPDATE_DAY)
+
+    @cache.memoize(3600)
+    def cache_score(self):
+        return self.score
+
+    @hybrid_property
+    def is_ban(self):
+        return (self.bans.filter(GoalRankingBan.is_deleted==False).count() > 0)
+
+    @is_ban.expression
+    def is_ban(cls):
+        return (select([func.count(GoalRankingBan.id) > 0])
+                .where(GoalRankingBan.goal_id==cls.id).label('is_ban'))
 
 
 class GoalActivity(db.Model):
@@ -58,7 +118,6 @@ class GoalActivity(db.Model):
     is_deleted = db.Column(db.Boolean, default=False)
 
     image = db.relationship('GoalFile', uselist=False)
-    goal = db.relationship('Goal', uselist=False)
     author = db.relationship(
         'Account', uselist=False,
         backref=db.backref('updates', uselist=True, lazy='dynamic',
