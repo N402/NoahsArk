@@ -5,6 +5,7 @@ from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
 from sqlalchemy.ext.hybrid import hybrid_property
 
+from ark import settings
 from ark.exts import db, cache
 from ark.exts.bcrypt import hash_password, check_password
 from ark.utils.avatar import random_avatar
@@ -32,11 +33,6 @@ class Account(db.Model):
         'deleted': 'Deleted',
         'inactive': 'Inactive',
     }
-
-    CREDIT_SCORES = 1
-    LIKE_SCORE = 100
-    GOAL_SCORE = 10
-    UPDATE_SCORE = -10
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), nullable=True, unique=True)
@@ -162,10 +158,10 @@ class Account(db.Model):
 
     @cache.memoize(3600)
     def get_total_score(self):
-        return (self.credit * self.CREDIT_SCORES +
-                self.get_like_count() * self.LIKE_SCORE +
-                self.goals.count() * self.GOAL_SCORE +
-                self.get_last_update_diff_day() * self.UPDATE_SCORE)
+        return (self.credit * settings.CREDIT_SCORES +
+                self.get_like_count() * settings.LIKE_SCORE +
+                self.goals.count() * settings.GOAL_SCORE +
+                self.get_last_update_diff_day() * settings.UPDATE_SCORE)
 
     @property
     def last_signin(self):
