@@ -1,0 +1,38 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('Goal Ranking Manage') }}{% endblock %}
+
+{% block content %}
+<div class="table-container">
+  <table class="ranking">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{{ _('Title') }}</th>
+        <th>{{ _('Author') }}</th>
+        <th>{{ _('Score') }}</th>
+        <th>{{ _('Operations') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for goal in pagination.items %}
+      <tr>
+        <td>{{ goal.id }}</td>
+        <td>{{ goal.title }}</td>
+        <td>{{ goal.author.username }}</td>
+        <td>{{ goal.cache_score() }}</td>
+        <td>
+          <a href="javascript:void(0)" id="unban-btn" data-id="{{ goal.id }}" href-url="{{ url_for('dashboard.ranking_ban', gid=goal.id) }}" class="btn btn-info" {%- if not goal.is_ban %}style="display: none;"{%- endif %}>{{ _('Unban') }}</a>
+          <a href="javascript:void(0)" id="ban-btn" data-id="{{ goal.id }}" href-url="{{ url_for('dashboard.ranking_ban', gid=goal.id) }}" class="btn btn-danger" {%- if goal.is_ban %}style="display: none;"{%- endif %}>{{ _('Ban') }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {{ paginator.render(pagination, 'dashboard.ranking') | safe }}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='scripts/dashboard/ranking.js') }}"></script>
+{% endblock %}
