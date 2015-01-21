@@ -3,14 +3,16 @@ from datetime import datetime, timedelta
 
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import func, select
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 from ark import settings
 from ark.exts import db, cache
 from ark.exts.bcrypt import hash_password, check_password
 from ark.utils.avatar import random_avatar
-from ark.goal.models import Goal, GoalActivity
+from ark.goal.models import Goal, GoalActivity, GoalLikeLog
 from ark.notification.models import Notification, ReadMark
+from ark.ranking.models import RankingBan
 
 
 class UserQuery(BaseQuery):
@@ -136,33 +138,6 @@ class Account(db.Model):
         return (self.notifications
                 .filter(Notification.created > self.read_ts.read_ts).all())
 
-    def get_like_count(self):
-        return sum([each.likes.count() for each in self.goals])
-
-    def get_last_update(self):
-        last_update = self.updates.limit(1).first()
-        return last_update
-
-    def get_last_update_ts(self):
-        last_update = self.updates.limit(1).first()
-        if last_update:
-            return last_update.created
-        return None
-
-    def get_last_update_diff_day(self):
-        last_update_ts = self.get_last_update_ts()
-        if last_update_ts:
-            delta = datetime.utcnow() - last_update_ts
-            return delta.days
-        return 0
-
-    @cache.memoize(3600)
-    def get_total_score(self):
-        return (self.credit * settings.CREDIT_SCORES +
-                self.get_like_count() * settings.LIKE_SCORE +
-                self.goals.count() * settings.GOAL_SCORE +
-                self.get_last_update_diff_day() * settings.UPDATE_SCORE)
-
     @property
     def last_signin(self):
         last_signin = self.activities.limit(1).first()
@@ -171,10 +146,87 @@ class Account(db.Model):
         else:
             return None
 
-    @property
+    @cache.memoize(3600)
+    def cached_total_score(self):
+        return self.total_score
+
+    @hybrid_property
+    def total_score(self):
+        return (self.credit * settings.CREDIT_SCORES +
+                self.like_count * settings.LIKE_SCORE +
+                self.goals_count * settings.GOAL_SCORE +
+                self.last_update_interval * settings.UPDATE_SCORE)
+
+    @hybrid_property
     def credit(self):
         return sum([each.score for each in self.score_logs])
 
+    @credit.expression
+    def credit(cls):
+        return (select([func.sum(AccountScoreLog.score)])
+                .where(AccountScoreLog.account_id==cls.id)
+                .label('credit'))
+
+    @hybrid_property
+    def like_count(self):
+        return sum([each.likes.count() for each in self.goals])
+
+    @like_count.expression
+    def like_count(cls):
+        return (
+            select([
+                func.sum(select([func.count(GoalLikeLog.id)])
+                         .where(GoalLikeLog.id==Goal.id)
+                         .label('goal_log_count'))])
+                .where(Goal.account_id==cls.id)
+                .label('like_count'))
+
+    @hybrid_property
+    def goals_count(self):
+        return self.goals.count()
+
+    @goals_count.expression
+    def goals_count(cls):
+        return (select([func.count(GoalLikeLog.id)])
+                .where(GoalLikeLog.id==Goal.id)
+                .label('goal_log_count'))
+
+    @hybrid_property
+    def last_update(self):
+        return self.updates.first()
+
+    @last_update.expression
+    def last_update(cls):
+        return (select([GoalActivity])
+                .where(GoalActivity.account_id==cls.id)
+                .order_by(GoalActivity.created.desc())
+                .limit(1)
+                .label('last_update'))
+
+    @hybrid_property
+    def last_update_interval(self):
+        if not self.last_update:
+            return 0
+        delta = datetime.utcnow() - self.last_update.created
+        return delta.days
+
+    @last_update_interval.expression
+    def last_update_interval(cls):
+        return (select([func.datediff('NOW()', GoalActivity.created)])
+                .where(GoalActivity.account_id==cls.id)
+                .order_by(GoalActivity.created.desc())
+                .limit(1)
+                .label('last_update_interval'))
+
+    @hybrid_property
+    def is_ban(self):
+        return (self.bans.filter(RankingBan.is_deleted==False).count() > 0)
+
+    @is_ban.expression
+    def is_ban(cls):
+        return (select([func.count(RankingBan.id) > 0])
+                .where(RankingBan.account_id==cls.id)).label('is_ban')
+        
     @property
     def gender(self):
         if self.is_male:

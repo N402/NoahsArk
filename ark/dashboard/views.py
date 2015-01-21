@@ -1,11 +1,12 @@
 from flask import Flask, Blueprint, render_template, request, jsonify
 from flask.ext.login import current_user
 
-from ark.exts import db
+from ark.exts import db, cache
 from ark.exts.login import su_required
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
 from ark.notification.models import Notification
+from ark.ranking.models import RankingBan
 from ark.dashboard.forms import (
     AccountEditForm, GoalEditForm, GoalActivityEditForm, NotificationSendForm)
 
@@ -151,11 +152,37 @@ def notification_send():
 @su_required
 def chasers():
     page = int(request.args.get('page', 1))
-    pagination = Account.query.paginate(page)
+    pagination = Account.query.order_by(Account.total_score).paginate(page)
     return render_template('dashboard/chasers.html', pagination=pagination)
 
 
-@dashboard_app.route('/dashboard/chasers/ban')
+@dashboard_app.route('/dashboard/chasers/cache/')
 @su_required
-def chasers_ban():
-    return render_template('dashboard/chasers_ban.html')
+def chasers_cache(aid):
+    cache.delete_memoized(Account.cached_total_score)
+    return jsonify(success=True)
+
+
+@dashboard_app.route('/dashboard/chasers/<aid>/cache/')
+@su_required
+def chaser_cache(aid):
+    account = Account.query.get_or_404(aid)
+    cache.delete_memoized(account.cached_total_score)
+    return jsonify(success=True)
+
+
+@dashboard_app.route('/dashboard/chasers/<aid>/ban',
+                     methods=['POST', 'DELETE'])
+@su_required
+def chasers_ban(aid):
+    account = Account.query.get_or_404(aid)
+    if request.method == 'POST':
+        ban = RankingBan(account_id=account.id, operator_id=current_user.id)
+        db.session.add(ban)
+    elif request.method == 'DELETE':
+        bans = account.bans.filter(RankingBan.is_deleted==False).all()
+        for each in bans:
+            each.is_deleted = True
+            db.session.add(each)
+    db.session.commit()
+    return jsonify(success=True)

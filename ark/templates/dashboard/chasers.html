@@ -21,10 +21,11 @@
         <td>{{ chaser.id }}</td>
         <td>{{ chaser.email }}</td>
         <td>{{ chaser.username }}</td>
-        <td>{{ chaser.get_total_score() }}</td>
+        <td>{{ chaser.cached_total_score() }}</td>
         <td>{{ loop.index }}</td>
         <td>
-            <a href="javascript:void()" data-id="{{ chaser.id }}" class="btn btn-info">{{ _('Ban') }}</a>
+          <a href="javascript:void(0)" id="unban-btn" data-id="{{ chaser.id }}" href-url="{{ url_for('dashboard.chasers_ban', aid=chaser.id) }}" class="btn btn-info" {%- if not chaser.is_ban %}style="display: none;"{%- endif %}>{{ _('Unban') }}</a>
+          <a href="javascript:void(0)" id="ban-btn" data-id="{{ chaser.id }}" href-url="{{ url_for('dashboard.chasers_ban', aid=chaser.id) }}" class="btn btn-danger" {%- if chaser.is_ban %}style="display: none;"{%- endif %}>{{ _('Ban') }}</a>
         </td>
       </tr>
       {% endfor %}
@@ -32,4 +33,8 @@
   </table>
   {{ paginator.render(pagination, 'dashboard.chasers') | safe }}
 </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='scripts/dashboard/chasers.js') }}"></script>
 {% endblock %}
