@@ -1,10 +1,10 @@
 from uuid import uuid4
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
 from sqlalchemy import func, select
-from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from ark import settings
 from ark.exts import db, cache
@@ -12,7 +12,7 @@ from ark.exts.bcrypt import hash_password, check_password
 from ark.utils.avatar import random_avatar
 from ark.goal.models import Goal, GoalActivity, GoalLikeLog
 from ark.notification.models import Notification, ReadMark
-from ark.ranking.models import RankingBan
+from ark.ranking.models import AccountRankingBan
 
 
 class UserQuery(BaseQuery):
@@ -152,10 +152,10 @@ class Account(db.Model):
 
     @hybrid_property
     def total_score(self):
-        return (self.credit * settings.CREDIT_SCORES +
-                self.like_count * settings.LIKE_SCORE +
-                self.goals_count * settings.GOAL_SCORE +
-                self.last_update_interval * settings.UPDATE_SCORE)
+        return (self.credit * settings.ACCOUNT_CREDIT_SCORES +
+                self.like_count * settings.ACCOUNT_LIKE_SCORE +
+                self.goals_count * settings.ACCOUNT_GOAL_SCORE +
+                self.last_update_interval * settings.ACCOUNT_UPDATE_SCORE)
 
     @hybrid_property
     def credit(self):
@@ -169,17 +169,17 @@ class Account(db.Model):
 
     @hybrid_property
     def like_count(self):
-        return sum([each.likes.count() for each in self.goals])
+        return sum([each.likes.filter(GoalLikeLog.is_deleted==False).count()
+                   for each in self.goals])
 
     @like_count.expression
     def like_count(cls):
-        return (
-            select([
-                func.sum(select([func.count(GoalLikeLog.id)])
-                         .where(GoalLikeLog.id==Goal.id)
-                         .label('goal_log_count'))])
-                .where(Goal.account_id==cls.id)
-                .label('like_count'))
+        return (select([func.sum(select([func.count(GoalLikeLog.id)])
+                                        .where(GoalLikeLog.id==Goal.id)
+                                        .where(GoalLikeLog.is_deleted==False)
+                                        .label('goal_log_count'))])
+                        .where(Goal.account_id==cls.id)
+                        .label('like_count'))
 
     @hybrid_property
     def goals_count(self):
@@ -220,12 +220,12 @@ class Account(db.Model):
 
     @hybrid_property
     def is_ban(self):
-        return (self.bans.filter(RankingBan.is_deleted==False).count() > 0)
+        return (self.bans.filter(AccountRankingBan.is_deleted==False).count() > 0)
 
     @is_ban.expression
     def is_ban(cls):
-        return (select([func.count(RankingBan.id) > 0])
-                .where(RankingBan.account_id==cls.id)).label('is_ban')
+        return (select([func.count(AccountRankingBan.id) > 0])
+                .where(AccountRankingBan.account_id==cls.id)).label('is_ban')
         
     @property
     def gender(self):
