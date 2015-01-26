@@ -1,15 +1,14 @@
-# Chinese translations for NoahsArk.
-# Copyright (C) 2015
-# This file is distributed under the same license as the NoahsArk project.
-# shonenada <shonenada@gmail.com>, 2015.
+# Chinese translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
-
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.0.3\n"
-"Report-Msgid-Bugs-To: shonenada@gmail.com\n"
-"POT-Creation-Date: 2015-01-07 01:24+0800\n"
-"PO-Revision-Date: 2015-01-07 01:24+0800\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-01-26 17:10+0800\n"
+"PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -18,43 +17,381 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: account/forms.py:13
+#: account/forms.py:17 account/forms.py:64
 msgid "username"
 msgstr "用户名"
 
-#: account/forms.py:19
-msgid "gender"
-msgstr "性别"
-
-#: account/forms.py:21
-msgid "boy"
-msgstr "男"
-
-#: account/forms.py:22
-msgid "girl"
-msgstr "女"
-
-#: account/forms.py:27 account/forms.py:47
+#: account/forms.py:23 account/forms.py:48
 msgid "email"
 msgstr "邮箱"
 
-#: account/forms.py:29 account/forms.py:49
+#: account/forms.py:25 account/forms.py:50
 msgid "please input your email"
-msgstr "请输入邮箱"
+msgstr "请输入您的邮箱"
 
-#: account/forms.py:30 account/forms.py:50
+#: account/forms.py:26 account/forms.py:51
 msgid "your email is invalid"
-msgstr "邮箱不合法"
+msgstr "您的邮箱不合法"
 
-#: account/forms.py:33 account/forms.py:53
+#: account/forms.py:29 account/forms.py:54
 msgid "password"
 msgstr "密码"
 
-#: account/forms.py:39
-msgid "confirm password"
-msgstr "确认密码"
+#: account/forms.py:38
+msgid "Email exists"
+msgstr "邮箱已存在"
 
-#: account/forms.py:58
+#: account/forms.py:43
+msgid "Username exists"
+msgstr "用户名已存在"
+
+#: account/forms.py:59
 msgid "remember me"
 msgstr "记住我"
 
+#: account/forms.py:73
+msgid "avatar"
+msgstr "头像"
+
+#: account/forms.py:79
+msgid "old password"
+msgstr "原始密码"
+
+#: account/forms.py:86
+msgid "new password"
+msgstr "新密码"
+
+#: account/forms.py:92
+msgid "confirm password"
+msgstr "确认密码"
+
+#: account/forms.py:99
+msgid "old password is wrong"
+msgstr "原始密码不正确"
+
+#: account/models.py:233 dashboard/forms.py:17
+msgid "Male"
+msgstr "男性"
+
+#: account/models.py:235 dashboard/forms.py:18
+msgid "Female"
+msgstr "女性"
+
+#: account/views.py:40
+msgid "email or password is wrong"
+msgstr "邮箱或密码错误"
+
+#: dashboard/forms.py:12 templates/dashboard/accounts.html:12
+#: templates/dashboard/chasers.html:12
+msgid "Username"
+msgstr "用户名"
+
+#: dashboard/forms.py:15 templates/dashboard/accounts.html:13
+msgid "Gender"
+msgstr "性别"
+
+#: dashboard/forms.py:19
+msgid "Password"
+msgstr "密码"
+
+#: dashboard/forms.py:20 templates/dashboard/goal.html:25
+msgid "State"
+msgstr "状态"
+
+#: dashboard/forms.py:21
+msgid "Normal"
+msgstr "正常"
+
+#: dashboard/forms.py:22
+msgid "Frozen"
+msgstr "冻结"
+
+#: dashboard/forms.py:23
+msgid "Deleted"
+msgstr "已删除"
+
+#: dashboard/forms.py:24
+msgid "Inactive"
+msgstr "未激活"
+
+#: dashboard/forms.py:25
+msgid "Superuser"
+msgstr "超级用户"
+
+#: dashboard/forms.py:27 dashboard/forms.py:33 dashboard/forms.py:39
+msgid "Yes"
+msgstr "是"
+
+#: dashboard/forms.py:28 dashboard/forms.py:34 dashboard/forms.py:40
+msgid "No"
+msgstr "否"
+
+#: dashboard/forms.py:32 dashboard/forms.py:38
+msgid "Is Deleted"
+msgstr "已删除"
+
+#: dashboard/forms.py:44 templates/dashboard/notifications.html:17
+msgid "Content"
+msgstr "内容"
+
+#: dashboard/forms.py:46 templates/dashboard/notifications.html:16
+msgid "Receivers"
+msgstr "收信人"
+
+#: goal/forms.py:9
+msgid "title"
+msgstr "标题"
+
+#: goal/forms.py:16
+msgid "description"
+msgstr "描述"
+
+#: goal/forms.py:22 goal/forms.py:34
+msgid "Image Name"
+msgstr "图片名称"
+
+#: goal/forms.py:23
+msgid "Image URL"
+msgstr "图片地址"
+
+#: goal/forms.py:28 templates/dashboard/activity.html:30
+msgid "Activity"
+msgstr "动态"
+
+#: goal/forms.py:35
+msgid "image"
+msgstr "图片"
+
+#: goal/models.py:17
+msgid "Ready"
+msgstr "预备"
+
+#: goal/models.py:18
+msgid "Doing"
+msgstr "执行中"
+
+#: goal/models.py:19
+msgid "Canceled"
+msgstr "已取消"
+
+#: goal/models.py:20
+msgid "Finished"
+msgstr "已完成"
+
+#: goal/models.py:21
+msgid "Expired"
+msgstr "已过期"
+
+#: goal/views.py:76
+msgid "cannot cancel goal"
+msgstr "不能取消目标"
+
+#: goal/views.py:95
+msgid "cannot finish it"
+msgstr "不能完成目标"
+
+#: goal/views.py:110
+msgid "Cannot like your goal"
+msgstr "您不能赞自己的目标"
+
+#: templates/account/avatar.html:12
+msgid "Upload"
+msgstr "上传"
+
+#: templates/account/goals.html:12
+msgid "My Goals"
+msgstr "我的"
+
+#: templates/account/goals.html:13
+msgid "Chasers"
+msgstr "追逐者"
+
+#: templates/account/goals.html:14
+msgid "Dreams Wall"
+msgstr "梦想墙"
+
+#: templates/account/goals.html:36
+msgid "Chasing"
+msgstr "追逐中"
+
+#: templates/account/goals.html:55
+msgid "Completed"
+msgstr "已完成"
+
+#: templates/account/signin.html:13
+msgid "Sign in"
+msgstr "登录"
+
+#: templates/account/signin.html:14
+msgid "New here?"
+msgstr "没有账号？"
+
+#: templates/account/signin.html:14 templates/account/signup.html:15
+msgid "Sign Up"
+msgstr "注册"
+
+#: templates/account/signup.html:16
+msgid "Have account?"
+msgstr "已有账号？"
+
+#: templates/account/signup.html:16
+msgid "Sign In"
+msgstr "登录"
+
+#: templates/dashboard/account.html:3 templates/dashboard/accounts.html:3
+msgid "Account Manage"
+msgstr "账号管理"
+
+#: templates/dashboard/account.html:18 templates/dashboard/accounts.html:11
+#: templates/dashboard/chasers.html:11
+msgid "Email"
+msgstr "邮箱"
+
+#: templates/dashboard/account.html:42 templates/dashboard/activity.html:46
+#: templates/dashboard/goal.html:53
+#: templates/dashboard/notification_send.html:25
+msgid "Submit"
+msgstr "提交"
+
+#: templates/dashboard/accounts.html:14
+msgid "Credit"
+msgstr "学分"
+
+#: templates/dashboard/accounts.html:15
+msgid "SignUp"
+msgstr "注册"
+
+#: templates/dashboard/accounts.html:16
+msgid "Last Signin"
+msgstr "最后登录时间"
+
+#: templates/dashboard/accounts.html:17 templates/dashboard/activities.html:15
+#: templates/dashboard/chasers.html:15 templates/dashboard/goals.html:15
+#: templates/dashboard/ranking.html:14
+msgid "Operations"
+msgstr "操作"
+
+#: templates/dashboard/accounts.html:31 templates/dashboard/goal.html:21
+msgid "Edit"
+msgstr "编辑"
+
+#: templates/dashboard/activities.html:3 templates/dashboard/activity.html:3
+msgid "Activity Manage"
+msgstr "动态管理"
+
+#: templates/dashboard/activities.html:11 templates/dashboard/activity.html:14
+msgid "Goal"
+msgstr "目标"
+
+#: templates/dashboard/activities.html:12 templates/dashboard/activity.html:18
+#: templates/dashboard/goal.html:18 templates/dashboard/goals.html:12
+#: templates/dashboard/ranking.html:12
+msgid "Author"
+msgstr "作者"
+
+#: templates/dashboard/activities.html:13 templates/dashboard/goal.html:37
+msgid "Description"
+msgstr "描述"
+
+#: templates/dashboard/activities.html:14 templates/dashboard/activity.html:24
+#: templates/dashboard/goal.html:31
+msgid "Created At"
+msgstr "创建时间"
+
+#: templates/dashboard/activity.html:36 templates/dashboard/goal.html:43
+msgid "Image"
+msgstr "图片"
+
+#: templates/dashboard/base.html:28
+msgid "Dashboard"
+msgstr "控制面板"
+
+#: templates/dashboard/base.html:29
+msgid "Notifications"
+msgstr "通知"
+
+#: templates/dashboard/base.html:30
+msgid "Accounts"
+msgstr "账号"
+
+#: templates/dashboard/base.html:31
+msgid "Goals"
+msgstr "目标"
+
+#: templates/dashboard/base.html:32
+msgid "Activities"
+msgstr "动态"
+
+#: templates/dashboard/base.html:33
+msgid "Chasers Ranking "
+msgstr "追逐者排名"
+
+#: templates/dashboard/base.html:34
+msgid "Goals Ranking"
+msgstr "目标排名"
+
+#: templates/dashboard/chasers.html:3
+msgid "Chasers Ranking Manage"
+msgstr "追逐者排名管理"
+
+#: templates/dashboard/chasers.html:13 templates/dashboard/ranking.html:13
+msgid "Score"
+msgstr "得分"
+
+#: templates/dashboard/chasers.html:14
+msgid "Ranking"
+msgstr "排名"
+
+#: templates/dashboard/chasers.html:27 templates/dashboard/ranking.html:25
+msgid "Unban"
+msgstr "unban"
+
+#: templates/dashboard/chasers.html:28 templates/dashboard/ranking.html:26
+msgid "Ban"
+msgstr "Ban"
+
+#: templates/dashboard/goal.html:3 templates/dashboard/goals.html:3
+msgid "Goal Manage"
+msgstr "目标管理"
+
+#: templates/dashboard/goal.html:14 templates/dashboard/goals.html:11
+#: templates/dashboard/ranking.html:11
+msgid "Title"
+msgstr "标题"
+
+#: templates/dashboard/goals.html:13
+msgid "Added At"
+msgstr "添加时间"
+
+#: templates/dashboard/goals.html:14
+msgid "Lasted Activity"
+msgstr "最新动态"
+
+#: templates/dashboard/notification_send.html:3
+#: templates/dashboard/notifications.html:3
+msgid "Notification Manage"
+msgstr "通知管理"
+
+#: templates/dashboard/notifications.html:7
+msgid "Send"
+msgstr "发送"
+
+#: templates/dashboard/notifications.html:15
+msgid "Sender"
+msgstr "发信人"
+
+#: templates/dashboard/notifications.html:18
+msgid "Send Time"
+msgstr "发信时间"
+
+#: templates/dashboard/notifications.html:28
+msgid "All Accounts"
+msgstr "所有账户"
+
+#: templates/dashboard/ranking.html:3
+msgid "Goal Ranking Manage"
+msgstr "目标排名管理"
+
+#: templates/goal/activity.html:20 templates/goal/create.html:24
+msgid "Create"
+msgstr "创建"
