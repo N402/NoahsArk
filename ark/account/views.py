@@ -7,6 +7,7 @@ from ark.exts import db
 from ark.utils.helper import jsonify_lazy
 from ark.account.forms import (
     SignUpForm, SignInForm, ChangePassword, AvatarForm)
+from ark.goal.services import get_charsing_goals, get_completed_goals
 from ark.account.models import Account
 from ark.account.services import (signin_user,  signout_user,
                                   signup_user, add_signin_score)
@@ -18,7 +19,7 @@ account_app = Blueprint('account', __name__)
 @account_app.route('/account/signin', methods=['GET', 'POST'])
 def signin():
     if not current_user.is_anonymous():
-        return redirect(url_for('account.profile'))
+        return redirect(url_for('account.goals'))
 
     form = SignInForm(request.form)
 
@@ -50,7 +51,7 @@ def signin():
 @account_app.route('/account/signup', methods=['GET', 'POST'])
 def signup():
     if not current_user.is_anonymous():
-        return redirect(url_for('account.profile'))
+        return redirect(url_for('account.goals'))
 
     form = SignUpForm(request.form)
 
@@ -126,4 +127,9 @@ def password():
 @account_app.route('/account/goals')
 @login_required
 def goals():
-    return render_template('account/goals.html')
+    charsing_goals = get_charsing_goals()
+    completed_goals = get_completed_goals()
+    return render_template(
+        'account/goals.html',
+        charsing_goals=charsing_goals,
+        completed_goals=completed_goals,)

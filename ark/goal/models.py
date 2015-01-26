@@ -146,3 +146,7 @@ class GoalFile(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean, default=False)
+
+    def get_thumbnail(self, width=0, height=0):
+        url = self.file_url
+        return '%s?imageMogr2/thumbnail/%sx%s!' % (url, width, height)

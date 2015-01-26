@@ -24,7 +24,7 @@
       <ul>
         <li><i class="iconfont icon-setting"></i> 设置</li>
         <li><i class="iconfont icon-msg"></i> 消息</li>
-        <li><i class="iconfont icon-signout"></i> 退出</li>
+        <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> 退出</a></li>
       </ul>
     </div>
   </div>
@@ -35,39 +35,30 @@
   <div class="wrapper">
     <div class="title"><span>{{ _('Chasing') }}</span></div>
     <ul>
-      <li class="cards-container normal-card" style="background-image: url(https://mailimg.teambition.com/logos/cover-internet.jpg)">
+      {% for each in charsing_goals %}
+      <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail(250, 150)}}')">
         <div class="card">
-          <img src="https://mailimg.teambition.com/logos/cover-internet.jpg" /> 
         </div>
       </li>
-      <li class="cards-container normal-card" style="background-image: url(https://mailimg.teambition.com/logos/cover-internet.jpg)">
-        <div class="card">
-          <img src="https://mailimg.teambition.com/logos/cover-internet.jpg" /> 
-        </div>
-      </li>
+      {% endfor %}
       <li class="cards-container create-card">
         <a href="{{ url_for('goal.create') }}" class="card">+</a>
       </li>
     </ul>
   </div>
-
+  {% if completed_goals %}
   <div class="wrapper">
     <div class="title"><span>{{ _('Completed') }}</span></div>
     <ul>
-      <li class="cards-container normal-card" style="background-image: url(https://mailimg.teambition.com/logos/cover-internet.jpg)">
+      {% for each in completed_goals %}
+      <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail(250, 150)}}')">
         <div class="card">
         </div>
       </li>
-      <li class="cards-container normal-card" style="background-image: url(https://mailimg.teambition.com/logos/cover-internet.jpg)">
-        <div class="card">
-          <img src="https://mailimg.teambition.com/logos/cover-internet.jpg" /> 
-        </div>
-      </li>
-      <li class="cards-container create-card">
-        <a href="{{ url_for('goal.create') }}" class="card">+</a>
-      </li>
+      {% endfor %}
     </ul>
   </div>
+  {% endif %}
 
 </div>
 {%- endblock %}

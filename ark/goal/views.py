@@ -51,6 +51,7 @@ def create():
             account_id=current_user.id,
             title=form.data['title'],
             description=form.data['description'],
+            state='doing',
         )
         goal.image = image
         db.session.add(goal)
