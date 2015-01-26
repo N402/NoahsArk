@@ -14,11 +14,9 @@ class Goal(db.Model):
     __tablename__ = 'goal'
 
     GOAL_STATES = {
-        'ready': _('Ready'),
         'doing': _('Doing'),
         'canceled': _('Canceled'),
         'finished': _('Finished'),
-        'expired': _('Expired'),
     }
 
     id = db.Column(db.Integer, primary_key=True)
@@ -28,7 +26,7 @@ class Goal(db.Model):
     image_file_id = db.Column(db.Integer, db.ForeignKey('goal_file.id'))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     operate_at = db.Column(db.DateTime)
-    state = db.Column(db.Enum(*(GOAL_STATES.keys())), default='ready')
+    state = db.Column(db.Enum(*(GOAL_STATES.keys())), default='doing')
     is_deleted = db.Column(db.Boolean, default=False)
 
     image = db.relationship('GoalFile', uselist=False)
