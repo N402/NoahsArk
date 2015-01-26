@@ -9,7 +9,7 @@ from ark.account.forms import (
     SignUpForm, SignInForm, ChangePassword, AvatarForm)
 from ark.goal.services import get_charsing_goals, get_completed_goals
 from ark.account.models import Account
-from ark.goal.models import Goal
+from ark.goal.models import Goal, GoalActivity
 from ark.goal.forms import GoalActivityForm
 from ark.account.services import (signin_user,  signout_user,
                                   signup_user, add_signin_score)
@@ -144,4 +144,7 @@ def goal(gid):
     form = GoalActivityForm(request.form)
     if goal.is_deleted:
         return abort(404)
-    return render_template('account/goal.html', goal=goal, form=form)
+    activities = (goal.activities.filter(GoalActivity.is_deleted==False)
+                  .order_by(GoalActivity.created.desc()).limit(20))
+    return render_template('account/goal.html',
+        goal=goal, form=form, activities=activities)
