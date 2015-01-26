@@ -36,8 +36,7 @@ ul, li
       transition-duration 0.25s
       min-width 100px
       color #fff
-      text-align center
-      padding 0px 20px
+      padding 0px 10px
       display inline-block
       height 45px
       line-height 45px
@@ -111,6 +110,31 @@ ul, li
     &:hover
       transform translate3d(0,-4px,0px)
       box-shadow 3px 3px 10px #aaa
+
+    .card
+      position relative
+      transition-duration 0.25s
+      background rgba(0,0,0,0.0)
+      height 100%
+      &:hover
+        background rgba(0,0,0,0.5)
+      &:hover .card-like
+        opacity 1
+      .card-title
+        color #fff
+        padding 15px
+        font-size 18px
+        text-overflow ellipsis
+      .card-like
+        transition-duration 0.25s
+        opacity 0
+        color #fff
+        right 15px
+        bottom 15px
+        font-weight bold
+        position absolute
+        .iconfont
+          color #ff0033
 
   .cards-container
     float left

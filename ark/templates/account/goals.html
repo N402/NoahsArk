@@ -38,6 +38,8 @@
       {% for each in charsing_goals %}
       <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail(250, 150)}}')">
         <div class="card">
+          <div class="card-title">{{ each.title }}</div>
+          <div class="card-like"><i class="iconfont icon-small icon-xiai"></i> {{ each.like_count }}</div>
         </div>
       </li>
       {% endfor %}
