@@ -20,11 +20,6 @@ def index():
         'index.html', sign_in_form=sign_in_form, sign_up_form=sign_up_form)
 
 
-@master_app.route('/about')
-def about():
-    return 'about'
-
-
 @master_app.route('/feedback')
 @login_required
 def feedback():
