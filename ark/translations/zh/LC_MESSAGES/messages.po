@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-27 00:47+0800\n"
+"POT-Creation-Date: 2015-01-27 01:57+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,69 +17,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: account/forms.py:17 dashboard/forms.py:12 oauth/forms.py:11
+#: account/forms.py:14 dashboard/forms.py:12 oauth/forms.py:11
 #: templates/dashboard/accounts.html:12 templates/dashboard/chasers.html:12
 msgid "Username"
 msgstr "用户名"
 
-#: account/forms.py:23 templates/dashboard/account.html:18
+#: account/forms.py:20 templates/dashboard/account.html:18
 #: templates/dashboard/accounts.html:11 templates/dashboard/chasers.html:11
 msgid "Email"
 msgstr "邮箱"
 
-#: account/forms.py:25 account/forms.py:50
+#: account/forms.py:22 account/forms.py:47
 msgid "please input your email"
 msgstr "请输入您的邮箱"
 
-#: account/forms.py:26 account/forms.py:51
+#: account/forms.py:23 account/forms.py:48
 msgid "your email is invalid"
 msgstr "您的邮箱不合法"
 
-#: account/forms.py:29 dashboard/forms.py:19
+#: account/forms.py:26 dashboard/forms.py:19
 msgid "Password"
 msgstr "密码"
 
-#: account/forms.py:38
+#: account/forms.py:35
 msgid "Email exists"
 msgstr "邮箱已存在"
 
-#: account/forms.py:43
+#: account/forms.py:40
 msgid "Username exists"
 msgstr "用户名已存在"
 
-#: account/forms.py:48
+#: account/forms.py:45
 msgid "email"
 msgstr "邮箱"
 
-#: account/forms.py:54
+#: account/forms.py:51
 msgid "password"
 msgstr "密码"
 
-#: account/forms.py:59
+#: account/forms.py:56
 msgid "remember me"
 msgstr "记住我"
 
-#: account/forms.py:64
+#: account/forms.py:61
 msgid "username"
 msgstr "用户名"
 
-#: account/forms.py:73
+#: account/forms.py:70
 msgid "avatar"
 msgstr "头像"
 
-#: account/forms.py:79
+#: account/forms.py:76
 msgid "old password"
 msgstr "原始密码"
 
-#: account/forms.py:86
+#: account/forms.py:83
 msgid "new password"
 msgstr "新密码"
 
-#: account/forms.py:92
+#: account/forms.py:89
 msgid "confirm password"
 msgstr "确认密码"
 
-#: account/forms.py:99
+#: account/forms.py:96
 msgid "old password is wrong"
 msgstr "原始密码不正确"
 
@@ -192,6 +192,7 @@ msgid "Cannot like your goal"
 msgstr "您不能赞自己的目标"
 
 #: oauth/forms.py:20
+#, python-format
 msgid "Username %(username)s exists"
 msgstr "用户名 %(username)s 已存在"
 
@@ -218,6 +219,10 @@ msgstr "我已完成"
 #: templates/account/goal.html:24
 msgid "Give up"
 msgstr "忍痛放弃"
+
+#: templates/account/goal.html:34
+msgid "Publish"
+msgstr "发布"
 
 #: templates/account/goals.html:10
 msgid "Chasing"
@@ -391,3 +396,4 @@ msgstr "目标排名管理"
 #: templates/goal/activity.html:20 templates/goal/create.html:24
 msgid "Create"
 msgstr "创建"
+
