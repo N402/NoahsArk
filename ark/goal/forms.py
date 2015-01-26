@@ -31,5 +31,5 @@ class GoalActivityForm(Form):
             Length(min=5, max=200),
         ]
     )
-    image_name = StringField(_('Image Name'))
-    image_url = StringField(label=_('image'))
+    image_name = StringField(_('Image Name'), validators=[InputRequired()])
+    image_url = StringField(label=_('image'), validators=[InputRequired()])
