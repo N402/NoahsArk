@@ -25,8 +25,8 @@
         <td>{{ account.username }}</td>
         <td>{{ account.gender }}</td>
         <td>{{ account.credit }}</td>
-        <td>{{ account.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
-        <td>{{ account.last_signin | format_datetime('Y-M-d HH:mm:SS') }}</td>
+        <td>{{ account.created | format_datetime('Y-M-d HH:mm:ss') }}</td>
+        <td>{{ account.last_signin | format_datetime('Y-M-d HH:mm:ss') }}</td>
         <td>
           <a href="{{ url_for('dashboard.account', uid=account.id) }}" class="btn btn-info">{{ _('Edit') }}</a>
         </td>
