@@ -1,6 +1,7 @@
 {%- extends 'layout.html' %}
 
 {%- block static %}
+<link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/account/goals.css') }}" type="text/css" />
 {%- endblock %}
 
@@ -34,13 +35,13 @@
         {{ form.image_url(style="display:none") }}
         {{ form.image_name(style="display:none") }}
         <div class="tool">
-          <a href="javascript:void(0);" id="upbtn">图片</a>
+          <a href="javascript:void(0);" id="upImage">图片</a>
           <span><img src="" id="preview" /></span>
           <button type="button" onclick="updateAvtivity()" id="submitBtn" class="btn btn-success pull-right">{{ _('Publish') }}</button>
         </div>
       </form>
     </div>
-    <div class="activitiess">
+    <div class="activities" id="activities">
       {% for each in activities %}
       <div class="activity">
         {{ each.activity }} 
