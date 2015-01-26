@@ -121,3 +121,9 @@ def password():
         return jsonify(success=False, messages=form.errors)
 
     return render_template('account/password.html')
+
+
+@account_app.route('/account/goals')
+@login_required
+def goals():
+    return render_template('account/goals.html')
