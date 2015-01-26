@@ -6,7 +6,7 @@
 
 {%- block main %}
 <div class="main" id="account-goal">
-  <div class="goal">
+  <div class="goal pull-left">
     <div class="banner-image" style="background-image: url('{{ goal.image.get_thumbnail_limit_witdh(350) }}')">
       <span class="avatar" style="background-image: url('{{ goal.author.avatar_url }}')"></span>
     </div>
@@ -26,7 +26,40 @@
     </div>
   </div>
 
-  <div class="activity-container">
+  <div class="activity-container pull-left">
+    <div class="create-activity" id="create-activity">
+      <form action="{{ url_for('goal.activity', gid=goal.id) }}" method="POST" id="createActivityForm">
+        {{ form.csrf_token }}
+        {{ form.activity() }}
+        {{ form.image_url(style="display:none") }}
+        {{ form.image_name(style="display:none") }}
+        <div class="tool">
+          <a href="javascript:void(0);" id="upbtn">图片</a>
+          <span><img src="" id="preview" /></span>
+          <button type="button" onclick="updateAvtivity()" id="submitBtn" class="btn btn-success pull-right">{{ _('Publish') }}</button>
+        </div>
+      </form>
+    </div>
+    <div class="activitiess">
+      {% for each in goal.activities %}
+      <div class="activity">
+        {{ each.activity }} 
+        <div class="activity-image">
+          <img src="{{ each.image.get_thumbnail(150, 150) }}" />
+        </div>
+        <div class="activity-time">{{ each.created | friendly_time('Y年M月d日 HH:mm') }}</div>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
+{%- endblock %}
+{%- block scripts %}
+<script src="{{ url_for('static', filename='components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/jquery-form/jquery.form.js') }}"></script>
+<script src="{{ url_for('static', filename='components/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/qiniu-js-sdk/src/qiniu.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/goal/activity.js')}}"></script>
 {%- endblock %}
