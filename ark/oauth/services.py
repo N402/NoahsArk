@@ -3,7 +3,7 @@ from flask import session, url_for, request, redirect
 from ark.exts import db
 from ark.exts.oauth.weibo import weibo_oauth
 from ark.account.models import Account, AccountOAuth
-from ark.account.services import get_oauth_user, signin_user
+from ark.account.services import get_oauth_user, signin_user, is_username_exist
 
 
 def do_oauth(service):
@@ -38,7 +38,7 @@ def _weibo_oauth_signup(uid, username, gender, avatar_url):
     return account
 
 
-def _weibo_oauth():
+def _weibo_oauth(username=None):
     if 'oauth_token' in session:
         oauth_token = session['oauth_token'][0]
         resp = weibo_oauth.get('account/get_uid.json')
@@ -46,7 +46,9 @@ def _weibo_oauth():
         oauth_account = get_oauth_user('weibo', str(uid))
         if not oauth_account:
             resp = weibo_oauth.get('users/show.json?uid=%s' % uid)
-            name = resp.data['name']
+            name = username or resp.data['name']
+            if is_username_exist(name):
+                return redirect(url_for('oauth.oauth_signup', service='weibo'))
             gender = resp.data['gender']
             avatar_url = resp.data['avatar_large']
             account = _weibo_oauth_signup(uid, name, gender, avatar_url)
@@ -54,6 +56,7 @@ def _weibo_oauth():
             account = oauth_account.account
         signin_user(account, remember=True)
         return redirect(url_for('account.profile'))
+    return redirect(url_for('master.index'))
 
 
 def _get_callback_url(service):

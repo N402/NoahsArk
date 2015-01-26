@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{%- block main %}
+<div id="main">
+  <div class="error">
+      用户名已存在, 请选择新用户名
+  </div>
+  <form id="signUpForm" action="{{ url_for('oauth.oauth_signup', service=service) }}" method="POST">
+    {{ form.csrf_token }}
+    {{ form.username.label }}
+    {{ form.username }}
+    <button>{{ _('Sign Up') }}</button>
+  </form>
+</div>
+{%- endblock %}

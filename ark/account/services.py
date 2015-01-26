@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta, date
 
+from flask import session
 from flask.ext.login import login_user, logout_user
 
 from ark.exts import db
-from ark.account.models import AccountOAuth
+from ark.account.models import AccountOAuth, Account
 from ark.account.models import AccountScoreLog, AccountActivityLog
 
 
@@ -86,8 +87,19 @@ def signin_user(user, remember=False):
 
 def signout_user(user):
     log_sign(user, 'signout')
+    session.pop('oauth_token', None)
     logout_user()
 
 
 def signup_user(user):
     add_signup_score(user)
+
+
+def get_by_username(username):
+    return Account.query.filter(Account.username==username).first()
+
+
+def is_username_exist(username):
+    if Account.query.filter(Account.username==username).count() > 0:
+        return True
+    return False

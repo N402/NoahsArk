@@ -14,19 +14,19 @@ EMAIL_RE = '(?:^[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+$)|(?:^$)'
 
 class SignUpForm(Form):
     username = StringField(
-        label=_(u'username'),
+        label=_(u'Username'),
         validators=[
             InputRequired(),
-            Length(min=6, max=30),
+            Length(min=4, max=30),
         ])
     email = EmailField(
-        label=_(u'email'),
+        label=_(u'Email'),
         validators=[
             InputRequired(message=_(u'please input your email')),
             Regexp(regex=EMAIL_RE, message=_(u'your email is invalid'))]
     )
     password = PasswordField(
-        label=_(u'password'),
+        label=_(u'Password'),
         validators=[
             InputRequired(),
             Length(min=6, max=30),
@@ -64,7 +64,7 @@ class SettingForm(Form):
         label=_(u'username'),
         validators=[
             InputRequired(),
-            Length(min=6, max=30),
+            Length(min=4, max=30),
         ])
 
 
