@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from ark.utils._time import friendly_time, format_datetime
+from ark.utils._time import friendly_time
 from ark.master.views import master_app
 from ark.account.views import account_app
 from ark.goal.views import goal_app
@@ -65,7 +65,6 @@ def init_error_pages(app):
 def init_jinja(app):
     _jinja_filters = {
         'friendly_time': friendly_time,
-        'date': format_datetime,
         'goal_state': (lambda state: Goal.GOAL_STATES[state]),
     }
     _jinja_global = {

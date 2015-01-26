@@ -2,17 +2,10 @@
 import time
 from datetime import datetime
 
-
-def format_datetime(date, fmt=None):
-    if not date:
-        return ''
-    if fmt:
-        return date.strftime(fmt)
-    else:
-        return date.strftime('%Y-%m-%d')
+from flask.ext.babel import format_datetime
 
 
-def friendly_time(time):
+def friendly_time(time, fallback_format=None):
     now = datetime.utcnow()
     if type(time) is datetime:
         diff = now - time
@@ -39,8 +32,4 @@ def friendly_time(time):
         return u'昨天'
     elif day_diff < 7:
         return u'%s 天前' % str(day_diff)
-    elif day_diff < 31:
-        return u'%s 周前' % str(day_diff / 7)
-    elif day_diff < 365:
-        return u'%s 月前' % str(day_diff / 30)
-    return u'%s 年前' % (day_diff / 365)
+    return format_datetime(time, fallback_format)
