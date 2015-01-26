@@ -80,84 +80,38 @@ ul, li
       line-height 50px
       padding 0 10px
 
-
-.main
-  width 80%
+#footer
+  position fixed
+  right 10px
+  bottom 0px
+  color #666
   margin 0 auto
-  margin-top 20px
-
-  .wrapper
-    clear both
-    display block
+  font-size 13px
+  text-align right
+  ul.nav
     overflow hidden
+    margin 0 auto
+    text-align center
+    li
+      display inline-block
+      &:after
+        content: '|'
+      &:last-child:after
+        content: ''
+      a
+        color #666
 
-  .title
-    height 18px
-    font-size 36px
-    border-bottom 1px solid #aaa
-    margin-top 40px
-    margin-bottom 40px
-    span
-      background #eee
-      padding-right 30px
+.btn-group.center
+  text-align center
+  margin 0 auto
 
-  .cards-container.normal-card
-    overflow hidden
-    background-size 100% 100%
-    transition-duration 0.25s
-    width 246px
-    height 146px
-    &:hover
-      transform translate3d(0,-4px,0px)
-      box-shadow 3px 3px 10px #aaa
-
-    .card
-      position relative
-      transition-duration 0.25s
-      background rgba(0,0,0,0.0)
-      height 100%
-      &:hover
-        background rgba(0,0,0,0.5)
-      &:hover .card-like
-        opacity 1
-      .card-title
-        color #fff
-        padding 15px
-        font-size 18px
-        text-overflow ellipsis
-      .card-like
-        transition-duration 0.25s
-        opacity 0
-        color #fff
-        right 15px
-        bottom 15px
-        font-weight bold
-        position absolute
-        .iconfont
-          color #ff0033
-
-  .cards-container
-    float left
-    margin 20px
-    border-radius 8px
-    img
-      width 250px
-      height 150px
-      border-radius 8px
-
-  .cards-container.create-card
-    width 246px
-    height 146px
-    border-radius 8px
-    border 2px dashed #aaa;
-
-    &:hover .card
-      color #aaa
-
-    .card
-      display block
-      cursor pointer
-      color #ccc
-      font-size 100px
-      line-height 150px
-      text-align center
+.btn-group
+  .btn
+    font-size 14px
+    padding 12px 30px
+    margin 0 10px
+    border-radius 3px
+    display inline-block
+    background #ababab
+  .btn-success
+    background #0dadb7

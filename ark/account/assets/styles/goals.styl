@@ -1,0 +1,131 @@
+.main
+  width 80%
+  margin 0 auto
+  margin-top 20px
+
+#account-goals.main
+  .wrapper
+    clear both
+    display block
+    overflow hidden
+
+  .title
+    height 18px
+    font-size 36px
+    border-bottom 1px solid #aaa
+    margin-top 40px
+    margin-bottom 40px
+    span
+      background #eee
+      padding-right 30px
+
+  .cards-container.normal-card
+    overflow hidden
+    background-size 100% 100%
+    transition-duration 0.25s
+    width 246px
+    height 146px
+    &:hover
+      transform translate3d(0,-4px,0px)
+      box-shadow 3px 3px 10px #aaa
+
+    .card
+      display block
+      position relative
+      transition-duration 0.25s
+      background rgba(0,0,0,0.0)
+      height 100%
+      &:hover
+        background rgba(0,0,0,0.5)
+      &:hover .card-like
+        opacity 1
+      .card-title
+        color #fff
+        padding 15px
+        font-size 18px
+        text-overflow ellipsis
+        text-shadow 0px 0px 3px #111
+      .card-like
+        transition-duration 0.25s
+        opacity 0
+        color #fff
+        right 15px
+        bottom 15px
+        font-weight bold
+        position absolute
+        .iconfont
+          color #ff0033
+
+  .cards-container
+    float left
+    margin 20px
+    border-radius 8px
+    img
+      width 250px
+      height 150px
+      border-radius 8px
+
+  .cards-container.create-card
+    width 246px
+    height 146px
+    border-radius 8px
+    border 2px dashed #aaa;
+
+    &:hover .card
+      color #aaa
+
+    .card
+      display block
+      cursor pointer
+      color #ccc
+      font-size 100px
+      line-height 150px
+      text-align center
+
+#account-goal.main
+  padding-top 40px
+  .goal
+    .banner-image
+      background-color #666
+      position relative
+      background-repeat no-repeat
+      margin 0
+      width 350px
+      height 170px
+      .avatar
+        background-size 100% 100%
+        width 90px
+        height 90px
+        border-radius 90px
+        border 3px solid rgba(255,255,255,0.7)
+        display block
+        position absolute
+        bottom -25px
+        left 130px
+    .goal-info
+      margin 0
+      width 350px
+      background #fff
+      padding-bottom 20px
+      .title
+        padding 40px 30px 0 30px
+        font-size 18px
+        font-weight bold
+      .state-like
+        padding 10px 30px
+        .state
+          font-size 14px
+          color #aaa
+        .like
+          color #aaa
+          font-size 14px
+          margin-left 40px
+          .icon-xiai
+            color #ff0000
+            font-size 12px
+      .goal-description
+        font-size 14px
+        padding 10px 30px
+        color #333
+    .btn-group
+      padding-top 16px
