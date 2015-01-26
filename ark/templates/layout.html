@@ -14,7 +14,48 @@
   {%- endblock %}
 </head>
 <body>
+  {%- block header %}
+  <div id="header">
+    <div id="logo"></div>
+    <div class="nav">
+      <ul>
+        <li class="my-goal"><i class="iconfont icon-profile"></i><a href="{{ url_for('account.goals') }}">{{ _('My Goals') }}</a></li>
+        <li class="chasers"><i class="iconfont icon-chaser"></i><a href="#">{{ _('Chasers') }}</a></li>
+        <li class="goals"><i class="iconfont icon-dream"></i><a href="#">{{ _('Dreams Wall') }}</a></li>
+      </ul>
+    </div>
+    <div class="profile">
+      <div class="avatar">
+        <img src="{{ current_user.avatar_url }}"/>
+      </div>
+      <div class="info">
+        {{ current_user.username }}
+        <i class="iconfont icon-small icon-unfold"></i>
+        <ul>
+          <li><i class="iconfont icon-setting"></i> 设置</li>
+          <li><i class="iconfont icon-msg"></i> 消息</li>
+          <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> 退出</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {%- endblock %}
   {%- block main %}
+  {%- endblock %}
+  {%- block footer %}
+  <div id="footer">
+    <div class="copyright">
+      <p>&copy; 2015 iChaser 追者</p>
+      <p>
+        <ul class="nav">
+          <li><a href="{{ url_for('master.about') }}">关于我们</a></li>
+          <li><a href="http://weibo.com/ichaser">官方微博</a></li>
+          <li><a href="{{ url_for('master.feedback') }}">意见反馈</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </p>
+    </div>
+  </div>
   {%- endblock %}
   {%- block script %}
   {%- endblock %}

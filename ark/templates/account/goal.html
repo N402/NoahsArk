@@ -1,0 +1,32 @@
+{%- extends 'layout.html' %}
+
+{%- block static %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/account/goals.css') }}" type="text/css" />
+{%- endblock %}
+
+{%- block main %}
+<div class="main" id="account-goal">
+  <div class="goal">
+    <div class="banner-image" style="background-image: url('{{ goal.image.get_thumbnail_limit_witdh(350) }}')">
+      <span class="avatar" style="background-image: url('{{ goal.author.avatar_url }}')"></span>
+    </div>
+    <div class="goal-info">
+      <div class="title">{{ goal.title }}</div>
+      <div class="state-like">
+        <span class="state">{{ goal.state }}</span>
+        <span class="like"><i class="iconfont icon-small icon-xiai"></i> {{ goal.like_count }}</span>
+      </div>
+      <div class="goal-description">
+        {{ goal.description }}
+      </div>
+      <div class="btn-group center">
+        <a href="#" class="btn btn-success">{{ _('Complete it') }}</a>
+        <a href="#" class="btn">{{ _('Give up') }}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-container">
+  </div>
+</div>
+{%- endblock %}

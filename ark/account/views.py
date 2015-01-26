@@ -9,6 +9,7 @@ from ark.account.forms import (
     SignUpForm, SignInForm, ChangePassword, AvatarForm)
 from ark.goal.services import get_charsing_goals, get_completed_goals
 from ark.account.models import Account
+from ark.goal.models import Goal
 from ark.account.services import (signin_user,  signout_user,
                                   signup_user, add_signin_score)
 
@@ -133,3 +134,12 @@ def goals():
         'account/goals.html',
         charsing_goals=charsing_goals,
         completed_goals=completed_goals,)
+
+
+@account_app.route('/account/goal/<gid>')
+@login_required
+def goal(gid):
+    goal = Goal.query.get_or_404(gid)
+    if goal.is_deleted:
+        return abort(404)
+    return render_template('account/goal.html', goal=goal,)
