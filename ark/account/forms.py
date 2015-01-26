@@ -2,14 +2,11 @@ from flask.ext.wtf import Form
 from flask.ext.wtf.html5 import EmailField
 from flask.ext.login import current_user
 from wtforms import StringField, PasswordField, BooleanField, SelectField
-from wtforms.validators import InputRequired, Email, Length, EqualTo, Regexp
+from wtforms.validators import InputRequired, Email, Length, EqualTo
 from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
 
 from ark.account.models import Account
-
-
-EMAIL_RE = '(?:^[a-zA-Z0-9+_\-\.]+@[0-9a-zA-Z][.-0-9a-zA-Z]*.[a-zA-Z]+$)|(?:^$)'
 
 
 class SignUpForm(Form):
@@ -23,7 +20,7 @@ class SignUpForm(Form):
         label=_(u'Email'),
         validators=[
             InputRequired(message=_(u'please input your email')),
-            Regexp(regex=EMAIL_RE, message=_(u'your email is invalid'))]
+            Email(message=_(u'your email is invalid'))]
     )
     password = PasswordField(
         label=_(u'Password'),
@@ -48,7 +45,7 @@ class SignInForm(Form):
         label=_(u'email'),
         validators=[
             InputRequired(message=_(u'please input your email')),
-            Regexp(regex=EMAIL_RE, message=_(u'your email is invalid'))]
+            Email(message=_(u'your email is invalid'))]
     )
     signin_password = PasswordField(
         label=_(u'password'),
