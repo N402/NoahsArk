@@ -45,9 +45,11 @@
       {% for each in activities %}
       <div class="activity">
         {{ each.activity }} 
+        {% if each.image %}
         <div class="activity-image">
           <img src="{{ each.image.get_thumbnail(150, 150) }}" />
         </div>
+        {% endif %}
         <div class="activity-time">{{ each.created | friendly_time('Y年M月d日 HH:mm') }}</div>
       </div>
       {% endfor %}

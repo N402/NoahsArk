@@ -9,9 +9,12 @@ $('#upImage').tooltipster 'update', '请上传图片'
 $('#createActivityForm').ajaxForm
   success: (resp) ->
     if resp.success
-      $('#activities').prepend($('<div class="activity"></div>').append($('#activity').val()).append(
-        $('<div class="activity-image"></div>').append(
-          $("<img src='#{$('#preview').attr('src')}' />"))).append($('<div class="activity-time">刚刚</div>')).fadeIn("slow"))
+      activity = $('<div class="activity"></div>').append($('#activity').val())
+      if $('#preview').attr('src').length > 0
+        activity.append($('<div class="activity-image"></div>').append(
+          $("<img src='#{$('#preview').attr('src')}' />")))
+      activity.append($('<div class="activity-time">刚刚</div>')).fadeIn("slow")
+      $('#activities').prepend(activity)
       $('#createActivityForm')[0].reset()
       document.getElementById('preview').src = ''
     else

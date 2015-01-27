@@ -42,18 +42,19 @@ def create():
 
     if form.validate_on_submit():
         url = get_url(form.data['image_url'])
-        image = GoalFile(
-            account_id=current_user.id,
-            name=form.data['image_name'],
-            file_url=url,
-        )
         goal = Goal(
             account_id=current_user.id,
             title=form.data['title'],
             description=form.data['description'],
             state='doing',
         )
-        goal.image = image
+        if url:
+            image = GoalFile(
+                account_id=current_user.id,
+                name=form.data['image_name'],
+                file_url=url,
+            )
+            goal.image = image
         db.session.add(goal)
         db.session.commit()
         add_create_goal_score(current_user)
@@ -134,16 +135,20 @@ def activity(gid):
     form = GoalActivityForm(request.form)
 
     if form.validate_on_submit():
-        url = get_url(form.data['image_url'])
-        image = GoalFile(
-            account_id=current_user.id,
-            name=form.data['image_name'],
-            file_url=url,
-        )
         activity = GoalActivity(activity=form.data['activity'])
-        activity.image = image
         activity.goal = goal
         activity.author = current_user
+        url = form.data['image_url']
+        if url:
+            image_url = get_url(url)
+            image = GoalFile(
+                account_id=current_user.id,
+                name=form.data['image_name'],
+                file_url=image_url,
+            )
+            activity.image = image
+        else:
+            activity.image = None
         db.session.add(activity)
         db.session.commit()
         add_update_activity_score(current_user)
