@@ -102,6 +102,9 @@ class Goal(db.Model):
         return (select([func.count(GoalRankingBan.id) > 0])
                 .where(GoalRankingBan.goal_id==cls.id).label('is_ban'))
 
+    def display_state(self):
+        return self.GOAL_STATES[self.state]
+
 
 class GoalActivity(db.Model):
 
