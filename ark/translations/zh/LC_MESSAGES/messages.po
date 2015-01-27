@@ -169,7 +169,7 @@ msgstr "图片"
 
 #: goal/models.py:17
 msgid "Doing"
-msgstr "执行中"
+msgstr "追逐中"
 
 #: goal/models.py:18
 msgid "Canceled"
