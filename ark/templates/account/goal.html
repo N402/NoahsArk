@@ -21,13 +21,16 @@
         {{ goal.description }}
       </div>
       <div class="btn-group center">
-        <a href="#" class="btn btn-success">{{ _('Complete it') }}</a>
-        <a href="#" class="btn">{{ _('Give up') }}</a>
+        {% if goal.is_doing() %}
+        <a href="javascript:void(0)" id="completeBtn" data-url="{{ url_for('goal.complete', gid=goal.id) }}" class="btn btn-success">{{ _('Complete it') }}</a>
+        <a href="javascript:void(0)" id="giveUpBtn" data-url="{{ url_for('goal.cancel', gid=goal.id) }}" class="btn">{{ _('Give up') }}</a>
+        {% endif %}
       </div>
     </div>
   </div>
 
   <div class="activity-container pull-left">
+    {% if goal.is_doing() %}
     <div class="create-activity" id="create-activity">
       <form action="{{ url_for('goal.activity', gid=goal.id) }}" method="POST" id="createActivityForm">
         {{ form.csrf_token }}
@@ -41,6 +44,7 @@
         </div>
       </form>
     </div>
+    {% endif %}
     <div class="activities" id="activities">
       {% for each in activities %}
       <div class="activity">

@@ -1,15 +1,14 @@
-import os
-from datetime import datetime
-
 from werkzeug import secure_filename
 from flask import Blueprint, render_template, redirect, request, abort, jsonify
 from flask import current_app
+from flask.ext.babel import lazy_gettext as _
 from flask.ext.login import current_user, login_required
 
 from ark.exts import db
 from ark.utils.qiniu import get_url
+from ark.utils.helper import jsonify_lazy
 from ark.account.services import (add_create_goal_score,
-   add_update_activity_score)
+   add_update_activity_score, add_finish_activity_score)
 from ark.goal.models import Goal, GoalActivity, GoalFile
 from ark.goal.forms import CreateGoalForm, GoalActivityForm
 
@@ -66,38 +65,36 @@ def create():
     return render_template('goal/create.html', form=form)
 
 
-@goal_app.route('/goals/<id>/cancel', methods=['DELETE'])
+@goal_app.route('/goals/<gid>/cancel', methods=['DELETE'])
 @login_required
-def cancel(id):
-    goal = Goal.query.get_or_404(id)
+def cancel(gid):
+    goal = Goal.query.get_or_404(gid)
 
-    if goal.user is not current_user:
+    if not goal.author.id == current_user.id:
         return abort(404)
 
-    if goal.state not in ('ready', 'doing', 'expired'):
-        return jsonify(success=False, messages=[_('cannot cancel goal')])
+    if goal.state not in ('doing',):
+        return jsonify_lazy(success=False, messages=[_('Cannot cancel goal')])
 
-    goal.state = 'canceled'
-    goal.operate_at = datetime.utcnow()
+    goal.cancel()
     db.session.add(goal)
     db.session.commit()
 
     return jsonify(success=True)
 
 
-@goal_app.route('/goals/<id>/finish', methods=['PATCH'])
+@goal_app.route('/goals/<gid>/complete', methods=['PUT'])
 @login_required
-def finish(id):
-    goal = Goal.query.get_or_404(id)
+def complete(gid):
+    goal = Goal.query.get_or_404(gid)
 
-    if goal.user is not current_user:
+    if not goal.author.id == current_user.id:
         return abort(404)
 
-    if goal.state not in ('doing', 'expired'):
-        return jsonify(success=False, messages=[_('cannot finish it')])
+    if goal.state not in ('doing',):
+        return jsonify_lazy(success=False, messages=[_('Cannot finish it')])
 
-    goal.state = 'finished'
-    goal.operate_at = datetime.utcnow()
+    goal.complete()
     db.session.add(goal)
     db.session.commit()
     add_finish_activity_score(current_user)

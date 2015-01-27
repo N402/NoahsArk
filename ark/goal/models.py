@@ -102,8 +102,19 @@ class Goal(db.Model):
         return (select([func.count(GoalRankingBan.id) > 0])
                 .where(GoalRankingBan.goal_id==cls.id).label('is_ban'))
 
+    def cancel(self):
+        self.state = 'canceled'
+        self.operate_at = datetime.utcnow()
+
+    def complete(self):
+        self.state = 'finished'
+        self.operate_at = datetime.utcnow()
+
     def display_state(self):
         return self.GOAL_STATES[self.state]
+
+    def is_doing(self):
+        return self.state == 'doing'
 
 
 class GoalActivity(db.Model):

@@ -61,3 +61,21 @@ updateAvtivity = ->
   $('#submitBtn').attr('disabled', 'disabled')
   $('#activity').attr('readonly', 'readonly')
   uploader.start()
+
+$('#giveUpBtn').click ->
+  $.ajax $(this).attr('data-url'),
+    type: 'DELETE'
+    cache: false
+    dataType: 'json'
+    success: (resp) ->
+      if resp.success
+        location.reload()
+
+$('#completeBtn').click ->
+  $.ajax $(this).attr('data-url'),
+    type: 'PUT'
+    cache: false
+    dataType: 'json'
+    success: (resp) ->
+      if resp.success
+        location.reload()

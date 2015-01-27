@@ -180,11 +180,11 @@ msgid "Finished"
 msgstr "已完成"
 
 #: goal/views.py:77
-msgid "cannot cancel goal"
+msgid "Cannot cancel goal"
 msgstr "不能取消目标"
 
 #: goal/views.py:96
-msgid "cannot finish it"
+msgid "Cannot finish it"
 msgstr "不能完成目标"
 
 #: goal/views.py:111
