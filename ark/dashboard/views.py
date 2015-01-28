@@ -3,12 +3,14 @@ from flask.ext.login import current_user
 
 from ark.exts import db, cache
 from ark.exts.login import su_required
+from ark.master.models import SystemSetting
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
 from ark.notification.models import Notification
 from ark.ranking.models import AccountRankingBan, GoalRankingBan
 from ark.dashboard.forms import (
-    AccountEditForm, GoalEditForm, GoalActivityEditForm, NotificationSendForm)
+    AccountEditForm, GoalEditForm, GoalActivityEditForm, NotificationSendForm,
+    SystemMsgForm)
 
 
 dashboard_app = Blueprint('dashboard', __name__)
@@ -212,3 +214,26 @@ def ranking_ban(gid):
             db.session.add(each)
     db.session.commit()
     return jsonify(success=True)
+
+
+@dashboard_app.route('/dashboard/system_msg', methods=('GET', 'POST'))
+@su_required
+def system_msgs():
+    form = SystemMsgForm()
+    first_login = SystemSetting.query.filter(
+        SystemSetting.key=='msg_first_login').first()
+    rollcall = SystemSetting.query.filter(
+        SystemSetting.key=='msg_rollcalled').first()
+    fail = SystemSetting.query.filter(
+        SystemSetting.key=='msg_failed').first()
+    if form.validate_on_submit():
+        first_login.value = form.data.get('msg_first_login', '')
+        rollcall.value = form.data.get('msg_rollcalled', '')
+        fail.value = form.data.get('msg_failed', '')
+        db.session.add(first_login)
+        db.session.add(rollcall)
+        db.session.add(fail)
+        db.session.commit()
+    return render_template(
+        'dashboard/system_msgs.html', form=form,
+        msgs=(first_login, rollcall, fail))

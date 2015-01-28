@@ -47,3 +47,9 @@ class NotificationSendForm(Form):
         query_factory=lambda: Account.query.filter(Account.state!='deleted').all(),
         get_label=lambda x: x.username,
     )
+
+
+class SystemMsgForm(Form):
+    msg_first_login = TextAreaField(label=_('First Login Message'))
+    msg_rollcalled = TextAreaField(label=_('Rollcalled Message'))
+    msg_failed = TextAreaField(label=_('Failed Message'))

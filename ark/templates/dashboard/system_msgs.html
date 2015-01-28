@@ -1,0 +1,30 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('System Message') }}{% endblock %}
+
+{% block content %}
+<div class="table-container form-container">
+  <form method="POST">
+    {{ form.csrf_token }}
+    <table class="notifications">
+      <thead>
+        <tr>
+          <th>{{ _('Key') }}</th>
+          <th>{{ _('Content') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in msgs %}
+        <tr>
+          <td>{{ msg.display_name() }}</td>
+          <td><textarea style="width: 400px; height: 100px; padding-left: 5px" name="{{ msg.key }}">{{ msg.value }}</textarea></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <section class="btn-group pull-right">
+      <button type="submit" class="btn btn-lg btn-success">{{ _('Submit') }}</button>
+    </section>
+  </form>
+</div>
+{% endblock %}

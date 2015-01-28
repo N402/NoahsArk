@@ -15,7 +15,7 @@ class Syncdb(Command):
             print 'Creating Database'
             db.create_all()
             first_login = SystemSetting(key='msg_first_login', value='')
-            called = SystemSetting(key='msg_called', value='')
+            called = SystemSetting(key='msg_rollcalled', value='')
             failed = SystemSetting(key='msg_failed', value='')
             db.session.add(first_login)
             db.session.add(called)

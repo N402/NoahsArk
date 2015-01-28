@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-28 17:32+0800\n"
+"POT-Creation-Date: 2015-01-29 03:11+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -24,6 +24,7 @@ msgstr "用户名"
 
 #: account/forms.py:20 templates/dashboard/account.html:18
 #: templates/dashboard/accounts.html:11 templates/dashboard/chasers.html:11
+#: templates/dashboard/system_msg.html:18
 msgid "Email"
 msgstr "邮箱"
 
@@ -136,12 +137,25 @@ msgid "Is Deleted"
 msgstr "已删除"
 
 #: dashboard/forms.py:44 templates/dashboard/notifications.html:17
+#: templates/dashboard/system_msgs.html:13
 msgid "Content"
 msgstr "内容"
 
 #: dashboard/forms.py:46 templates/dashboard/notifications.html:16
 msgid "Receivers"
 msgstr "收信人"
+
+#: dashboard/forms.py:53 master/models.py:11
+msgid "First Login Message"
+msgstr "首次登录"
+
+#: dashboard/forms.py:54 master/models.py:12
+msgid "Rollcalled Message"
+msgstr "被点名"
+
+#: dashboard/forms.py:55 master/models.py:13
+msgid "Failed Message"
+msgstr "挂科"
 
 #: goal/forms.py:9
 msgid "title"
@@ -151,7 +165,7 @@ msgstr "标题"
 msgid "description"
 msgstr "描述"
 
-#: goal/forms.py:22 goal/forms.py:34
+#: goal/forms.py:22 goal/forms.py:35
 msgid "Image Name"
 msgstr "图片名称"
 
@@ -159,11 +173,11 @@ msgstr "图片名称"
 msgid "Image URL"
 msgstr "图片地址"
 
-#: goal/forms.py:28 templates/dashboard/activity.html:30
+#: goal/forms.py:29 templates/dashboard/activity.html:30
 msgid "Activity"
 msgstr "动态"
 
-#: goal/forms.py:35
+#: goal/forms.py:36
 msgid "image"
 msgstr "图片"
 
@@ -179,15 +193,15 @@ msgstr "已取消"
 msgid "Finished"
 msgstr "已完成"
 
-#: goal/views.py:77
+#: goal/views.py:81
 msgid "Cannot cancel goal"
 msgstr "不能取消目标"
 
-#: goal/views.py:95
+#: goal/views.py:99
 msgid "Cannot finish it"
 msgstr "不能完成目标"
 
-#: goal/views.py:109
+#: goal/views.py:113
 msgid "Cannot like your goal"
 msgstr "您不能赞自己的目标"
 
@@ -224,40 +238,40 @@ msgstr "忍痛放弃"
 msgid "Publish"
 msgstr "发布"
 
-#: templates/account/goals.html:10
+#: templates/account/goals.html:11
 msgid "Create Goal"
 msgstr "创建目标"
 
-#: templates/account/goals.html:13
+#: templates/account/goals.html:15
 msgid "Goal Informantion"
 msgstr "目标信息"
 
-#: templates/account/goals.html:14
+#: templates/account/goals.html:16
 msgid "Goal Name"
 msgstr "目标名"
 
-#: templates/account/goals.html:15
+#: templates/account/goals.html:17
 msgid "Goal Description"
 msgstr "目标描述"
 
-#: templates/account/goals.html:24
+#: templates/account/goals.html:44
 msgid "Upload Image"
 msgstr "上传图片"
 
-#: templates/account/goals.html:28
+#: templates/account/goals.html:51
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/account/goals.html:29 templates/goal/activity.html:20
+#: templates/account/goals.html:52 templates/goal/activity.html:20
 #: templates/goal/create.html:24
 msgid "Create"
 msgstr "创建"
 
-#: templates/account/goals.html:36
+#: templates/account/goals.html:60
 msgid "Chasing"
 msgstr "追逐中"
 
-#: templates/account/goals.html:53
+#: templates/account/goals.html:77
 msgid "Completed"
 msgstr "已完成"
 
@@ -283,13 +297,15 @@ msgid "Sign In"
 msgstr "登录"
 
 #: templates/dashboard/account.html:3 templates/dashboard/accounts.html:3
-#: templates/dashboard/base.html:30
+#: templates/dashboard/base.html:31
 msgid "Account Manage"
 msgstr "账号管理"
 
 #: templates/dashboard/account.html:42 templates/dashboard/activity.html:46
 #: templates/dashboard/goal.html:53
 #: templates/dashboard/notification_send.html:25
+#: templates/dashboard/system_msg.html:42
+#: templates/dashboard/system_msgs.html:26
 msgid "Submit"
 msgstr "提交"
 
@@ -316,7 +332,7 @@ msgid "Edit"
 msgstr "编辑"
 
 #: templates/dashboard/activities.html:3 templates/dashboard/activity.html:3
-#: templates/dashboard/base.html:32
+#: templates/dashboard/base.html:33
 msgid "Activity Manage"
 msgstr "动态管理"
 
@@ -348,19 +364,23 @@ msgid "Dashboard"
 msgstr "控制面板"
 
 #: templates/dashboard/base.html:29
+msgid "System Messages"
+msgstr "系统消息"
+
+#: templates/dashboard/base.html:30
 msgid "Notifications"
 msgstr "通知"
 
-#: templates/dashboard/base.html:31 templates/dashboard/goal.html:3
+#: templates/dashboard/base.html:32 templates/dashboard/goal.html:3
 #: templates/dashboard/goals.html:3
 msgid "Goal Manage"
 msgstr "目标管理"
 
-#: templates/dashboard/base.html:33
+#: templates/dashboard/base.html:34
 msgid "Chasers Ranking "
 msgstr "追逐者排名"
 
-#: templates/dashboard/base.html:34
+#: templates/dashboard/base.html:35
 msgid "Goals Ranking"
 msgstr "目标排名"
 
@@ -421,4 +441,12 @@ msgstr "所有账户"
 #: templates/dashboard/ranking.html:3
 msgid "Goal Ranking Manage"
 msgstr "目标排名管理"
+
+#: templates/dashboard/system_msg.html:3 templates/dashboard/system_msgs.html:3
+msgid "System Message"
+msgstr "系统消息"
+
+#: templates/dashboard/system_msgs.html:12
+msgid "Key"
+msgstr "键"
 
