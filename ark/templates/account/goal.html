@@ -7,7 +7,7 @@
 
 {%- block main %}
 <div class="main" id="account-goal">
-  <div class="goal pull-left">
+  <div class="goal">
     <div class="banner-image" style="background-image: url('{{ goal.image.get_thumbnail_limit_width(350) }}')">
       <span class="avatar" style="background-image: url('{{ goal.author.avatar_url }}')"></span>
     </div>
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div class="activity-container pull-left">
+  <div class="activity-container">
     {% if goal.is_doing() %}
     <div class="create-activity" id="create-activity">
       <form action="{{ url_for('goal.activity', gid=goal.id) }}" method="POST" id="createActivityForm">
