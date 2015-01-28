@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-27 01:57+0800\n"
+"POT-Creation-Date: 2015-01-28 17:32+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -91,7 +91,7 @@ msgstr "男性"
 msgid "Female"
 msgstr "女性"
 
-#: account/views.py:42
+#: account/views.py:43
 msgid "email or password is wrong"
 msgstr "邮箱或密码错误"
 
@@ -183,11 +183,11 @@ msgstr "已完成"
 msgid "Cannot cancel goal"
 msgstr "不能取消目标"
 
-#: goal/views.py:96
+#: goal/views.py:95
 msgid "Cannot finish it"
 msgstr "不能完成目标"
 
-#: goal/views.py:111
+#: goal/views.py:109
 msgid "Cannot like your goal"
 msgstr "您不能赞自己的目标"
 
@@ -212,23 +212,52 @@ msgstr "梦想墙"
 msgid "Upload"
 msgstr "上传"
 
-#: templates/account/goal.html:23
+#: templates/account/goal.html:25
 msgid "Complete it"
 msgstr "我已完成"
 
-#: templates/account/goal.html:24
+#: templates/account/goal.html:26
 msgid "Give up"
 msgstr "忍痛放弃"
 
-#: templates/account/goal.html:34
+#: templates/account/goal.html:43
 msgid "Publish"
 msgstr "发布"
 
 #: templates/account/goals.html:10
+msgid "Create Goal"
+msgstr "创建目标"
+
+#: templates/account/goals.html:13
+msgid "Goal Informantion"
+msgstr "目标信息"
+
+#: templates/account/goals.html:14
+msgid "Goal Name"
+msgstr "目标名"
+
+#: templates/account/goals.html:15
+msgid "Goal Description"
+msgstr "目标描述"
+
+#: templates/account/goals.html:24
+msgid "Upload Image"
+msgstr "上传图片"
+
+#: templates/account/goals.html:28
+msgid "Cancel"
+msgstr "取消"
+
+#: templates/account/goals.html:29 templates/goal/activity.html:20
+#: templates/goal/create.html:24
+msgid "Create"
+msgstr "创建"
+
+#: templates/account/goals.html:36
 msgid "Chasing"
 msgstr "追逐中"
 
-#: templates/account/goals.html:27
+#: templates/account/goals.html:53
 msgid "Completed"
 msgstr "已完成"
 
@@ -392,8 +421,4 @@ msgstr "所有账户"
 #: templates/dashboard/ranking.html:3
 msgid "Goal Ranking Manage"
 msgstr "目标排名管理"
-
-#: templates/goal/activity.html:20 templates/goal/create.html:24
-msgid "Create"
-msgstr "创建"
 
