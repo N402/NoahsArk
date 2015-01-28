@@ -9,7 +9,7 @@ from ark.utils.qiniu import get_url
 from ark.utils.helper import jsonify_lazy
 from ark.account.services import (add_create_goal_score,
    add_update_activity_score, add_finish_activity_score)
-from ark.goal.models import Goal, GoalActivity, GoalFile
+from ark.goal.models import Goal, GoalActivity, GoalFile, GoalLikeLog
 from ark.goal.forms import CreateGoalForm, GoalActivityForm
 
 
@@ -106,27 +106,31 @@ def complete(gid):
     return jsonify(success=True)
 
 
-@goal_app.route('/goals/<id>/like', methods=['POST', 'DELETE'])
-def like(id):
-    goal = Goal.query.get_or_404(id)
-    if goal.user is current_user:
+@goal_app.route('/goals/<gid>/like', methods=['POST', 'DELETE'])
+def like(gid):
+    goal = Goal.query.get_or_404(gid)
+    if goal.author is current_user:
         return jsonify(success=False, messages=_('Cannot like your goal'))
 
     if request.method == 'POST':
-        like_log = GoalLikeLog(goal_id=id, account_id=current_user.id)
-        db.session.add(like_log)
-        db.session.commit()
-        return jsonify(success=True)
+        if not goal.is_like_by(current_user):
+            like_log = GoalLikeLog(goal_id=gid, account_id=current_user.id)
+            db.session.add(like_log)
+            db.session.commit()
+        return jsonify(success=True, like_count=goal.like_count)
 
-    if request.methos == 'DELETE':
-        log_id = request.form['log_id']
-        log = GoalLikeLog.query.get_or_404(log_id)
-        if not log.account_id is current_user.id:
+    if request.method == 'DELETE':
+        log = (GoalLikeLog.query
+               .filter(GoalLikeLog.goal_id==gid)
+               .filter(GoalLikeLog.account_id==current_user.id)
+               .filter(GoalLikeLog.is_deleted==False)
+               .first())
+        if not log:
             return abort(404)
         log.is_deleted = True
         db.session.add(log)
         db.session.commit()
-        return jsonify(success=True)
+        return jsonify(success=True, like_count=goal.like_count)
 
 
 @goal_app.route('/goals/<gid>/activity', methods=['GET', 'POST'])

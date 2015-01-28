@@ -15,7 +15,14 @@
       <div class="title">{{ goal.title }}</div>
       <div class="state-like">
         <span class="state">{{ goal.display_state() }}</span>
-        <span class="like"><i class="iconfont icon-small icon-xiai"></i> {{ goal.like_count }}</span>
+        <span class="like">
+          <a href="javascript:void(0)" id="likeBtn"
+             data-url="{{ url_for('goal.like', gid=goal.id) }}"
+             {% if goal.is_like_by(current_user) %}data-status="liked"{% else %}data-status="unlike"{% endif %}>
+             <i class="iconfont icon-small icon-xiai {% if goal.is_like_by(current_user) %}liked {% endif %}"></i>
+          </a>
+          <span id="likeCount">{{ goal.like_count }}</span>
+        </span>
       </div>
       <div class="goal-description">
         {{ goal.description }}

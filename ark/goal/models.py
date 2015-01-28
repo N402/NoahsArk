@@ -116,6 +116,12 @@ class Goal(db.Model):
     def is_doing(self):
         return self.state == 'doing'
 
+    def is_like_by(self, user):
+        count = (self.likes
+                .filter(GoalLikeLog.account_id==user.id)
+                .filter(GoalLikeLog.is_deleted==False).count())
+        return count > 0
+
 
 class GoalActivity(db.Model):
 
@@ -134,7 +140,6 @@ class GoalActivity(db.Model):
         'Account', uselist=False,
         backref=db.backref('updates', uselist=True, lazy='dynamic',
                            order_by='desc(GoalActivity.created)'))
-        
 
 
 class GoalLikeLog(db.Model):

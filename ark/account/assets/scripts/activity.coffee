@@ -79,3 +79,22 @@ $('#completeBtn').click ->
     success: (resp) ->
       if resp.success
         location.reload()
+
+$('#likeBtn').click ->
+  status = $(this).attr('data-status')
+  if status == 'unlike'
+    method = 'POST'
+  else
+    method = 'DELETE'
+  $.ajax $(this).attr('data-url'),
+    type: method
+    cache: false
+    dataType: 'json'
+    success: (resp) ->
+      if method == 'POST'
+        $('#likeBtn i.icon-xiai').addClass('liked')
+        $('#likeBtn').attr('data-status', 'liked')
+      else
+        $('#likeBtn i.icon-xiai').removeClass('liked')
+        $('#likeBtn').attr('data-status', 'unlike')
+      $('#likeCount').html(resp.like_count)
