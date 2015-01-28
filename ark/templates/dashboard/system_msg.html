@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ _('System Message') }}{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<div id="info-container" class="info-bar" style="display: none"></div>
+<div class="form-container">
+  <form action="{{ url_for('dashboard.system_msg', mid=msg.id) }}" id="systemMessageEditForm">
+    {{ form.csrf_token }}
+    <section>
+      {{ form.username.label }}
+      {{ form.username() }}
+    </section>
+    <section class="disabled">
+      <label>{{ _('Email') }}</label>
+      <input type="text" disabled="disabled" value="{{ account.email }}" readonly="readonly" />
+    </section>
+    <section>
+      {{ form.password.label }}
+      {{ form.password() }}
+    </section>
+    <section>
+      {{ form.gender.label }}
+      {{ form.gender() }}
+    </section>
+    <section>
+      {{ form.state.label }}
+      {{ form.state() }}
+    </section>
+    <section>
+      {{ form.is_superuser.label }}
+    {%- if current_user == account %}
+      {{ form.is_superuser(disabled="disabled") }} (Cannot edit yourself)
+    {%- else %}
+      {{ form.is_superuser() }}
+    {%- endif %}
+    </section>
+    <section class="btn-group">
+      <button type="submit" class="btn btn-lg btn-success">{{ _('Submit') }}</button>
+      <a href="{{ url_for('dashboard.accounts') }}" class="btn btn-lg">Cancel</a>
+    </section>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='scripts/dashboard/account.js') }}"></script>
+{% endblock %}
+
