@@ -23,7 +23,7 @@
     overflow hidden
     background-position center center
     transition-duration 0.25s
-    width 246px
+    width 245px
     height 146px
     &:hover
       transform translate3d(0,-4px,0px)
@@ -172,6 +172,122 @@
           width 150px
           height 150px
       .activity-time
-        margin-top 10px
         color #999
         font-size 14px
+        margin-top 10px
+
+#mask
+  position fixed
+  top 0
+  left 0
+  width 100%
+  height 100%
+  z-index 1
+  background rgba(0,0,0,0.6)
+
+#createGoal
+  position fixed
+  top 50%
+  left 50%
+  width 600px
+  height 560px
+  padding 20px
+  margin-top -300px
+  margin-left -300px
+  background #fff
+  z-index 500
+  border-radius 6px
+  overflow hidden
+
+  h2
+    color #888
+    margin 0
+    padding 0
+    padding-bottom 10px
+    border-bottom 1px solid #ccc
+
+  h3
+    color #999
+    margin-top 24px
+    margin-bottom 15px
+
+  input, textarea
+    margin-bottom 12px
+  textarea[name="description"]
+    height 6em
+
+  .pics
+    position relative
+    margin-top 18px
+    margin-bottom 18px
+    height 110px
+    .pic
+      position absolute
+      width 180px
+      height 100px
+      overflow hidden
+      border none
+      img
+        border none
+        width 100%
+        height 100%
+
+    .pic-selected:not(#createGoalChoosePicBtn)
+      border 2px solid #0dadb7
+      box-shadow 0px 0px 10px #999
+      height 96px
+      width 176px
+      span
+        top -10px
+        left -10px
+        color #fff
+        text-align center
+        line-height 46px
+        font-size 24px
+        position absolute
+        background #0dadb7
+        display block
+        height 40px
+        width 40px;
+        border-radius 40px
+
+    #createGoalChoosePicBtn.pic-selected
+      border 2px solid #0dadb7
+      transition-duration 0.25s
+      opacity 0
+      &:hover
+        opacity 1
+        background rgba(0,0,0,0.7)
+
+    .pic-left
+      left 0
+
+    .pic-right
+      right 0
+
+    .pic-middle
+      left 50%
+      margin-left -90px
+
+  .btn-group
+    a#createCancelBtn
+      color #999
+      font-size 14px
+      padding 40px
+      font-weight bold
+
+  #createGoalChoosePicBtn
+    border 2px solid #ddd
+    height 96px
+    width 176px
+    cursor pointer
+    color #ccc
+    text-align center
+    p
+      margin 0
+      font-size 60px
+      padding-top 30px
+      padding-bottom 10px
+      line-height 20px
+    span
+      letter-spacing 8px

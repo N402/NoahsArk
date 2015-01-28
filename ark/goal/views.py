@@ -1,6 +1,6 @@
 from werkzeug import secure_filename
 from flask import Blueprint, render_template, redirect, request, abort, jsonify
-from flask import current_app
+from flask import current_app, url_for
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.login import current_user, login_required
 
@@ -40,7 +40,7 @@ def create():
     form = CreateGoalForm()
 
     if form.validate_on_submit():
-        url = get_url(form.data['image_url'])
+        url = form.data['image_url']
         goal = Goal(
             account_id=current_user.id,
             title=form.data['title'],
@@ -48,6 +48,10 @@ def create():
             state='doing',
         )
         if url:
+            if form.data['is_external_image'] == 'False':
+                url = get_url(url, url_for('static', filename=''))
+            else:
+                url = get_url(url)
             image = GoalFile(
                 account_id=current_user.id,
                 name=form.data['image_name'],

@@ -10,7 +10,7 @@ from ark.account.forms import (
 from ark.goal.services import get_charsing_goals, get_completed_goals
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
-from ark.goal.forms import GoalActivityForm
+from ark.goal.forms import GoalActivityForm, CreateGoalForm
 from ark.account.services import (signin_user,  signout_user,
                                   signup_user, add_signin_score)
 
@@ -129,10 +129,11 @@ def password():
 @account_app.route('/account/goals')
 @login_required
 def goals():
+    form = CreateGoalForm()
     charsing_goals = get_charsing_goals()
     completed_goals = get_completed_goals()
     return render_template(
-        'account/goals.html',
+        'account/goals.html', form=form,
         charsing_goals=charsing_goals,
         completed_goals=completed_goals,)
 

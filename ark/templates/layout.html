@@ -16,7 +16,7 @@
 <body>
   {%- block header %}
   <div id="header">
-    <div id="logo"></div>
+    <a href="{{ url_for('master.index') }}" id="logo"></a>
     <div class="nav">
       <ul>
         <li class="my-goal"><i class="iconfont icon-profile"></i><a href="{{ url_for('account.goals') }}">{{ _('My Goals') }}</a></li>

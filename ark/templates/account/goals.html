@@ -1,10 +1,60 @@
 {% extends 'layout.html' %}
 
 {%- block static %}
+<link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/account/goals.css') }}" type="text/css" />
 {%- endblock %}
 
 {%- block main %}
+<div id="mask" class="display-hide"></div>
+<div id="createGoal" class="create-goal display-hide">
+  <h2>{{ _('Create Goal') }}</h2>
+  <div class="goal-content">
+    <form action="{{ url_for('goal.create') }}" method="post" id="createGoalForm">
+      {{ form.csrf_token }}
+      <h3>{{ _('Goal Informantion') }}</h3>
+      {{ form.title(placeholder=_('Goal Name')) }}
+      {{ form.description(placeholder=_('Goal Description')) }}
+      {{ form.image_url(style="display:none") }}
+      {{ form.image_name(style="display:none") }}
+      {{ form.is_external_image(style="display:none", value="True") }}
+      <div class="pics">
+        <a href="javascript:void(0)" class="pic pic-left" data="0">
+          <span class="selected-circle display-hide">√</span>
+          <img src="{{ url_for('static', filename='images/pics/0.png') }}" />
+        </a>
+        <a href="javascript:void(0)" class="pic pic-middle" data="1">
+          <span class="selected-circle display-hide">√</span>
+          <img src="{{ url_for('static', filename='images/pics/1.png') }}" />
+        </a>
+        <a href="javascript:void(0)" class="pic pic-right" data="2">
+          <span class="selected-circle display-hide">√</span>
+          <img src="{{ url_for('static', filename='images/pics/2.png') }}" />
+        </a>
+      </div>
+      <div class="pics">
+        <a href="javascript:void(0)" class="pic pic-left" data="3">
+          <span class="selected-circle display-hide">√</span>
+          <img src="{{ url_for('static', filename='images/pics/3.png') }}" />
+        </a>
+        <a href="javascript:void(0)" class="pic pic-middle" data="4">
+          <span class="selected-circle display-hide">√</span>
+          <img src="{{ url_for('static', filename='images/pics/4.png') }}" />
+        </a>
+        <a href="javascript:void(0)" class="pic pic-right" id="createGoalChoosePicBtn"><p>+</p><span>{{ _('Upload Image') }}</span></a>
+        <a class="pic pic-right pic-selected display-hide" id="createGoalPrevewContainer">
+          <span class="selected-circle display-hide">√</span>
+          <img src="" id="createGoalPriview" />
+        </a>
+      </div>
+      <div class="btn-group pull-right">
+        <a href="javascript:void(0)" id="createCancelBtn">{{ _('Cancel') }}</a>
+        <button type="button" id="createBtn" class="btn btn-success">{{ _('Create') }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="main" id="account-goals">
   <div class="wrapper">
     <div class="title"><span>{{ _('Chasing') }}</span></div>
@@ -18,7 +68,7 @@
       </li>
       {% endfor %}
       <li class="cards-container create-card">
-        <a href="{{ url_for('goal.create') }}" class="card">+</a>
+        <a href="javascript:void(0)" class="card" id="openModalBtn">+</a>
       </li>
     </ul>
   </div>
@@ -38,4 +88,14 @@
   </div>
   {% endif %}
 </div>
+{%- endblock %}
+
+{%- block scripts %}
+<script src="{{ url_for('static', filename='components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/jquery-form/jquery.form.js') }}"></script>
+<script src="{{ url_for('static', filename='components/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='components/qiniu-js-sdk/src/qiniu.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/account/createGoal.js')}}"></script>
 {%- endblock %}

@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, TextAreaField, DateTimeField
+from wtforms import StringField, TextAreaField, DateTimeField, BooleanField
 from wtforms.validators import InputRequired, Length
 from flask.ext.babel import lazy_gettext as _
 
@@ -21,6 +21,7 @@ class CreateGoalForm(Form):
     )
     image_name = StringField(_('Image Name'))
     image_url = StringField(_('Image URL'), validators=[InputRequired()])
+    is_external_image = StringField()
 
 
 class GoalActivityForm(Form):
