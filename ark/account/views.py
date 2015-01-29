@@ -18,7 +18,7 @@ from ark.account.services import (signin_user,  signout_user,
 account_app = Blueprint('account', __name__)
 
 
-@account_app.route('/account/signin', methods=['GET', 'POST'])
+@account_app.route('/account/signin', methods=('POST',))
 def signin():
     if not current_user.is_anonymous():
         return redirect(url_for('goal.goals', uid=current_user.id))
@@ -50,7 +50,7 @@ def signin():
     return render_template('account/signin.html', form=form)
 
 
-@account_app.route('/account/signup', methods=['GET', 'POST'])
+@account_app.route('/account/signup', methods=('POST',))
 def signup():
     if not current_user.is_anonymous():
         return redirect(url_for('goal.goals', uid=current_user.id))
