@@ -110,5 +110,6 @@ class ChangePassword(Form):
         ])
 
     def validate_old_password(form, field):
-        if not current_user.check_password(field.data):
+        if (current_user.hashed_password and
+            not current_user.check_password(field.data)):
             raise ValidationError(_(u'old password is wrong'))

@@ -52,10 +52,12 @@
     <div class="tab-container display-hide" id="password-tab">
       <form id="passwordForm" action="{{ url_for('account.password') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-        <section>
+        {% if current_user.hashed_password %}
+         <section>
           <label>{{ _('Old Password') }}</label>
           <input type="password" value="" name="old_password" id="old_password" />
         </section>
+        {% endif %}
         <section>
           <label>{{ _('New Password') }}</label>
           <input type="password" value="" name="new_password" id="new_password" />
