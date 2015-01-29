@@ -78,7 +78,7 @@
     <ul>
       {% for each in completed_goals %}
       <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail_limit_width(250)}}')">
-        <a class="card" href="{{ url_for('goals.view_goal', uid=each.author.id, gid=each.id) }}">
+        <a class="card" href="{{ url_for('goal.view_goal', uid=each.author.id, gid=each.id) }}">
           <div class="card-title">{{ each.title }}</div>
           <div class="card-like"><i class="iconfont icon-small icon-xiai"></i> {{ each.like_count }}</div>
         </a>

@@ -37,7 +37,7 @@
   </div>
 
   <div class="activity-container">
-    {% if goal.is_doing() %}
+    {% if goal.is_doing() and goal.is_belong_to(current_user) %}
     <div class="create-activity" id="create-activity">
       <form action="{{ url_for('goal.activity', gid=goal.id) }}" method="POST" id="createActivityForm">
         {{ form.csrf_token }}
