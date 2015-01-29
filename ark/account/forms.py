@@ -93,7 +93,6 @@ class ChangePassword(Form):
     old_password = PasswordField(
         label=_(u'old password'),
         validators=[
-            InputRequired(),
             Length(min=6, max=30),
         ],
     )
