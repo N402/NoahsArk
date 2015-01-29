@@ -21,7 +21,7 @@ account_app = Blueprint('account', __name__)
 @account_app.route('/account/signin', methods=['GET', 'POST'])
 def signin():
     if not current_user.is_anonymous():
-        return redirect(url_for('account.profile'))
+        return redirect(url_for('goal.goals', uid=current_user.id))
 
     form = SignInForm(request.form)
 
@@ -53,7 +53,7 @@ def signin():
 @account_app.route('/account/signup', methods=['GET', 'POST'])
 def signup():
     if not current_user.is_anonymous():
-        return redirect(url_for('account.profile'))
+        return redirect(url_for('goal.goals', uid=current_user.id))
 
     form = SignUpForm(request.form)
 
