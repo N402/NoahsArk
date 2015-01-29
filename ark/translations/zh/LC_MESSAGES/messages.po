@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-29 21:03+0800\n"
+"POT-Creation-Date: 2015-01-30 04:24+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,70 +17,83 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: account/forms.py:14 dashboard/forms.py:12 oauth/forms.py:11
-#: templates/dashboard/accounts.html:12 templates/dashboard/chasers.html:12
+#: account/forms.py:15 dashboard/forms.py:12 oauth/forms.py:11
+#: templates/layout.html:39 templates/dashboard/accounts.html:12
+#: templates/dashboard/chasers.html:12
 msgid "Username"
 msgstr "用户名"
 
-#: account/forms.py:20 templates/dashboard/account.html:18
-#: templates/dashboard/accounts.html:11 templates/dashboard/chasers.html:11
-#: templates/dashboard/system_msg.html:18
+#: account/forms.py:21 account/forms.py:62 templates/layout.html:35
+#: templates/dashboard/account.html:18 templates/dashboard/accounts.html:11
+#: templates/dashboard/chasers.html:11 templates/dashboard/system_msg.html:18
 msgid "Email"
 msgstr "邮箱"
 
-#: account/forms.py:22 account/forms.py:47
+#: account/forms.py:23 account/forms.py:48
 msgid "please input your email"
 msgstr "请输入您的邮箱"
 
-#: account/forms.py:23 account/forms.py:48
+#: account/forms.py:24 account/forms.py:49
 msgid "your email is invalid"
 msgstr "您的邮箱不合法"
 
-#: account/forms.py:26 dashboard/forms.py:19
+#: account/forms.py:27 dashboard/forms.py:19
 msgid "Password"
 msgstr "密码"
 
-#: account/forms.py:35
+#: account/forms.py:36 account/forms.py:78
 msgid "Email exists"
 msgstr "邮箱已存在"
 
-#: account/forms.py:40
+#: account/forms.py:41 account/forms.py:83
 msgid "Username exists"
 msgstr "用户名已存在"
 
-#: account/forms.py:45
+#: account/forms.py:46
 msgid "email"
 msgstr "邮箱"
 
-#: account/forms.py:51
+#: account/forms.py:52
 msgid "password"
 msgstr "密码"
 
-#: account/forms.py:56
+#: account/forms.py:57
 msgid "remember me"
 msgstr "记住我"
 
-#: account/forms.py:61
+#: account/forms.py:64
+msgid "Your Email is invalid"
+msgstr "您的邮箱不合法"
+
+#: account/forms.py:66
 msgid "username"
 msgstr "用户名"
 
-#: account/forms.py:70
+#: account/forms.py:72
+msgid "whatsup"
+msgstr "个人介绍"
+
+#: account/forms.py:88
 msgid "avatar"
 msgstr "头像"
 
-#: account/forms.py:76
+#: account/forms.py:94
 msgid "old password"
 msgstr "原始密码"
 
-#: account/forms.py:83
+#: account/forms.py:101
 msgid "new password"
 msgstr "新密码"
 
-#: account/forms.py:89
+#: account/forms.py:107
 msgid "confirm password"
 msgstr "确认密码"
 
-#: account/forms.py:96
+#: account/forms.py:109
+msgid "Confirm password not match"
+msgstr "确认密码不匹配"
+
+#: account/forms.py:115
 msgid "old password is wrong"
 msgstr "原始密码不正确"
 
@@ -92,7 +105,7 @@ msgstr "男性"
 msgid "Female"
 msgstr "女性"
 
-#: account/views.py:43
+#: account/views.py:45
 msgid "email or password is wrong"
 msgstr "邮箱或密码错误"
 
@@ -206,49 +219,98 @@ msgstr "不能完成目标"
 msgid "Username %(username)s exists"
 msgstr "用户名 %(username)s 已存在"
 
-#: templates/layout.html:22
-msgid "My Goals"
-msgstr "我的"
-
-#: templates/layout.html:23
-msgid "Chasers"
-msgstr "追逐者"
-
-#: templates/layout.html:24
-msgid "Dreams Wall"
-msgstr "梦想墙"
-
-#: templates/layout.html:42
+#: templates/layout.html:24 templates/layout.html:96
 msgid "Settings"
 msgstr "设置"
 
+#: templates/layout.html:28
+msgid "Profile"
+msgstr "个人设置"
+
+#: templates/layout.html:29
+msgid "Change Password"
+msgstr "修改密码"
+
 #: templates/layout.html:43
+msgid "Whats up"
+msgstr "个人介绍"
+
+#: templates/layout.html:46 templates/layout.html:70
+msgid "Successful"
+msgstr "成功"
+
+#: templates/layout.html:48 templates/layout.html:72
+msgid "Save"
+msgstr "保存"
+
+#: templates/layout.html:49 templates/layout.html:73
+#: templates/goal/goals.html:50
+msgid "Cancel"
+msgstr "取消"
+
+#: templates/layout.html:58
+msgid "Old Password"
+msgstr "原始密码"
+
+#: templates/layout.html:63
+msgid "New Password"
+msgstr "新密码"
+
+#: templates/layout.html:67
+msgid "Confirm Password"
+msgstr "确认密码"
+
+#: templates/layout.html:82
+msgid "My Goals"
+msgstr "我的"
+
+#: templates/layout.html:83
+msgid "Chasers"
+msgstr "追逐者"
+
+#: templates/layout.html:84
+msgid "Dreams Wall"
+msgstr "梦想墙"
+
+#: templates/layout.html:97
 msgid "Messages"
 msgstr "消息"
 
-#: templates/layout.html:44
+#: templates/layout.html:98
 msgid "Signout"
 msgstr "退出"
 
-#: templates/layout.html:58
+#: templates/layout.html:118
 msgid "About Us"
 msgstr "关于我们"
 
-#: templates/layout.html:59
+#: templates/layout.html:119
 msgid "Weibo"
 msgstr "官方微博"
 
-#: templates/layout.html:60
+#: templates/layout.html:120
 msgid "Feedback"
 msgstr "反馈"
 
-#: templates/layout.html:61
+#: templates/layout.html:121
 msgid "Contact Us"
 msgstr "联系我们"
 
 #: templates/account/avatar.html:12
 msgid "Upload"
 msgstr "上传"
+
+#: templates/account/messages.html:9
+msgid "My Messages"
+msgstr "我的消息"
+
+#: templates/account/messages.html:23
+msgid "Prev Page"
+msgstr "上一页"
+
+#: templates/account/messages.html:27
+msgid "Next Page"
+msgstr "下一页"
 
 #: templates/account/signin.html:13
 msgid "Sign in"
@@ -284,7 +346,7 @@ msgstr "账号管理"
 msgid "Submit"
 msgstr "提交"
 
-#: templates/dashboard/accounts.html:14 templates/goal/chasers.html:19
+#: templates/dashboard/accounts.html:14 templates/goal/chasers.html:20
 msgid "Credit"
 msgstr "学分"
 
@@ -425,60 +487,55 @@ msgstr "系统消息"
 msgid "Key"
 msgstr "键"
 
-#: templates/goal/activity.html:20 templates/goal/create.html:24
-#: templates/goal/goals.html:52
-msgid "Create"
-msgstr "创建"
-
-#: templates/goal/chasers.html:24
+#: templates/goal/chasers.html:25
 msgid "Goals Count"
 msgstr "目标"
 
-#: templates/goal/chasers.html:29
+#: templates/goal/chasers.html:30
 msgid "Like Count"
 msgstr "被赞"
 
-#: templates/goal/goal.html:32
+#: templates/goal/goal.html:31
 msgid "Complete it"
 msgstr "我已完成"
 
-#: templates/goal/goal.html:33
+#: templates/goal/goal.html:32
 msgid "Give up"
 msgstr "忍痛放弃"
 
-#: templates/goal/goal.html:50
+#: templates/goal/goal.html:49
 msgid "Publish"
 msgstr "发布"
 
-#: templates/goal/goals.html:11
+#: templates/goal/goals.html:10
 msgid "Create Goal"
 msgstr "创建目标"
 
-#: templates/goal/goals.html:15
+#: templates/goal/goals.html:14
 msgid "Goal Informantion"
 msgstr "目标信息"
 
-#: templates/goal/goals.html:16
+#: templates/goal/goals.html:15
 msgid "Goal Name"
 msgstr "目标名"
 
-#: templates/goal/goals.html:17
+#: templates/goal/goals.html:16
 msgid "Goal Description"
 msgstr "目标描述"
 
-#: templates/goal/goals.html:44
+#: templates/goal/goals.html:43
 msgid "Upload Image"
 msgstr "上传图片"
 
 #: templates/goal/goals.html:51
-msgid "Cancel"
-msgstr "取消"
+msgid "Create"
+msgstr "创建"
 
-#: templates/goal/goals.html:60
+#: templates/goal/goals.html:59
 msgid "Chasing"
 msgstr "追逐中"
 
-#: templates/goal/goals.html:79
+#: templates/goal/goals.html:78
 msgid "Completed"
 msgstr "已完成"
 
