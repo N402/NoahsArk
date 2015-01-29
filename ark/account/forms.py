@@ -1,7 +1,8 @@
 from flask.ext.wtf import Form
 from flask.ext.wtf.html5 import EmailField
 from flask.ext.login import current_user
-from wtforms import StringField, PasswordField, BooleanField, SelectField
+from wtforms import (
+    StringField, PasswordField, BooleanField, SelectField, TextAreaField)
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
@@ -56,13 +57,21 @@ class SignInForm(Form):
     remember_me = BooleanField(label=_(u'remember me'))
 
 
-class SettingForm(Form):
+class ProfileForm(Form):
     username = StringField(
         label=_(u'username'),
         validators=[
             InputRequired(),
             Length(min=4, max=30),
         ])
+    whatsup = TextAreaField(
+        label=_('whatsup'),
+    )
+
+    def validate_username(form, field):
+        query_user = Account.query.filter(Account.username==field.data)
+        if query_user.count() > 0:
+            raise ValidationError(_(u'Username exists'))
 
 
 class AvatarForm(Form):
@@ -88,7 +97,7 @@ class ChangePassword(Form):
     confirm_password = PasswordField(
         label=_(u'confirm password'),
         validators=[
-            EqualTo('new_password')
+            EqualTo('new_password', message=_('Confirm password not match'))
         ])
 
     def validate_old_password(form, field):

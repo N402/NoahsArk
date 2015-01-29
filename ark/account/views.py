@@ -6,7 +6,7 @@ from flask.ext.babel import gettext
 from ark.exts import db
 from ark.utils.helper import jsonify_lazy
 from ark.account.forms import (
-    SignUpForm, SignInForm, ChangePassword, AvatarForm)
+    SignUpForm, SignInForm, ChangePassword, AvatarForm, ProfileForm)
 from ark.goal.services import get_charsing_goals, get_completed_goals
 from ark.account.models import Account
 from ark.goal.models import Goal, GoalActivity
@@ -89,10 +89,19 @@ def signout():
     return redirect(next) 
 
 
-@account_app.route('/account/profile')
+@account_app.route('/account/profile', methods=('PUT',))
 @login_required
 def profile():
-    return render_template('account/profile.html')
+    form = ProfileForm(request.form)
+    if form.validate_on_submit():
+        current_user.username = form.data['username']
+        current_user.whatsup = form.data['whatsup']
+        db.session.add(current_user)
+        db.session.commit()
+        return jsonify(success=True)
+
+    if form.errors:
+        return jsonify_lazy(success=False, messages=form.errors)
 
 
 @account_app.route('/account/avatar', methods=['GET', 'POST'])
@@ -111,16 +120,14 @@ def avatar():
     return render_template('account/avatar.html', form=form)
 
 
-@account_app.route('/profile/password')
+@account_app.route('/profile/password', methods=('PUT',))
 @login_required
 def password():
     form = ChangePassword(request.form)
-
     if form.validate_on_submit():
-        current_user.change_password(form.data('new_password'))
+        current_user.change_password(form.data['new_password'])
+        db.session.add(current_user)
+        db.session.commit()
         return jsonify(success=True)
-
     if form.errors:
-        return jsonify(success=False, messages=form.errors)
-
-    return render_template('account/password.html')
+        return jsonify_lazy(success=False, messages=form.errors)

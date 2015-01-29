@@ -16,6 +16,61 @@
 </head>
 <body>
   {%- block header %}
+  <div class="mask display-hide"></div>
+  <div class="setting display-hide" id="profile-setting">
+    <div class="title">
+      <span>{{ _('Settings') }}</span>
+      <div class="avatar"><img src="{{ current_user.avatar_url }}" /></div>
+    </div>
+    <div class="tabs">
+      <a href="javascript:void(0)" data-tab="profile" class="tabBtn selected" style="float: left">{{ _('Profile') }}</a>
+      <a href="javascript:void(0)" data-tab="password" class="tabBtn" style="float: right">{{ _('Change Password') }}</a>
+    </div>
+    <div class="tab-container" id="profile-tab">
+      <form action="{{ url_for('account.profile') }}" id="profileForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <section>
+          <label>{{ _('Email') }}</label>
+          <input type="text" value="{{ current_user.email }}" disabled="disabled" />
+        </section>
+        <section>
+          <label>{{ _('Username') }}</label>
+          <input type="text" value="{{ current_user.username }}" name="username" id="username" />
+        </section>
+        <section>
+          <label>{{ _('Whats up') }}</label>
+          <textarea name="whatsup" id="whatsup">{{ current_user.whatsup or '' }}</textarea>
+        </section>
+        <div class="msg-tips display-hide">{{ _('Successful') }}</div>
+        <section class="btn-group">
+          <button type="submit" class="btn btn-success">{{ _('Save') }}</button>
+          <button type="button" class="btn cancelBtn">{{ _('Cancel') }}</button>
+        </section>
+      </form>
+    </div>
+    <div class="tab-container display-hide" id="password-tab">
+      <form id="passwordForm" action="{{ url_for('account.password') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <section>
+          <label>{{ _('Old Password') }}</label>
+          <input type="password" value="" name="old_password" id="old_password" />
+        </section>
+        <section>
+          <label>{{ _('New Password') }}</label>
+          <input type="password" value="" name="new_password" id="new_password" />
+        </section>
+        <section>
+          <label>{{ _('Confirm Password') }}</label>
+          <input type="password" value="" name="confirm_password" id="confirm_password" />
+        </section>
+        <div class="msg-tips display-hide">{{ _('Successful') }}</div>
+        <section class="btn-group">
+          <button type="submit" class="btn btn-success">{{ _('Save') }}</button>
+          <button type="button" class="btn cancelBtn">{{ _('Cancel') }}</button>
+        </section>
+      </form>
+    </div>
+  </div>
   <div id="header">
     <a href="{{ url_for('master.index') }}" id="logo"></a>
     <div class="nav">
@@ -40,7 +95,7 @@
         {{ current_user.username }}
         <i class="iconfont icon-small icon-unfold"></i>
         <ul>
-          <li><a href="#"><i class="iconfont icon-setting"></i> {{ _('Settings') }}</a></li>
+          <li><a href="javascript:void(0)" id="openSettingBtn"><i class="iconfont icon-setting"></i> {{ _('Settings') }}</a></li>
           <li><a href="#"><i class="iconfont icon-msg"></i> {{ _('Messages') }}</a></li>
           <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> {{ _('Signout') }}</a></li>
         </ul>
@@ -65,6 +120,11 @@
     </div>
   </div>
   {%- endblock %}
+  <script src="{{ url_for('static', filename='components/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/jquery-form/jquery.form.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='scripts/master/global.js') }}"></script>
   {%- block scripts %}
   {%- endblock %}
   {%- include 'inc/analytics.html' %}

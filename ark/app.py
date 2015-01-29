@@ -10,7 +10,8 @@ from ark.oauth.views import oauth_app
 from ark.dashboard.views import dashboard_app
 from ark.goal.models import Goal
 from ark.exts import (setup_babel, setup_bcrypt, setup_cache, setup_collect,
-                      setup_database, setup_login_manager, setup_oauth)
+                      setup_database, setup_login_manager, setup_oauth,
+                      setup_csrf)
 
 
 def create_app(name=None, config=None):
@@ -38,6 +39,7 @@ def create_app(name=None, config=None):
     setup_database(app)
     setup_login_manager(app)
     setup_oauth(app)
+    setup_csrf(app)
 
     app.register_blueprint(master_app)
     app.register_blueprint(account_app)
