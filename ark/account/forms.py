@@ -74,12 +74,12 @@ class ProfileForm(Form):
 
     def validate_email(form, field):
         query_user = Account.query.filter(Account.email==field.data)
-        if query_user.count() > 0:
+        if query_user.count() > 0 and query_user.id != current_user.id:
             raise ValidationError(_(u'Email exists'))
 
     def validate_username(form, field):
         query_user = Account.query.filter(Account.username==field.data)
-        if query_user.count() > 0:
+        if query_user.count() > 0 and query_user.id != current_user.id:
             raise ValidationError(_(u'Username exists'))
 
 
