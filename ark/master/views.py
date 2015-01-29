@@ -12,7 +12,7 @@ master_app = Blueprint('master', __name__)
 @master_app.route('/')
 def index():
     if not current_user.is_anonymous():
-        return redirect(url_for('account.goals'))
+        return redirect(url_for('account.profile'))
 
     sign_in_form = SignInForm()
     sign_up_form = SignUpForm()

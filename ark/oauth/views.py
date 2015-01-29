@@ -28,7 +28,7 @@ def oauth_authorized(service):
 @oauth_app.route('/oauth/<service>/signup', methods=('GET', 'POST'))
 def oauth_signup(service):
     if not current_user.is_anonymous():
-        return redirect(url_for('account.goals'))
+        return redirect(url_for('account.profile'))
 
     form = OAuthSignUpForm(request.form)
 
