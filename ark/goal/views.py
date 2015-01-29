@@ -32,7 +32,7 @@ def goals(uid):
     charsing_goals = get_charsing_goals(account)
     completed_goals = get_completed_goals(account)
     return render_template(
-        'goal/goals.html', form=form,
+        'goal/goals.html', form=form, account=account,
         charsing_goals=charsing_goals,
         completed_goals=completed_goals)
 

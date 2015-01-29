@@ -67,9 +67,11 @@
         </a>
       </li>
       {% endfor %}
+      {% if current_user.id == account.id %} 
       <li class="cards-container create-card">
         <a href="javascript:void(0)" class="card" id="openModalBtn">+</a>
       </li>
+      {% endif %}
     </ul>
   </div>
   {% if completed_goals %}
