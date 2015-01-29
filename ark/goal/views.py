@@ -7,10 +7,12 @@ from flask.ext.login import current_user, login_required
 from ark.exts import db
 from ark.utils.qiniu import get_url
 from ark.utils.helper import jsonify_lazy
-from ark.account.services import (add_create_goal_score,
+from ark.account.models import Account
+from ark.account.services import (add_create_goal_score, get_by_username,
    add_update_activity_score, add_finish_activity_score)
 from ark.goal.models import Goal, GoalActivity, GoalFile, GoalLikeLog
 from ark.goal.forms import CreateGoalForm, GoalActivityForm
+from ark.goal.services import get_charsing_goals, get_completed_goals
 
 
 goal_app = Blueprint('goal', __name__)
@@ -22,16 +24,33 @@ def explore():
     return render_template('goal/explore.html', goals=goals)
 
 
-@goal_app.route('/<username>/goals')
-def goals(username):
-    goals = Goal.query.filter(Goal.user.username == username).all()
-    return render_template('goal/goals.html', goals=goals)
+@goal_app.route('/account/<int:uid>/goals')
+@login_required
+def goals(uid):
+    form = CreateGoalForm()
+    account = Account.query.get_or_404(uid)
+    charsing_goals = get_charsing_goals(account)
+    completed_goals = get_completed_goals(account)
+    return render_template(
+        'goal/goals.html', form=form,
+        charsing_goals=charsing_goals,
+        completed_goals=completed_goals)
 
 
-@goal_app.route('/<username>/goals/<id>')
-def view_goal(username, id):
-    goal = Goal.query.filter(Goal.id==id).filter(Goal.user.username==username)
-    return render_template('goal/goal.html', goal=goal)
+@goal_app.route('/account/<int:uid>/goals/<int:gid>')
+@login_required
+def view_goal(uid, gid):
+    goal = Goal.query.get_or_404(gid)
+    account = Account.query.get_or_404(uid)
+    if not goal.author.id == uid:
+        return abort(404)
+    if goal.is_deleted:
+        return abort(404)
+    form = GoalActivityForm(request.form)
+    activities = (goal.activities.filter(GoalActivity.is_deleted==False)
+                  .order_by(GoalActivity.created.desc()).limit(20))
+    return render_template('goal/goal.html',
+        goal=goal, form=form, activities=activities)
 
 
 @goal_app.route('/goals/create', methods=['GET', 'POST'])

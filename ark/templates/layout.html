@@ -19,7 +19,7 @@
     <a href="{{ url_for('master.index') }}" id="logo"></a>
     <div class="nav">
       <ul>
-        <li class="my-goal"><i class="iconfont icon-profile"></i><a href="{{ url_for('account.goals') }}">{{ _('My Goals') }}</a></li>
+        <li class="my-goal"><i class="iconfont icon-profile"></i><a href="{{ url_for('goal.goals', uid=current_user.id) }}">{{ _('My Goals') }}</a></li>
         <li class="chasers"><i class="iconfont icon-chaser"></i><a href="#">{{ _('Chasers') }}</a></li>
         <li class="goals"><i class="iconfont icon-dream"></i><a href="#">{{ _('Dreams Wall') }}</a></li>
       </ul>

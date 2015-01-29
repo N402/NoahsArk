@@ -2,7 +2,7 @@
 
 {%- block static %}
 <link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/account/goals.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/goal/goals.css') }}" type="text/css" />
 {%- endblock %}
 
 {%- block main %}
@@ -75,5 +75,5 @@
 <script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
 <script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
 <script src="{{ url_for('static', filename='components/qiniu-js-sdk/src/qiniu.js') }}"></script>
-<script src="{{ url_for('static', filename='scripts/account/activity.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/goal/activity.js')}}"></script>
 {%- endblock %}

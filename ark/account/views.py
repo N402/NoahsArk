@@ -124,28 +124,3 @@ def password():
         return jsonify(success=False, messages=form.errors)
 
     return render_template('account/password.html')
-
-
-@account_app.route('/account/goals')
-@login_required
-def goals():
-    form = CreateGoalForm()
-    charsing_goals = get_charsing_goals()
-    completed_goals = get_completed_goals()
-    return render_template(
-        'account/goals.html', form=form,
-        charsing_goals=charsing_goals,
-        completed_goals=completed_goals,)
-
-
-@account_app.route('/account/goal/<gid>')
-@login_required
-def goal(gid):
-    goal = Goal.query.get_or_404(gid)
-    form = GoalActivityForm(request.form)
-    if goal.is_deleted:
-        return abort(404)
-    activities = (goal.activities.filter(GoalActivity.is_deleted==False)
-                  .order_by(GoalActivity.created.desc()).limit(20))
-    return render_template('account/goal.html',
-        goal=goal, form=form, activities=activities)

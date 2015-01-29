@@ -2,7 +2,7 @@
 
 {%- block static %}
 <link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/account/goals.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/goal/goals.css') }}" type="text/css" />
 {%- endblock %}
 
 {%- block main %}
@@ -61,7 +61,7 @@
     <ul>
       {% for each in charsing_goals %}
       <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail_limit_width(250)}}')">
-        <a class="card" href="{{ url_for('account.goal', gid=each.id) }}">
+        <a class="card" href="{{ url_for('goal.view_goal', uid=each.author.id, gid=each.id) }}">
           <div class="card-title">{{ each.title }}</div>
           <div class="card-like"><i class="iconfont icon-small icon-xiai {% if each.is_like_by(current_user) %}liked {% endif %}"></i> {{ each.like_count }}</div>
         </a>
@@ -78,7 +78,7 @@
     <ul>
       {% for each in completed_goals %}
       <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail_limit_width(250)}}')">
-        <a class="card" href="{{ url_for('account.goal', gid=each.id) }}">
+        <a class="card" href="{{ url_for('goals.view_goal', uid=each.author.id, gid=each.id) }}">
           <div class="card-title">{{ each.title }}</div>
           <div class="card-like"><i class="iconfont icon-small icon-xiai"></i> {{ each.like_count }}</div>
         </a>
@@ -97,5 +97,5 @@
 <script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
 <script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
 <script src="{{ url_for('static', filename='components/qiniu-js-sdk/src/qiniu.js') }}"></script>
-<script src="{{ url_for('static', filename='scripts/account/createGoal.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/goal/createGoal.js')}}"></script>
 {%- endblock %}

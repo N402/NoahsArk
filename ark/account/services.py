@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, date
 
-from flask import session
+from flask import session, abort
 from flask.ext.login import login_user, logout_user
 
 from ark.exts import db
@@ -101,6 +101,12 @@ def signup_user(user):
 
 def get_by_username(username):
     return Account.query.filter(Account.username==username).first()
+
+
+def get_by_username_or_404(username):
+    account = get_by_username(username)
+    if not account:
+        return abort(404)
 
 
 def is_username_exist(username):
