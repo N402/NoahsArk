@@ -10,6 +10,9 @@ $('#profileForm textarea').tooltipster
   trigger: 'custom'
   position: 'top'
 
+$('#msgContainer .closeBtn').click ->
+  $('#msgContainer').fadeOut()
+
 $('#openSettingBtn').click ->
   $('.msg-tips').hide()
   $('.mask').fadeIn()

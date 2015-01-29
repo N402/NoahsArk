@@ -85,7 +85,7 @@
       {%- if current_user.unread_notifications %}
       <div class="msgContainer" id="msgContainer">
         您有 {{ current_user.unread_notifications | length }} 条新消息，
-        <a href="#">点击查看</a>
+        <a href="{{ url_for('account.messages') }}">点击查看</a>
         <a href="javascript:void(0)" class="closeBtn">x</a>
       </div>
       {% endif %}

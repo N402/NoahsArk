@@ -30,3 +30,22 @@
   </div>
 </div>
 {%- endblock %}
+
+{%- block scripts %}
+<script>
+  $(function() {
+    $.ajax({
+      url: '{{ url_for("account.mark_read") }}',
+      type: 'PUT',
+      data: {
+        csrf_token: '{{ csrf_token() }}',
+      },
+      success: function(resp) {
+        if (resp.success) {
+          $('#msgContainer').fadeOut()
+        }
+      }
+    })
+  })
+</script>
+{%- endblock %}

@@ -145,6 +145,14 @@ def messages():
                   .filter(or_(Notification.receivers.any(
                                   Account.id==current_user.id),
                               Notification.send_to_all==True))
-                  .paginate(page))
+                  .order_by(Notification.created.desc())
+                  .paginate(page, 10))
     return render_template(
         'account/messages.html', page=page, pagination=pagination)
+
+
+@account_app.route('/account/messages/mark_read', methods=('PUT',))
+@login_required
+def mark_read():
+    current_user.mark_read()
+    return jsonify(success=True)
