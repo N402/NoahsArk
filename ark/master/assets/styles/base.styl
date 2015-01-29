@@ -111,7 +111,9 @@ input, textarea
       background #eee
     .btn-group
       .btn
-        width 49%
+        width 46%
+      .cancelBtn
+        float right
     .msg-tips
       color #15ABB6
       text-align center
@@ -155,6 +157,29 @@ input, textarea
     margin-right 100px
     &:not(#msgContainer):hover div#msgContainer
       opacity 0
+    &:hover ul
+      opacity 1
+      display block
+    ul
+      opacity 0
+      transition-duration 0.25s
+      display none
+      padding 10px 0
+      position absolute
+      background-color #333538
+      z-index 9999
+      margin-top 51px
+      li a
+        display block
+        width 130px
+        height 40px
+        line-height 30px
+        padding 0 20px
+        background-color #333538
+        transition-duration 0.25s
+        &:hover
+          cursor pointer
+          background-color #686E76
    .avatar
       display inline-block
       float left
@@ -168,29 +193,7 @@ input, textarea
       float left
       line-height 50px
       padding 0 10px
-      &:hover ul
-        opacity 1
-        display block
-      ul
-        transition-duration 0.25s
-        opacity 0
-        display none
-        padding 10px 0
-        position absolute
-        background-color #333538
-        z-index 9999
-        li a
-          display block
-          width 130px
-          height 40px
-          line-height 30px
-          padding 0 20px
-          background-color #333538
-          transition-duration 0.25s
-          &:hover
-            cursor pointer
-            background-color #686E76
-
+   
 #footer
   position fixed
   right 10px
