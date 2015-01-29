@@ -92,9 +92,6 @@ class AvatarForm(Form):
 class ChangePassword(Form):
     old_password = PasswordField(
         label=_(u'old password'),
-        validators=[
-            Length(min=6, max=30),
-        ],
     )
     new_password = PasswordField(
         label=_(u'new password'),
