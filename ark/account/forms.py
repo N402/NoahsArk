@@ -58,6 +58,10 @@ class SignInForm(Form):
 
 
 class ProfileForm(Form):
+    email = EmailField(
+        label=_(u'Email'),
+        validators=[
+            Email(message=_(u'Your Email is invalid'))])
     username = StringField(
         label=_(u'username'),
         validators=[
@@ -67,6 +71,11 @@ class ProfileForm(Form):
     whatsup = TextAreaField(
         label=_('whatsup'),
     )
+
+    def validate_email(form, field):
+        query_user = Account.query.filter(Account.email==field.data)
+        if query_user.count() > 0:
+            raise ValidationError(_(u'Email exists'))
 
     def validate_username(form, field):
         query_user = Account.query.filter(Account.username==field.data)

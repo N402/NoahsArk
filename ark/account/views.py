@@ -94,6 +94,8 @@ def signout():
 def profile():
     form = ProfileForm(request.form)
     if form.validate_on_submit():
+        if current_user.email is None and form.data['email']:
+            current_user.email = form.data['email']
         current_user.username = form.data['username']
         current_user.whatsup = form.data['whatsup']
         db.session.add(current_user)
