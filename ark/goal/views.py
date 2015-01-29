@@ -4,7 +4,7 @@ from flask import current_app, url_for
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.login import current_user, login_required
 
-from ark.exts import db
+from ark.exts import db, csrf
 from ark.utils.qiniu import get_url
 from ark.utils.helper import jsonify_lazy
 from ark.account.models import Account
@@ -102,6 +102,7 @@ def create():
 
 @goal_app.route('/goals/<gid>/cancel', methods=['DELETE'])
 @login_required
+@csrf.exempt
 def cancel(gid):
     goal = Goal.query.get_or_404(gid)
 
@@ -120,6 +121,7 @@ def cancel(gid):
 
 @goal_app.route('/goals/<gid>/complete', methods=['PUT'])
 @login_required
+@csrf.exempt
 def complete(gid):
     goal = Goal.query.get_or_404(gid)
 
@@ -137,6 +139,7 @@ def complete(gid):
     return jsonify(success=True)
 
 
+@csrf.exempt
 @goal_app.route('/goals/<gid>/like', methods=['POST', 'DELETE'])
 def like(gid):
     goal = Goal.query.get_or_404(gid)
