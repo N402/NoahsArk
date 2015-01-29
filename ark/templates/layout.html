@@ -97,7 +97,7 @@
         <i class="iconfont icon-small icon-unfold"></i>
         <ul>
           <li><a href="javascript:void(0)" id="openSettingBtn"><i class="iconfont icon-setting"></i> {{ _('Settings') }}</a></li>
-          <li><a href="#"><i class="iconfont icon-msg"></i> {{ _('Messages') }}</a></li>
+          <li><a href="{{ url_for('account.messages') }}"><i class="iconfont icon-msg"></i> {{ _('Messages') }}</a></li>
           <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> {{ _('Signout') }}</a></li>
         </ul>
       </div>

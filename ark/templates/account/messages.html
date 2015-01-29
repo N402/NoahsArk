@@ -1,0 +1,32 @@
+{%- extends 'layout.html' %}
+
+{%- block static %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/account/messages.css') }}" type="text/css" />
+{%- endblock %}
+
+{%- block main %}
+<div class="wrapper" id="message-container">
+  <h2>{{ _('My Messages') }}</h2>
+  <ul>
+    {% for each in pagination.items %}
+    <li>
+      <div class="avatar"><img src="{{ url_for('static', filename='images/favicon.png') }}" /></div>
+      <div class="content">
+        <p>{{ each.content }}</p>
+        <span class="time">{{ each.created | format_datetime('Y年M月d日 HH:mm:ss') }}</span>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="pagination">
+      {%- if pagination.has_prev %}
+      <a href="{{ url_for('account.messages', page=pagination.prev_num) }}">{{ _('Prev Page') }}</a>
+      {%- endif %}
+      <span class="pages">{{ page }} / {{ pagination.pages }}</span>
+      {%- if pagination.has_next %}
+      <a href="{{ url_for('account.messages', page=pagination.next_num) }}">{{ _('Next') }}</a>
+      {%- endif %}
+    </ul>
+  </div>
+</div>
+{%- endblock %}

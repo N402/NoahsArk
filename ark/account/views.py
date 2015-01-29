@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 from flask import url_for, redirect, request, jsonify
 from flask.ext.login import current_user, login_required
 from flask.ext.babel import gettext
+from sqlalchemy import or_
 
 from ark.exts import db
 from ark.utils.helper import jsonify_lazy
@@ -13,6 +14,7 @@ from ark.goal.models import Goal, GoalActivity
 from ark.goal.forms import GoalActivityForm, CreateGoalForm
 from ark.account.services import (signin_user,  signout_user,
                                   signup_user, add_signin_score)
+from ark.notification.models import Notification
 
 
 account_app = Blueprint('account', __name__)
@@ -122,7 +124,7 @@ def avatar():
     return render_template('account/avatar.html', form=form)
 
 
-@account_app.route('/profile/password', methods=('PUT',))
+@account_app.route('/account/profile/password', methods=('PUT',))
 @login_required
 def password():
     form = ChangePassword(request.form)
@@ -133,3 +135,16 @@ def password():
         return jsonify(success=True)
     if form.errors:
         return jsonify_lazy(success=False, messages=form.errors)
+
+
+@account_app.route('/account/messages')
+@login_required
+def messages():
+    page = int(request.args.get('page', 1))
+    pagination = (Notification.query
+                  .filter(or_(Notification.receivers.any(
+                                  Account.id==current_user.id),
+                              Notification.send_to_all==True))
+                  .paginate(page))
+    return render_template(
+        'account/messages.html', page=page, pagination=pagination)
