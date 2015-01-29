@@ -1,0 +1,45 @@
+{%- extends 'layout.html' %}
+
+{%- block static %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/goal/goals.css') }}" type="text/css" />
+{%- endblock %}
+
+{%- block main %}
+<div class="main" id="chasers">
+  <div class="wrapper">
+    <ul class="chasers">
+      {% for each in chasers %}
+      <li>
+        <a href="{{ url_for('goal.goals', uid=each.id) }}">
+          <div class="chaser">
+            <div class="avatar"><img src="{{ each.avatar_url }}" /></div>
+            <div class="username">{{ each.username }}</div>
+            <div class="whatsup">{{ each.whatsup or '这家伙还没签名呢' }}</div>
+            <div class="scores">
+              <div class="credit right-line">
+                {{ _('Credit') }}
+                <br />
+                <span>{{ each.credit }}</span>
+              </div>
+              <div class="goal_count right-line">
+                {{ _('Goals Count') }}
+                <br />
+                <span>{{ each.goals_count }}</span>
+              </div>
+              <div class="like_count">
+                {{ _('Like Count') }}
+                <br />
+                <span>{{ each.like_count }}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{%- endblock %}
+
+{%- block scripts %}
+{%- endblock %}

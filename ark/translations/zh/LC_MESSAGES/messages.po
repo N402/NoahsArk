@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-29 03:11+0800\n"
+"POT-Creation-Date: 2015-01-29 21:03+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -84,11 +84,11 @@ msgstr "确认密码"
 msgid "old password is wrong"
 msgstr "原始密码不正确"
 
-#: account/models.py:233 dashboard/forms.py:17
+#: account/models.py:240 dashboard/forms.py:17
 msgid "Male"
 msgstr "男性"
 
-#: account/models.py:235 dashboard/forms.py:18
+#: account/models.py:242 dashboard/forms.py:18
 msgid "Female"
 msgstr "女性"
 
@@ -193,17 +193,13 @@ msgstr "已取消"
 msgid "Finished"
 msgstr "已完成"
 
-#: goal/views.py:81
+#: goal/views.py:112
 msgid "Cannot cancel goal"
 msgstr "不能取消目标"
 
-#: goal/views.py:99
+#: goal/views.py:130
 msgid "Cannot finish it"
 msgstr "不能完成目标"
-
-#: goal/views.py:113
-msgid "Cannot like your goal"
-msgstr "您不能赞自己的目标"
 
 #: oauth/forms.py:20
 #, python-format
@@ -222,58 +218,37 @@ msgstr "追逐者"
 msgid "Dreams Wall"
 msgstr "梦想墙"
 
+#: templates/layout.html:42
+msgid "Settings"
+msgstr "设置"
+
+#: templates/layout.html:43
+msgid "Messages"
+msgstr "消息"
+
+#: templates/layout.html:44
+msgid "Signout"
+msgstr "退出"
+
+#: templates/layout.html:58
+msgid "About Us"
+msgstr "关于我们"
+
+#: templates/layout.html:59
+msgid "Weibo"
+msgstr "官方微博"
+
+#: templates/layout.html:60
+msgid "Feedback"
+msgstr "反馈"
+
+#: templates/layout.html:61
+msgid "Contact Us"
+msgstr "联系我们"
+
 #: templates/account/avatar.html:12
 msgid "Upload"
 msgstr "上传"
-
-#: templates/account/goal.html:25
-msgid "Complete it"
-msgstr "我已完成"
-
-#: templates/account/goal.html:26
-msgid "Give up"
-msgstr "忍痛放弃"
-
-#: templates/account/goal.html:43
-msgid "Publish"
-msgstr "发布"
-
-#: templates/account/goals.html:11
-msgid "Create Goal"
-msgstr "创建目标"
-
-#: templates/account/goals.html:15
-msgid "Goal Informantion"
-msgstr "目标信息"
-
-#: templates/account/goals.html:16
-msgid "Goal Name"
-msgstr "目标名"
-
-#: templates/account/goals.html:17
-msgid "Goal Description"
-msgstr "目标描述"
-
-#: templates/account/goals.html:44
-msgid "Upload Image"
-msgstr "上传图片"
-
-#: templates/account/goals.html:51
-msgid "Cancel"
-msgstr "取消"
-
-#: templates/account/goals.html:52 templates/goal/activity.html:20
-#: templates/goal/create.html:24
-msgid "Create"
-msgstr "创建"
-
-#: templates/account/goals.html:60
-msgid "Chasing"
-msgstr "追逐中"
-
-#: templates/account/goals.html:77
-msgid "Completed"
-msgstr "已完成"
 
 #: templates/account/signin.html:13
 msgid "Sign in"
@@ -309,7 +284,7 @@ msgstr "账号管理"
 msgid "Submit"
 msgstr "提交"
 
-#: templates/dashboard/accounts.html:14
+#: templates/dashboard/accounts.html:14 templates/goal/chasers.html:19
 msgid "Credit"
 msgstr "学分"
 
@@ -449,4 +424,64 @@ msgstr "系统消息"
 #: templates/dashboard/system_msgs.html:12
 msgid "Key"
 msgstr "键"
+
+#: templates/goal/activity.html:20 templates/goal/create.html:24
+#: templates/goal/goals.html:52
+msgid "Create"
+msgstr "创建"
+
+#: templates/goal/chasers.html:24
+msgid "Goals Count"
+msgstr "目标"
+
+#: templates/goal/chasers.html:29
+msgid "Like Count"
+msgstr "被赞"
+
+#: templates/goal/goal.html:32
+msgid "Complete it"
+msgstr "我已完成"
+
+#: templates/goal/goal.html:33
+msgid "Give up"
+msgstr "忍痛放弃"
+
+#: templates/goal/goal.html:50
+msgid "Publish"
+msgstr "发布"
+
+#: templates/goal/goals.html:11
+msgid "Create Goal"
+msgstr "创建目标"
+
+#: templates/goal/goals.html:15
+msgid "Goal Informantion"
+msgstr "目标信息"
+
+#: templates/goal/goals.html:16
+msgid "Goal Name"
+msgstr "目标名"
+
+#: templates/goal/goals.html:17
+msgid "Goal Description"
+msgstr "目标描述"
+
+#: templates/goal/goals.html:44
+msgid "Upload Image"
+msgstr "上传图片"
+
+#: templates/goal/goals.html:51
+msgid "Cancel"
+msgstr "取消"
+
+#: templates/goal/goals.html:60
+msgid "Chasing"
+msgstr "追逐中"
+
+#: templates/goal/goals.html:79
+msgid "Completed"
+msgstr "已完成"
+
+#~ msgid "Cannot like your goal"
+#~ msgstr "您不能赞自己的目标"
 

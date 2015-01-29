@@ -20,8 +20,8 @@
     <div class="nav">
       <ul>
         <li class="my-goal"><a href="{{ url_for('goal.goals', uid=current_user.id) }}"><i class="iconfont icon-profile"></i>{{ _('My Goals') }}</a></li>
-        <li class="chasers"><a href="#"><i class="iconfont icon-chaser"></i>{{ _('Chasers') }}</a></li>
-        <li class="goals"><a href="#"><i class="iconfont icon-dream"></i>{{ _('Dreams Wall') }}</a></li>
+        <li class="chasers"><a href="{{ url_for('goal.chasers') }}"><i class="iconfont icon-chaser"></i>{{ _('Chasers') }}</a></li>
+        <li class="goals"><a href="{{ url_for('goal.dreams_wall') }}"><i class="iconfont icon-dream"></i>{{ _('Dreams Wall') }}</a></li>
       </ul>
     </div>
     <div class="profile">
@@ -39,9 +39,9 @@
         {{ current_user.username }}
         <i class="iconfont icon-small icon-unfold"></i>
         <ul>
-          <li><a href="#"><i class="iconfont icon-setting"></i> 设置</a></li>
-          <li><a href="#"><i class="iconfont icon-msg"></i> 消息</a></li>
-          <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> 退出</a></li>
+          <li><a href="#"><i class="iconfont icon-setting"></i> {{ _('Settings') }}</a></li>
+          <li><a href="#"><i class="iconfont icon-msg"></i> {{ _('Messages') }}</a></li>
+          <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> {{ _('Signout') }}</a></li>
         </ul>
       </div>
     </div>
@@ -55,10 +55,10 @@
       <p>&copy; 2015 iChaser 追者</p>
       <p>
         <ul class="nav">
-          <li><a href="http://blog.ichaser.net/aboutus">关于我们</a></li>
-          <li><a href="http://weibo.com/ichaser">官方微博</a></li>
-          <li><a href="{{ url_for('master.feedback') }}">意见反馈</a></li>
-          <li><a href="http://blog.ichaser.net/contact">联系我们</a></li>
+          <li><a href="http://blog.ichaser.net/aboutus">{{ _('About Us') }}</a></li>
+          <li><a href="http://weibo.com/ichaser">{{ _('Weibo') }}</a></li>
+          <li><a href="{{ url_for('master.feedback') }}">{{ _('Feedback') }}</a></li>
+          <li><a href="http://blog.ichaser.net/contact">{{ _('Contact Us') }}</a></li>
         </ul>
       </p>
     </div>

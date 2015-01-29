@@ -18,10 +18,22 @@ from ark.goal.services import get_charsing_goals, get_completed_goals
 goal_app = Blueprint('goal', __name__)
 
 
-@goal_app.route('/explore')
-def explore():
-    goals = Goal.query.all()
-    return render_template('goal/explore.html', goals=goals)
+@goal_app.route('/goals/walls')
+def dreams_wall():
+    goals = (Goal.query
+             .filter(Goal.is_deleted==False)
+             .filter(Goal.is_ban==False)
+             .filter(Goal.state!='canceled')
+             .order_by(Goal.score).limit(100).all())
+    return render_template('goal/dream-wall.html', goals=goals)
+
+
+@goal_app.route('/goals/chasers')
+def chasers():
+    chasers = (Account.query
+               .filter(Account.is_ban==False)
+               .order_by(Account.total_score).limit(100).all())
+    return render_template('goal/chasers.html', chasers=chasers)
 
 
 @goal_app.route('/account/<int:uid>/goals')
@@ -93,8 +105,8 @@ def create():
 def cancel(gid):
     goal = Goal.query.get_or_404(gid)
 
-    if not goal.author.id == current_user.id:
-        return abort(404)
+    if not goal.is_belong_to(current_user):
+        return abort(403)
 
     if goal.state not in ('doing',):
         return jsonify_lazy(success=False, messages=[_('Cannot cancel goal')])
@@ -111,8 +123,8 @@ def cancel(gid):
 def complete(gid):
     goal = Goal.query.get_or_404(gid)
 
-    if not goal.author.id == current_user.id:
-        return abort(404)
+    if not goal.is_belong_to(current_uesr):
+        return abort(403)
 
     if goal.state not in ('doing',):
         return jsonify_lazy(success=False, messages=[_('Cannot finish it')])
@@ -128,8 +140,6 @@ def complete(gid):
 @goal_app.route('/goals/<gid>/like', methods=['POST', 'DELETE'])
 def like(gid):
     goal = Goal.query.get_or_404(gid)
-    if goal.author is current_user:
-        return jsonify(success=False, messages=_('Cannot like your goal'))
 
     if request.method == 'POST':
         if not goal.is_like_by(current_user):
@@ -152,9 +162,11 @@ def like(gid):
         return jsonify(success=True, like_count=goal.like_count)
 
 
-@goal_app.route('/goals/<gid>/activity', methods=['GET', 'POST'])
+@goal_app.route('/goals/<gid>/activity', methods=('POST',))
 def activity(gid):
     goal = Goal.query.get_or_404(gid)
+    if not goal.is_belong_to(current_user):
+        return abort(403)
 
     form = GoalActivityForm(request.form)
 
@@ -180,5 +192,3 @@ def activity(gid):
 
     if form.errors:
         return jsonify(success=False, messages=form.errors)
-
-    return render_template('goal/activity.html', form=form, goal=goal)

@@ -9,7 +9,8 @@
 .icon-xiai.liked
  color #ff0033
 
-#account-goals.main
+#account-goals.main,
+#dreams-wall.main
   .wrapper
     clear both
     display block
@@ -45,6 +46,8 @@
         background rgba(0,0,0,0.5)
       &:hover .card-like
         opacity 1
+      &:hover .card-author
+        opacity 1
       .card-title
         color #fff
         padding 15px
@@ -59,6 +62,20 @@
         bottom 15px
         font-weight bold
         position absolute
+      .card-author
+        transition-duration 0.25s
+        font-size 14px
+        opacity 0
+        position absolute
+        left 10px
+        bottom 10px
+        line-height 25px
+        img.avatar
+          margin-right 4px
+          float left
+          width 25px
+          height 25px
+          border-radius 25px
 
   .cards-container
     float left
@@ -293,3 +310,54 @@
       line-height 20px
     span
       letter-spacing 8px
+
+#chasers.main
+  .wrapper
+    clear both
+    display block
+    overflow hidden
+
+    ul.chasers
+      li a
+        transition-duration 0.25s
+        color #333
+        overflow hidden
+        padding 16px
+        margin-top 20px
+        margin-bottom 10px
+        margin-right 20px
+        width 200px
+        float left
+        background #fff
+        border-radius 8px
+        border 1px solid #aaa
+        .chaser
+          text-align center
+          .avatar
+            padding-top 10px
+            img
+              width 80px
+              height 80px
+              border-radius 80px
+          .username
+            font-size 18px
+            padding 8px
+            color #0dadb7
+          .whatsup
+            font-size 14px
+            border-bottom 1px solid #aaa
+            padding-bottom 8px
+        .scores
+          margin-top 20px
+          div
+            display inline-block
+            width 30%
+            span
+              color #0dadb7
+              line-height 2em
+              font-size 20px
+          .right-line
+            border-right 1px solid #aaa
+        &:hover
+          transform translate3d(0,-4px,0px)
+          box-shadow 3px 3px 10px #ccc
