@@ -3,7 +3,8 @@ from flask import session, url_for, request, redirect
 from ark.exts import db
 from ark.exts.oauth.weibo import weibo_oauth
 from ark.account.models import Account, AccountOAuth
-from ark.account.services import get_oauth_user, signin_user, is_username_exist
+from ark.account.services import (
+    get_oauth_user, signin_user, is_username_exist, signup_user)
 
 
 def do_oauth(service):
@@ -32,6 +33,7 @@ def _weibo_oauth_signup(uid, username, gender, avatar_url):
         username=username, is_male=(gender=='m'), avatar_url=avatar_url)
     account_oauth = AccountOAuth(oauth_uid=str(uid), service='weibo')
     account_oauth.account = account
+    signup_user(account)
     db.session.add(account)
     db.session.add(account_oauth)
     db.session.commit()
