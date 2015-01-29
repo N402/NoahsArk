@@ -4,6 +4,7 @@ from flask import session
 from flask.ext.login import login_user, logout_user
 
 from ark.exts import db
+from ark.notification.models import ReadMark
 from ark.notification.services import send_first_login_sysmsg
 from ark.account.models import AccountOAuth, Account
 from ark.account.models import AccountScoreLog, AccountActivityLog
@@ -95,6 +96,7 @@ def signout_user(user):
 def signup_user(user):
     add_signup_score(user)
     send_first_login_sysmsg(user)
+    ReadMark.init_for(user)
 
 
 def get_by_username(username):

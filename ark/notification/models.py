@@ -37,3 +37,11 @@ class ReadMark(db.Model):
     account_id = db.Column(
         db.Integer, db.ForeignKey('account.id'), unique=True)
     read_ts = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @staticmethod
+    def init_for(account):
+        read_mark = ReadMark()
+        account.read_ts = read_mark
+        read_mark.account = account
+        db.session.add(read_mark)
+        db.session.commit()

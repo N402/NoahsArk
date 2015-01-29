@@ -25,6 +25,13 @@
       </ul>
     </div>
     <div class="profile">
+      {%- if current_user.unread_notifications %}
+      <div class="msgContainer" id="msgContainer">
+        您有 {{ current_user.unread_notifications | length }} 条新消息，
+        <a href="#">点击查看</a>
+        <a href="javascript:void(0)" class="closeBtn">x</a>
+      </div>
+      {% endif %}
       <div class="avatar">
         <img src="{{ current_user.avatar_url }}"/>
       </div>
@@ -32,8 +39,8 @@
         {{ current_user.username }}
         <i class="iconfont icon-small icon-unfold"></i>
         <ul>
-          <li><i class="iconfont icon-setting"></i> 设置</li>
-          <li><i class="iconfont icon-msg"></i> 消息</li>
+          <li><a href="#"><i class="iconfont icon-setting"></i> 设置</a></li>
+          <li><a href="#"><i class="iconfont icon-msg"></i> 消息</a></li>
           <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> 退出</a></li>
         </ul>
       </div>

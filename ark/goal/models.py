@@ -116,11 +116,14 @@ class Goal(db.Model):
     def is_doing(self):
         return self.state == 'doing'
 
-    def is_like_by(self, user):
+    def is_like_by(self, account):
         count = (self.likes
-                .filter(GoalLikeLog.account_id==user.id)
+                .filter(GoalLikeLog.account_id==account.id)
                 .filter(GoalLikeLog.is_deleted==False).count())
         return count > 0
+
+    def is_belong_to(self, account):
+        return self.author.id is account.id
 
 
 class GoalActivity(db.Model):

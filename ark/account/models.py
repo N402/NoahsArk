@@ -134,9 +134,16 @@ class Account(db.Model):
     def get_id(self):
         return self.id
 
+    @property
     def unread_notifications(self):
-        return (self.notifications
-                .filter(Notification.created > self.read_ts.read_ts).all())
+        if self.read_ts is None:
+            ReadMark.init_for(self)
+        user_noti = (self.notifications
+                     .filter(Notification.created > self.read_ts.read_ts).all())
+        all_noti = (Notification.query
+                    .filter(Notification.created > self.read_ts.read_ts)
+                    .filter(Notification.send_to_all==True).all())
+        return (user_noti + all_noti)
 
     @property
     def last_signin(self):
@@ -237,6 +244,11 @@ class Account(db.Model):
     @gender.setter
     def gender(self, gender):
         self.change_gender(gender)
+
+    def mark_read(self):
+        self.read_ts.read_ts = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
 
     def get_timezone(self):
         #TODO

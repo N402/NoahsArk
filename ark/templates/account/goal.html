@@ -28,7 +28,7 @@
         {{ goal.description }}
       </div>
       <div class="btn-group center">
-        {% if goal.is_doing() %}
+        {% if goal.is_doing() and goal.is_belong_to(current_user) %}
         <a href="javascript:void(0)" id="completeBtn" data-url="{{ url_for('goal.complete', gid=goal.id) }}" class="btn btn-success">{{ _('Complete it') }}</a>
         <a href="javascript:void(0)" id="giveUpBtn" data-url="{{ url_for('goal.cancel', gid=goal.id) }}" class="btn">{{ _('Give up') }}</a>
         {% endif %}
