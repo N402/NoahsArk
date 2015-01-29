@@ -32,7 +32,7 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <section>
           <label>{{ _('Email') }}</label>
-          <input type="text" value="{{ current_user.email or '' }}" {% if current_user.email %} disabled="disabled"{% else %}name="email"{% endif %}/>
+          <input type="text" value="{{ current_user.email or '' }}" {% if current_user.email %} disabled="disabled"{% else %}name="email" id="email"{% endif %}/>
         </section>
         <section>
           <label>{{ _('Username') }}</label>
