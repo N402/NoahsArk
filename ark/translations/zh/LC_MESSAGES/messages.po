@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-30 04:24+0800\n"
+"POT-Creation-Date: 2015-01-30 17:28+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -81,19 +81,19 @@ msgstr "头像"
 msgid "old password"
 msgstr "原始密码"
 
-#: account/forms.py:101
+#: account/forms.py:97
 msgid "new password"
 msgstr "新密码"
 
-#: account/forms.py:107
+#: account/forms.py:103
 msgid "confirm password"
 msgstr "确认密码"
 
-#: account/forms.py:109
+#: account/forms.py:105
 msgid "Confirm password not match"
 msgstr "确认密码不匹配"
 
-#: account/forms.py:115
+#: account/forms.py:111
 msgid "old password is wrong"
 msgstr "原始密码不正确"
 
@@ -206,11 +206,11 @@ msgstr "已取消"
 msgid "Finished"
 msgstr "已完成"
 
-#: goal/views.py:112
+#: goal/views.py:113
 msgid "Cannot cancel goal"
 msgstr "不能取消目标"
 
-#: goal/views.py:130
+#: goal/views.py:132
 msgid "Cannot finish it"
 msgstr "不能完成目标"
 
@@ -219,7 +219,7 @@ msgstr "不能完成目标"
 msgid "Username %(username)s exists"
 msgstr "用户名 %(username)s 已存在"
 
-#: templates/layout.html:24 templates/layout.html:96
+#: templates/layout.html:24 templates/layout.html:97
 msgid "Settings"
 msgstr "设置"
 
@@ -260,39 +260,39 @@ msgstr "新密码"
 msgid "Confirm Password"
 msgstr "确认密码"
 
-#: templates/layout.html:82
+#: templates/layout.html:83
 msgid "My Goals"
 msgstr "我的"
 
-#: templates/layout.html:83
+#: templates/layout.html:84
 msgid "Chasers"
 msgstr "追逐者"
 
-#: templates/layout.html:84
+#: templates/layout.html:85
 msgid "Dreams Wall"
 msgstr "梦想墙"
 
-#: templates/layout.html:97
+#: templates/layout.html:98
 msgid "Messages"
 msgstr "消息"
 
-#: templates/layout.html:98
+#: templates/layout.html:99
 msgid "Signout"
 msgstr "退出"
 
-#: templates/layout.html:118
+#: templates/layout.html:120
 msgid "About Us"
 msgstr "关于我们"
 
-#: templates/layout.html:119
+#: templates/layout.html:121
 msgid "Weibo"
 msgstr "官方微博"
 
-#: templates/layout.html:120
+#: templates/layout.html:122
 msgid "Feedback"
 msgstr "反馈"
 
-#: templates/layout.html:121
+#: templates/layout.html:123
 msgid "Contact Us"
 msgstr "联系我们"
 
@@ -503,7 +503,11 @@ msgstr "我已完成"
 msgid "Give up"
 msgstr "忍痛放弃"
 
-#: templates/goal/goal.html:49
+#: templates/goal/goal.html:41
+msgid "Update Activities"
+msgstr "更新目标动态"
+
+#: templates/goal/goal.html:50
 msgid "Publish"
 msgstr "发布"
 
