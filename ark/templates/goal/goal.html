@@ -38,13 +38,14 @@
   <div class="activity-container">
     {% if goal.is_doing() and goal.is_belong_to(current_user) %}
     <div class="create-activity" id="create-activity">
+      <span class="title">{{ _('Update Activities') }}</span>
       <form action="{{ url_for('goal.activity', gid=goal.id) }}" method="POST" id="createActivityForm">
         {{ form.csrf_token }}
         {{ form.activity() }}
         {{ form.image_url(style="display:none") }}
         {{ form.image_name(style="display:none") }}
         <div class="tool">
-          <a href="javascript:void(0);" id="upImage">图片</a>
+          <a href="javascript:void(0);" id="upImage"><i class="iconfont icon-tuwenxiangqing"></i> 图片</a>
           <span><img src="" id="preview" /></span>
           <button type="button" onclick="updateAvtivity()" id="submitBtn" class="btn btn-success pull-right">{{ _('Publish') }}</button>
         </div>
