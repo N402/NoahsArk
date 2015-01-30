@@ -1,3 +1,5 @@
+$('#header .container').css('width', document.body.clientWidth)
+
 $('#passwordForm input').tooltipster
   trigger: 'custom'
   position: 'top'

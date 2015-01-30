@@ -127,6 +127,9 @@ input, textarea
   white-space nowrap
   background-color #333538
 
+  .container
+    position relative
+
   #logo
     display block
     float left
@@ -140,6 +143,7 @@ input, textarea
   .nav
     margin-left 20px
     display inline-block
+    vertical-align top
     li
       display inline-block
       a
@@ -153,11 +157,11 @@ input, textarea
         border-bottom #0dadb7 5px solid;
 
   .profile
-    position relative
+    display inline-block
+    position absolute
     color #fff
-    float right
     line-height 40px
-    margin-right 100px
+    right 100px
     &:not(#msgContainer):hover div#msgContainer
       opacity 0
     &:hover ul
@@ -212,11 +216,15 @@ input, textarea
     li
       display inline-block
       &:after
+        margin-left 4px
         content: '|'
       &:last-child:after
         content: ''
       a
         color #666
+  .copyright
+    p
+      margin 4px 0
 
 .main
   overflow hidden
