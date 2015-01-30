@@ -11,7 +11,7 @@ class AccountEditForm(Form):
 
     username = StringField(_(u'Username'),
                            validators=[InputRequired(),
-                                       Length(min=4, max=30)])
+                                       Length(min=3, max=30)])
     gender = SelectField(_(u'Gender'),
                           choices=[
                               ('male', _('Male')),
