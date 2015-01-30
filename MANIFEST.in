@@ -4,3 +4,4 @@ recursive-include ark/static *.css
 recursive-include ark/static *.js
 recursive-include ark/static *.svg
 recursive-include ark/static *.png
+recursive-include ark/translations/
