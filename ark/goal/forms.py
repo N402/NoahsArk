@@ -8,14 +8,14 @@ class CreateGoalForm(Form):
     title = StringField(
         label=_(u'title'),
         validators=[
-            InputRequired(),
+            InputRequired(message=_("Please input title")),
             Length(min=1, max=100),
         ]
     )
     description = TextAreaField(
         label=_(u'description'),
         validators=[
-            InputRequired(),
+            InputRequired(message=_("Please input description")),
             Length(min=5, max=200),
         ]
     )
@@ -28,7 +28,7 @@ class GoalActivityForm(Form):
     activity = TextAreaField(
         label=_('Activity'),
         validators=[
-            InputRequired(),
+            InputRequired(message=_("Please input activity")),
             Length(min=5, max=200),
         ]
     )

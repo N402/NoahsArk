@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-30 17:28+0800\n"
+"POT-Creation-Date: 2015-01-31 16:07+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -174,9 +174,17 @@ msgstr "挂科"
 msgid "title"
 msgstr "标题"
 
+#: goal/forms.py:11
+msgid "Please input title"
+msgstr "请输入标题"
+
 #: goal/forms.py:16
 msgid "description"
 msgstr "描述"
+
+#: goal/forms.py:18
+msgid "Please input description"
+msgstr "请输入描述"
 
 #: goal/forms.py:22 goal/forms.py:35
 msgid "Image Name"
@@ -189,6 +197,10 @@ msgstr "图片地址"
 #: goal/forms.py:29 templates/dashboard/activity.html:30
 msgid "Activity"
 msgstr "动态"
+
+#: goal/forms.py:31
+msgid "Please input activity"
+msgstr "请填写动态"
 
 #: goal/forms.py:36
 msgid "image"
@@ -289,8 +301,8 @@ msgid "Weibo"
 msgstr "官方微博"
 
 #: templates/layout.html:122
-msgid "Feedback"
-msgstr "反馈"
+msgid "FAQ"
+msgstr "常见问题"
 
 #: templates/layout.html:123
 msgid "Contact Us"
@@ -545,4 +557,7 @@ msgstr "已完成"
 
 #~ msgid "Cannot like your goal"
 #~ msgstr "您不能赞自己的目标"
+
+#~ msgid "Feedback"
+#~ msgstr "反馈"
 
