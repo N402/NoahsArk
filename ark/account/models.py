@@ -219,7 +219,7 @@ class Account(db.Model):
 
     @last_update_interval.expression
     def last_update_interval(cls):
-        return (select([func.datediff('NOW()', GoalActivity.created)])
+        return (select([func.datediff(func.now(), GoalActivity.created)])
                 .where(GoalActivity.account_id==cls.id)
                 .order_by(GoalActivity.created.desc())
                 .limit(1)

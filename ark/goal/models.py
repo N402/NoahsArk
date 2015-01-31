@@ -57,7 +57,7 @@ class Goal(db.Model):
 
     @last_activity_interval.expression
     def last_activity_interval(cls):
-        return (select([func.datediff('NOW()', GoalActivity.created)])
+        return (select([func.datediff(func.now(), GoalActivity.created)])
                 .where(GoalActivity.goal_id==cls.id)
                 .order_by(GoalActivity.created.desc())
                 .limit(1).label('last_activity_interval'))
@@ -88,6 +88,12 @@ class Goal(db.Model):
         return (self.like_count * settings.GOAL_LIKE_SOCRE +
                 self.activity_count * settings.GOAL_UPDATE_SCORE +
                 self.last_activity_interval * settings.GOAL_UPDATE_DAY)
+
+    @score.expression
+    def score(cls):
+        return (cls.like_count * settings.GOAL_LIKE_SOCRE +
+                cls.activity_count * settings.GOAL_UPDATE_SCORE +
+                cls.last_activity_interval * settings.GOAL_UPDATE_DAY)
 
     @cache.memoize(3600)
     def cache_score(self):
