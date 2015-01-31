@@ -24,7 +24,7 @@ def dreams_wall():
              .filter(Goal.is_deleted==False)
              .filter(Goal.is_ban==False)
              .filter(Goal.state!='canceled')
-             .order_by(Goal.score).limit(100).all())
+             .order_by(Goal.score.desc()).limit(100).all())
     return render_template('goal/dream-wall.html', goals=goals)
 
 
@@ -32,7 +32,7 @@ def dreams_wall():
 def chasers():
     chasers = (Account.query
                .filter(Account.is_ban==False)
-               .order_by(Account.total_score).limit(100).all())
+               .order_by(Account.total_score.desc()).limit(100).all())
     return render_template('goal/chasers.html', chasers=chasers)
 
 

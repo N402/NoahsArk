@@ -154,7 +154,8 @@ def notification_send():
 @su_required
 def chasers():
     page = int(request.args.get('page', 1))
-    pagination = Account.query.order_by(Account.total_score).paginate(page)
+    pagination = (Account.query.order_by(Account.total_score.desc())
+                  .paginate(page))
     return render_template('dashboard/chasers.html', pagination=pagination)
 
 
@@ -195,7 +196,7 @@ def chasers_ban(aid):
 @su_required
 def ranking():
     page = int(request.args.get('page', 1))
-    pagination = Goal.query.order_by(Goal.score).paginate(page)
+    pagination = Goal.query.order_by(Goal.score.desc()).paginate(page)
     return render_template('dashboard/ranking.html', pagination=pagination)
 
 
