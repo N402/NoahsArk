@@ -3,7 +3,7 @@ from flask.ext.wtf.html5 import EmailField
 from flask.ext.login import current_user
 from wtforms import (
     StringField, PasswordField, BooleanField, SelectField, TextAreaField)
-from wtforms.validators import InputRequired, Email, Length, EqualTo
+from wtforms.validators import InputRequired, Email, Length, EqualTo, Optional
 from wtforms.validators import ValidationError
 from flask.ext.babel import lazy_gettext as _
 
@@ -60,7 +60,7 @@ class SignInForm(Form):
 class ProfileForm(Form):
     email = EmailField(
         label=_(u'Email'),
-        validators=[
+        validators=[Optional(),
             Email(message=_(u'Your Email is invalid'))])
     username = StringField(
         label=_(u'username'),
