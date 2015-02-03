@@ -5,4 +5,5 @@ recursive-include ark/static *.css
 recursive-include ark/static *.js
 recursive-include ark/static *.svg
 recursive-include ark/static *.png
-graft ark/translations/
+recursive-include ark/translations *.po
+recursive-include ark/translations *.mo
