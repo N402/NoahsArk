@@ -554,10 +554,3 @@ msgstr "追逐中"
 #: templates/goal/goals.html:78
 msgid "Completed"
 msgstr "已完成"
-
-#~ msgid "Cannot like your goal"
-#~ msgstr "您不能赞自己的目标"
-
-#~ msgid "Feedback"
-#~ msgstr "反馈"
-
