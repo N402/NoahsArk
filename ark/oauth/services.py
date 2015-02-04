@@ -58,7 +58,7 @@ def _weibo_oauth(username=None):
         else:
             account = oauth_account.account
         signin_user(account, remember=True)
-        return redirect(url_for('goal.goals', uid=current_user.id))
+        return redirect(url_for('goal.goals', uid=account.id))
     return redirect(url_for('master.index'))
 
 
