@@ -1,13 +1,18 @@
 {%- extends 'layout.html' %}
+
+{%- block html %} xmlns:wb="http://open.weibo.com/wb"{%- endblock %}
+
 {%- block static %}
 <link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/master/index.css') }}" type="text/css" />
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 {%- endblock %}
 
 {%- block header %}{%- endblock %}
 {%- block footer %}{%- endblock %}
 
 {%- block main %}
+<div style="float: right"><wb:follow-button uid="5467400033" type="red_1" width="67" height="24" ></wb:follow-button></div>
 <div class="main">
   <div class="wrapper" id="logo-container">
     <div class="logo" id="logo"></div>
