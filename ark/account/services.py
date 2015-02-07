@@ -4,21 +4,11 @@ from flask import session, abort
 from flask.ext.login import login_user, logout_user
 
 from ark.exts import db
+from ark.settings import ACTION_SCORE
 from ark.notification.models import ReadMark
 from ark.notification.services import send_first_login_sysmsg
 from ark.account.models import AccountOAuth, Account
 from ark.account.models import AccountScoreLog, AccountActivityLog
-
-
-ACTION_SCORE = {
-    'signin': 1,
-    'signup': 10,
-    'update': 1,
-    'finish': 5,
-    'create': -5,
-    'restore': -10,
-    'called': -1,
-}
 
 
 def get_oauth_user(service, oauth_uid):
