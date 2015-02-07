@@ -1,5 +1,4 @@
 from flask import session, url_for, request, redirect
-from flask.ext.login import current_user
 
 from ark.exts import db
 from ark.exts.oauth.weibo import weibo_oauth
