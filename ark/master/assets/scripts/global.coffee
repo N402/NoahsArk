@@ -1,4 +1,8 @@
 $('#header .container').css('width', document.body.clientWidth)
+$('#header .profile #msgContainer').mouseover ->
+  $('#header .profile ul').hide()
+$('#header .profile #msgContainer').mouseout ->
+  $('#header .profile ul').show()
 
 $('#passwordForm input').tooltipster
   trigger: 'custom'
