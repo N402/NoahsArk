@@ -12,7 +12,7 @@
     <li>
       <div class="avatar"><img src="{{ url_for('static', filename='images/favicon.png') }}" /></div>
       <div class="content">
-        <p>{{ each.content }}</p>
+        <p>{{ each.content|safe }}</p>
         <span class="time">{{ each.created | format_datetime('Y年M月d日 HH:mm:ss') }}</span>
       </div>
     </li>
