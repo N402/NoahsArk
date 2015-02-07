@@ -23,8 +23,10 @@
         <section>{{ sign_in_form.signin_email(placeholder=sign_in_form.signin_email.label.text) }}</section>
         <section>{{ sign_in_form.signin_password(placeholder=sign_in_form.signin_password.label.text) }}</section>
         <section><button type="submit">登录</button></section>
-        <section><a href="javascript:void(0)" class="sign-btn">注册</a></section>
-        <section><a href="{{ url_for('oauth.oauth', service='weibo') }}">微博登录</a></section>
+        <section>
+          <a href="{{ url_for('oauth.oauth', service='weibo') }}">微博登录</a>
+          <a href="javascript:void(0)" class="sign-btn">注册</a>
+        </section>
       </form>
     </div>
     <div class="sign-container signup-container">
