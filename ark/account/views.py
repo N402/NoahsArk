@@ -72,6 +72,7 @@ def signup():
         db.session.add(user)
         signup_user(user)
         db.session.commit()
+        signin_user(user, remember=True)
 
         return jsonify(success=True)
 
@@ -145,6 +146,7 @@ def messages():
                   .filter(or_(Notification.receivers.any(
                                   Account.id==current_user.id),
                               Notification.send_to_all==True))
+                  .filter(Notification.created >= current_user.created)
                   .order_by(Notification.created.desc())
                   .paginate(page, 10))
     return render_template(

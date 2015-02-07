@@ -139,9 +139,9 @@ class Account(db.Model):
         if self.read_ts is None:
             ReadMark.init_for(self)
         user_noti = (self.notifications
-                     .filter(Notification.created > self.read_ts.read_ts).all())
+                     .filter(Notification.created >= self.read_ts.read_ts).all())
         all_noti = (Notification.query
-                    .filter(Notification.created > self.read_ts.read_ts)
+                    .filter(Notification.created >= self.read_ts.read_ts)
                     .filter(Notification.send_to_all==True).all())
         return (user_noti + all_noti)
 

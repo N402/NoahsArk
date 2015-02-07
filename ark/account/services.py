@@ -85,8 +85,8 @@ def signout_user(user):
 
 def signup_user(user):
     add_signup_score(user)
-    send_first_login_sysmsg(user)
     ReadMark.init_for(user)
+    send_first_login_sysmsg(user)
 
 
 def get_by_username(username):
