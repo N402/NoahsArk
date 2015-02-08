@@ -1,15 +1,31 @@
-{% extends 'layout.html' %}
-
-{%- block main %}
-<div id="main">
-  <div class="error">
-      用户名已存在, 请选择新用户名
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{{ web_title or site_title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='components/normalize.css/normalize.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/master/base.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/oauth/oauth.css') }}" type="text/css" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
+</head>
+<body id="oauth-signup">
+  <div class="container">
+    <div class="logo"><a href="/"></a></div>
+    <div class="body">
+      <p class="tips">您的用户名已被占用，请输入新用户名</p>
+      <form id="signUpForm" action="{{ url_for('oauth.oauth_signup', service=service) }}" method="POST">
+        {{ form.csrf_token }}
+        <section>{{ form.username(placeholder='新用户名') }}</section>
+        <button>提交</button>
+      </form>
+    </div>
   </div>
-  <form id="signUpForm" action="{{ url_for('oauth.oauth_signup', service=service) }}" method="POST">
-    {{ form.csrf_token }}
-    {{ form.username.label }}
-    {{ form.username }}
-    <button>{{ _('Sign Up') }}</button>
-  </form>
-</div>
-{%- endblock %}
+  <script src="{{ url_for('static', filename='components/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/jquery-form/jquery.form.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='scripts/oauth/oauth-signup.js')}}"></script>
+</body>
+</html>
