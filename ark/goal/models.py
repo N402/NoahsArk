@@ -188,3 +188,7 @@ class GoalFile(db.Model):
     def get_thumbnail_limit_width(self, width=0):
         url = self.file_url
         return '%s?imageMogr2/thumbnail/%sx' % (url, width)
+
+    def get_scale_long(self, width=0, height=0):
+        url = self.file_url
+        return '%s?imageMogr2/thumbnail/%sx%s' % (url, width, height)

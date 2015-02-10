@@ -5,6 +5,7 @@
 {%- endblock %}
 
 {%- block main %}
+<div id="imagePreviewBox" class="display-hide mask-fadeOut"><img src="" /></div>
 <div class="main" id="account-goal">
   <div class="goal">
     <div class="banner-image" style="background-image: url('{{ goal.image.get_thumbnail_limit_width(350) }}')">
@@ -58,7 +59,9 @@
         {{ each.activity }} 
         {% if each.image %}
         <div class="activity-image">
-          <img src="{{ each.image.get_thumbnail(150, 150) }}" />
+          <a href="javascript:void(0)" class="imagePreviewBtn">
+            <img src="{{ each.image.get_thumbnail(150, 150) }}" data-preview-src="{{ each.image.get_scale_long(600, 400)}}" />
+          </a>
         </div>
         {% endif %}
         <div class="tools">

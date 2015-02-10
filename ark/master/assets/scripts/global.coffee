@@ -28,6 +28,10 @@ $('.cancelBtn').click ->
   $('.mask').fadeOut()
   $('#profile-setting').fadeOut()
 
+$('.mask').click ->
+  $('.mask').fadeOut()
+  $('.mask-fadeOut').fadeOut()
+
 $('.tabBtn').click ->
   tab = $(this).attr('data-tab')
   $('.tabBtn').removeClass('selected')

@@ -1,20 +1,12 @@
 $('#activity').tooltipster
   trigger: 'custom'
   position: 'top'
+
 $('#upImage').tooltipster
   trigger: 'custom'
   position: 'right'
-$('#upImage').tooltipster 'update', '请上传图片'
 
-$('.deleteActivityBtn').click ->
-  id = $(this).attr('data-id')
-  url = $(this).attr('data-url')
-  $.ajax
-    url: url
-    type: 'DELETE'
-    success: (resp) ->
-      if resp.success
-        $('#activity-' + id).slideUp()
+$('#upImage').tooltipster 'update', '请上传图片'
 
 $('#createActivityForm').ajaxForm
   success: (resp) ->
@@ -111,3 +103,19 @@ $('#likeBtn').click ->
         $('#likeBtn i.icon-xiai').removeClass('liked')
         $('#likeBtn').attr('data-status', 'unlike')
       $('#likeCount').html(resp.like_count)
+
+$('.deleteActivityBtn').click ->
+  id = $(this).attr('data-id')
+  url = $(this).attr('data-url')
+  $.ajax
+    url: url
+    type: 'DELETE'
+    success: (resp) ->
+      if resp.success
+        $('#activity-' + id).slideUp()
+
+$('.imagePreviewBtn').click ->
+  $('.mask').fadeIn()
+  src = $(this).children('img').attr('data-preview-src')
+  $('#imagePreviewBox img').attr('src', src)
+  $('#imagePreviewBox').fadeIn()
