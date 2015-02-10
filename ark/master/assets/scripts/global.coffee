@@ -62,3 +62,37 @@ $('#profileForm').ajaxForm
       for field, msg of resp.messages
         $("##{field}").tooltipster 'update', msg?.join ','
         $("##{field}").tooltipster 'show'
+
+avatarUpload = Qiniu.uploader
+  runtimes: 'html5,flash,html4'
+  browse_button: 'avatarUploadBtn'
+  uptoken_url: '/uptoken'
+  save_key: true
+  domain: 'https://dn-ichaser-upload.qbox.me'
+  container: 'profile-setting'
+  max_file_size: '3mb'
+  flash_swf_url: 'js/plupload/Moxie.swf'
+  max_retries: 3
+  dragdrop: false
+  drop_element: 'profile-setting'
+  chunk_size: '4mb'
+  auto_start: true
+  init:
+    'FilesAdded': (up, files) ->
+    'BeforeUpload': (up, file) ->
+    'UploadProgress': (up, file) ->
+    'FileUploaded': (up, file, info) ->
+      infoObj = JSON.parse info
+      image_url = infoObj.key
+      token = $('#avatarUploadBtn').attr('data-csrf')
+      $.ajax
+        url: '/account/avatar'
+        type: 'POST'
+        data:
+          avatar_url: image_url
+          csrf_token: token
+        success: (resp) ->
+          if resp.success
+            $('.avatarImage').attr('src', resp.url)
+    'Error': (up, err, errTip) ->
+    'UploadComplete': () ->

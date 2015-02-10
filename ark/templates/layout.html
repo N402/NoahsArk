@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='components/normalize.css/normalize.css') }}" type="text/css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='components/tooltipster/css/tooltipster.css') }}" type="text/css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/master/base.css') }}" type="text/css" />
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1422606966_030624.css" type="text/css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1423560719_836788.css" type="text/css" />
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
   {%- block static %}
   {%- endblock %}
@@ -22,7 +22,10 @@
     <div class="title">
       <a href="javascript:void(0)" class="cancelBtn pull-right">x</a>
       <span>{{ _('Settings') }}</span>
-      <div class="avatar"><img src="{{ current_user.avatar_url }}" /></div>
+      <div class="avatar">
+        <img src="{{ current_user.avatar_url }}" class="avatarImage" />
+        <span class="edit"><a href="javascript:void(0)" data-csrf="{{ csrf_token() }}" id="avatarUploadBtn"><i class="iconfont icon-edit"></i></a></span>
+      </div>
     </div>
     <div class="tabs">
       <a href="javascript:void(0)" data-tab="profile" class="tabBtn selected" style="float: left">{{ _('Profile') }}</a>
@@ -99,7 +102,7 @@
           <li><a href="{{ url_for('account.signout') }}"><i class="iconfont icon-signout"></i> {{ _('Signout') }}</a></li>
         </ul>
         <div class="avatar">
-          <img src="{{ current_user.avatar_url }}"/>
+          <img src="{{ current_user.avatar_url }}" class="avatarImage" />
         </div>
         <div class="info">
           {{ current_user.username }}
@@ -130,6 +133,8 @@
   <script src="{{ url_for('static', filename='components/jquery-form/jquery.form.js') }}"></script>
   <script src="{{ url_for('static', filename='components/jquery-validation/dist/jquery.validate.min.js') }}"></script>
   <script src="{{ url_for('static', filename='components/tooltipster/js/jquery.tooltipster.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/plupload/js/plupload.full.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='components/qiniu-js-sdk/src/qiniu.js') }}"></script>
   <script src="{{ url_for('static', filename='scripts/master/global.js') }}"></script>
   {%- block scripts %}
   {%- endblock %}

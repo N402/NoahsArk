@@ -5,6 +5,7 @@ from flask.ext.babel import gettext
 from sqlalchemy import or_
 
 from ark.exts import db
+from ark.utils.qiniu import get_url
 from ark.utils.helper import jsonify_lazy
 from ark.account.forms import (
     SignUpForm, SignInForm, ChangePassword, AvatarForm, ProfileForm)
@@ -115,10 +116,10 @@ def avatar():
     form = AvatarForm(request.form)
 
     if form.validate_on_submit():
-        current_user.avatar_url = form.data['avatar_url']
+        current_user.avatar_url = get_url(form.data['avatar_url'])
         db.session.add(current_user)
         db.session.commit()
-        return jsonify(success=True)
+        return jsonify(success=True, url=current_user.avatar_url)
 
     if form.errors:
         return jsonify(success=False, messages=form.errors)
