@@ -60,7 +60,8 @@ class SignInForm(Form):
 class ProfileForm(Form):
     email = EmailField(
         label=_(u'Email'),
-        validators=[Optional(),
+        validators=[
+            Optional(),
             Email(message=_(u'Your Email is invalid'))])
     username = StringField(
         label=_(u'username'),
@@ -70,6 +71,7 @@ class ProfileForm(Form):
         ])
     whatsup = TextAreaField(
         label=_('whatsup'),
+        validators=[Optional(), Length(max=60)],
     )
 
     def validate_email(form, field):

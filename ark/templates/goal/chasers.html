@@ -14,7 +14,13 @@
           <div class="chaser">
             <div class="avatar"><img src="{{ each.avatar_url }}" /></div>
             <div class="username">{{ each.username }}</div>
-            <div class="whatsup">{{ each.whatsup or '这家伙还没签名呢' }}</div>
+            <div class="whatsup">
+              {% if each.whatsup %}
+              {{ each.whatsup | truncate(25, True) }}
+              {% else %}
+              这家伙还没签名呢
+              {% endif %}
+            </div>
             <div class="scores">
               <div class="credit right-line">
                 {{ _('Credit') }}
