@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-31 16:07+0800\n"
+"POT-Creation-Date: 2015-02-10 15:47+0800\n"
 "PO-Revision-Date: 2015-01-26 17:08+0800\n"
 "Last-Translator: shonenada <shonenada@gmail.com>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -333,7 +333,6 @@ msgid "New here?"
 msgstr "没有账号？"
 
 #: templates/account/signin.html:14 templates/account/signup.html:15
-#: templates/oauth/signup.html:12
 msgid "Sign Up"
 msgstr "注册"
 
@@ -523,6 +522,10 @@ msgstr "更新目标动态"
 msgid "Publish"
 msgstr "发布"
 
+#: templates/goal/goal.html:66
+msgid "Delete"
+msgstr "删除"
+
 #: templates/goal/goals.html:10
 msgid "Create Goal"
 msgstr "创建目标"
@@ -554,3 +557,4 @@ msgstr "追逐中"
 #: templates/goal/goals.html:78
 msgid "Completed"
 msgstr "已完成"
+

@@ -6,6 +6,16 @@ $('#upImage').tooltipster
   position: 'right'
 $('#upImage').tooltipster 'update', '请上传图片'
 
+$('.deleteActivityBtn').click ->
+  id = $(this).attr('data-id')
+  url = $(this).attr('data-url')
+  $.ajax
+    url: url
+    type: 'DELETE'
+    success: (resp) ->
+      if resp.success
+        $('#activity-' + id).slideUp()
+
 $('#createActivityForm').ajaxForm
   success: (resp) ->
     if resp.success
@@ -13,10 +23,13 @@ $('#createActivityForm').ajaxForm
       if $('#preview').attr('src').length > 0
         activity.append($('<div class="activity-image"></div>').append(
           $("<img src='#{$('#preview').attr('src')}' />")))
-      activity.append($('<div class="activity-time">刚刚</div>')).fadeIn("slow")
+      activity.append($('<div class="tools"><span class="activity-time">刚刚</span></div>')).fadeIn("slow")
       $('#activities').prepend(activity)
       $('#createActivityForm')[0].reset()
       document.getElementById('preview').src = ''
+      setTimeout ->
+        location.reload()
+      , 1000
     else
       for field, msg of resp.messages
         if field in ['image_url', 'image_name']

@@ -150,6 +150,14 @@ class GoalActivity(db.Model):
         backref=db.backref('updates', uselist=True, lazy='dynamic',
                            order_by='desc(GoalActivity.created)'))
 
+    def is_belong_to(self, account):
+        return self.author.id is account.id
+
+    def delete(self):
+        self.is_deleted = True
+        db.session.add(self)
+        db.session.commit()
+
 
 class GoalLikeLog(db.Model):
 

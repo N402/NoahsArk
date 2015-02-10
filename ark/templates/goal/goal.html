@@ -39,7 +39,7 @@
     {% if goal.is_doing() and goal.is_belong_to(current_user) %}
     <div class="create-activity" id="create-activity">
       <span class="title">{{ _('Update Activities') }}</span>
-      <form action="{{ url_for('goal.activity', gid=goal.id) }}" method="POST" id="createActivityForm">
+      <form action="{{ url_for('goal.create_activity', gid=goal.id) }}" method="POST" id="createActivityForm">
         {{ form.csrf_token }}
         {{ form.activity() }}
         {{ form.image_url(style="display:none") }}
@@ -54,14 +54,17 @@
     {% endif %}
     <div class="activities" id="activities">
       {% for each in activities %}
-      <div class="activity">
+      <div class="activity" id="activity-{{ each.id }}">
         {{ each.activity }} 
         {% if each.image %}
         <div class="activity-image">
           <img src="{{ each.image.get_thumbnail(150, 150) }}" />
         </div>
         {% endif %}
-        <div class="activity-time">{{ each.created | friendly_time('Y年M月d日 HH:mm') }}</div>
+        <div class="tools">
+          <span class="activity-time">{{ each.created | friendly_time('Y年M月d日 HH:mm') }}</span> | 
+          <a href="javascript:void(0)" data-url="{{ url_for('goal.activity', gid=each.goal.id, aid=each.id) }}" data-id="{{ each.id }}" class="deleteActivityBtn">{{ _('Delete') }}</a>
+        </div>
       </div>
       {% endfor %}
     </div>

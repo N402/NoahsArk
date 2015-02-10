@@ -125,7 +125,7 @@ def cancel(gid):
 def complete(gid):
     goal = Goal.query.get_or_404(gid)
 
-    if not goal.is_belong_to(current_uesr):
+    if not goal.is_belong_to(current_user):
         return abort(403)
 
     if goal.state not in ('doing',):
@@ -166,7 +166,7 @@ def like(gid):
 
 
 @goal_app.route('/goals/<gid>/activity', methods=('POST',))
-def activity(gid):
+def create_activity(gid):
     goal = Goal.query.get_or_404(gid)
     if not goal.is_belong_to(current_user):
         return abort(403)
@@ -195,3 +195,20 @@ def activity(gid):
 
     if form.errors:
         return jsonify(success=False, messages=form.errors)
+
+
+@goal_app.route('/goals/<int:gid>/activity/<int:aid>', methods=('DELETE',))
+def activity(gid, aid):
+    goal = Goal.query.get_or_404(gid)
+    if not goal.is_belong_to(current_user):
+        return abort(403)
+    if goal.state not in ('doing',):
+        return jsonify_lazy(
+            success=False, messages=[_('Cannot Update Activity')])
+    activity = GoalActivity.query.get_or_404(aid)
+    if not activity.goal.id == goal.id:
+        return abort(403)
+    if not activity.is_belong_to(current_user):
+        return abort(403) 
+    activity.delete()
+    return jsonify(success=True)
