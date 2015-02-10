@@ -23,6 +23,7 @@
       <a href="javascript:void(0)" class="cancelBtn pull-right">x</a>
       <span>{{ _('Settings') }}</span>
       <div class="avatar">
+        <div id="avatarSaveTip" class="display-hide">{{ _('Uploading..') }}</div>
         <img src="{{ current_user.avatar_url }}" class="avatarImage" />
         <span class="edit"><a href="javascript:void(0)" data-csrf="{{ csrf_token() }}" id="avatarUploadBtn"><i class="iconfont icon-edit"></i></a></span>
       </div>

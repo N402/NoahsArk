@@ -21,9 +21,11 @@ def calc_ts(s):
     return calendar.timegm(deadline.timetuple())
 
 
-def hash_save_key(uid=None, filename=None):
+def hash_save_key(uid=None, prefix=None):
     hash_uid = md5(str(uid)).hexdigest()
-    key = filename.split('.', 1)[0] if filename else uuid4().hex
+    key = uuid4().hex
+    if prefix:
+        key = '%s-%s' % (prefix, key)
     return '%s/%s$(ext)' % (hash_uid, key)
 
 

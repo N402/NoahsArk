@@ -66,7 +66,7 @@ $('#profileForm').ajaxForm
 avatarUpload = Qiniu.uploader
   runtimes: 'html5,flash,html4'
   browse_button: 'avatarUploadBtn'
-  uptoken_url: '/uptoken'
+  uptoken_url: '/uptoken/avatar'
   save_key: true
   domain: 'https://dn-ichaser-upload.qbox.me'
   container: 'profile-setting'
@@ -79,6 +79,7 @@ avatarUpload = Qiniu.uploader
   auto_start: true
   init:
     'FilesAdded': (up, files) ->
+      $('#avatarSaveTip').fadeIn()
     'BeforeUpload': (up, file) ->
     'UploadProgress': (up, file) ->
     'FileUploaded': (up, file, info) ->
@@ -94,5 +95,7 @@ avatarUpload = Qiniu.uploader
         success: (resp) ->
           if resp.success
             $('.avatarImage').attr('src', resp.url)
+            $('#avatarSaveTip').fadeOut()
     'Error': (up, err, errTip) ->
+      $('#avatarSaveTip').fadeOut()
     'UploadComplete': () ->
