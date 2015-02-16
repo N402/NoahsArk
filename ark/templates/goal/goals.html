@@ -56,6 +56,34 @@
 
 <div class="main" id="account-goals">
   <div class="wrapper">
+    <div class="account-info">
+      <div class="avatar"><img src="{{ account.avatar_url }}" /></div>
+      <div class="info">
+        <div>{{ account.username }}</div>
+        <div class="whatsup">{{ account.whatsup }}</div>
+      </div>
+    </div>
+    <div class="account-score">
+      <div class="score-wrapper">
+        <div class="score-col right-line">
+          {{ _('Credit') }}
+          <br />
+          <span class="numeric">{{ account.credit }}</span>
+        </div>
+        <div class="score-col right-line">
+          {{ _('Goals Count') }}
+          <br />
+          <span class="numeric">{{ account.goals_count }}</span>
+        </div>
+        <div class="score-col">
+          {{ _('Like Count') }}
+          <br />
+          <span class="numeric">{{ account.like_count }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper">
     <div class="title"><span>{{ _('Chasing') }}</span></div>
     <ul>
       {% for each in charsing_goals %}
