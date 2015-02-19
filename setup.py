@@ -11,7 +11,7 @@ with open('requirements.txt') as requirements:
 
 setup(
     name='NoahsArk',
-    version='0.3.7',
+    version='0.4.0',
     author="shonenada",
     author_email="shonenada@gmail.com",
     url="https://github.com/N402/NoahsArk",
