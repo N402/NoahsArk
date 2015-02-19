@@ -32,7 +32,7 @@ def dreams_wall():
 def chasers():
     chasers = (Account.query
                .filter(Account.is_ban==False)
-               .order_by(Account.total_score.desc()).limit(100).all())
+               .order_by(Account.score.desc()).limit(100).all())
     return render_template('goal/chasers.html', chasers=chasers)
 
 

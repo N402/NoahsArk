@@ -6,6 +6,7 @@ from ark.management.syncdb import Syncdb
 from ark.management.destroy import Destroy 
 from ark.management.superuser import CreateSuperUser
 from ark.management.export import ExportCommand
+from ark.management.cal_score_sche import ScoreCommand
 
 
 application = create_app('ark')
@@ -17,6 +18,7 @@ manager.add_command('syncdb', Syncdb)
 manager.add_command('destroy', Destroy)
 manager.add_command('superuser', CreateSuperUser)
 manager.add_command('export', ExportCommand)
+manager.add_command('score', ScoreCommand)
 
 
 def execute_command_line():

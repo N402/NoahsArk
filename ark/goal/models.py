@@ -26,6 +26,7 @@ class Goal(db.Model):
     image_file_id = db.Column(db.Integer, db.ForeignKey('goal_file.id'))
     created = db.Column(db.DateTime, default=datetime.utcnow)
     operate_at = db.Column(db.DateTime)
+    score = db.Column(db.Integer, default=0)
     state = db.Column(db.Enum(*(GOAL_STATES.keys())), default='doing')
     is_deleted = db.Column(db.Boolean, default=False)
 
@@ -83,17 +84,10 @@ class Goal(db.Model):
                 .where(GoalActivity.is_deleted==False)
                 .label('activity_count'))
 
-    @hybrid_property
-    def score(self):
+    def cal_score(self):
         return (self.like_count * settings.GOAL_LIKE_SOCRE +
                 self.activity_count * settings.GOAL_UPDATE_SCORE +
                 self.last_activity_interval * settings.GOAL_UPDATE_DAY)
-
-    @score.expression
-    def score(cls):
-        return (cls.like_count * settings.GOAL_LIKE_SOCRE +
-                cls.activity_count * settings.GOAL_UPDATE_SCORE +
-                cls.last_activity_interval * settings.GOAL_UPDATE_DAY)
 
     @cache.memoize(3600)
     def cache_score(self):

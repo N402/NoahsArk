@@ -44,6 +44,7 @@ class Account(db.Model):
     whatsup = db.Column(db.String(60))
     avatar_url = db.Column(db.String(128), default=random_avatar)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    score = db.Column(db.Integer, default=0)
     salt = db.Column(db.String(128))
     is_superuser = db.Column(db.Boolean, default=False)
     state = db.Column(db.Enum(*(USER_STATES.keys())), default='normal')
@@ -154,11 +155,10 @@ class Account(db.Model):
             return None
 
     @cache.memoize(3600)
-    def cached_total_score(self):
-        return self.total_score
+    def cached_score(self):
+        return self.score
 
-    @hybrid_property
-    def total_score(self):
+    def cal_score(self):
         return (self.credit * settings.ACCOUNT_CREDIT_SCORES +
                 self.like_count * settings.ACCOUNT_LIKE_SCORE +
                 self.goals_count * settings.ACCOUNT_GOAL_SCORE +

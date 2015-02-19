@@ -154,7 +154,7 @@ def notification_send():
 @su_required
 def chasers():
     page = int(request.args.get('page', 1))
-    pagination = (Account.query.order_by(Account.total_score.desc())
+    pagination = (Account.query.order_by(Account.score.desc())
                   .paginate(page))
     return render_template('dashboard/chasers.html', pagination=pagination)
 
@@ -162,7 +162,7 @@ def chasers():
 @dashboard_app.route('/dashboard/chasers/cache/')
 @su_required
 def chasers_cache(aid):
-    cache.delete_memoized(Account.cached_total_score)
+    cache.delete_memoized(Account.cached_score)
     return jsonify(success=True)
 
 
@@ -170,7 +170,7 @@ def chasers_cache(aid):
 @su_required
 def chaser_cache(aid):
     account = Account.query.get_or_404(aid)
-    cache.delete_memoized(account.cached_total_score)
+    cache.delete_memoized(account.cached_score)
     return jsonify(success=True)
 
 

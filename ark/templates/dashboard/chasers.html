@@ -21,7 +21,7 @@
         <td>{{ chaser.id }}</td>
         <td>{{ chaser.email }}</td>
         <td>{{ chaser.username }}</td>
-        <td>{{ chaser.cached_total_score() }}</td>
+        <td>{{ chaser.cached_score() }}</td>
         <td>{{ loop.index }}</td>
         <td>
           <a href="javascript:void(0)" id="unban-btn" data-id="{{ chaser.id }}" href-url="{{ url_for('dashboard.chasers_ban', aid=chaser.id) }}" class="btn btn-info" {%- if not chaser.is_ban %}style="display: none;"{%- endif %}>{{ _('Unban') }}</a>
