@@ -12,7 +12,7 @@ from ark.goal.models import Goal
 class ScoreSaver(object):
 
     def __init__(self):
-        self.interval = 10
+        self.interval = 600
 
     def refresh_account_score(self):
         all_accounts = Account.query.filter(
@@ -34,11 +34,10 @@ class ScoreSaver(object):
 
     def start(self):
         while(True):
-            time.sleep(self.interval / 2)
             self.refresh_account_score()
             self.refresh_goal_score()
             db.session.commit()
-            time.sleep(self.interval / 2)
+            time.sleep(self.interval)
 
 
 class ScoreCommand(Command):
