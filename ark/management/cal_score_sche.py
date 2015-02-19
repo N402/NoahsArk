@@ -20,7 +20,7 @@ class ScoreSaver(object):
         for each in all_accounts:
             each.score = each.cal_score()
             db.session.add(each)
-            print 'Saved Account %s (%s), Score: %s' % (
+            print 'Saved Account %s (%s), Score: %s'.encode('utf-8') % (
                 each.username, each.id, each.score)
 
     def refresh_goal_score(self):
@@ -29,7 +29,7 @@ class ScoreSaver(object):
         for each in all_goals:
             each.score = each.cal_score()
             db.session.add(each)
-            print 'Saved Goal %s (%s), Score: %s' % (
+            print 'Saved Goal %s (%s), Score: %s'.encode('utf-8') % (
                 each.title, each.id, each.score)
 
     def start(self):
