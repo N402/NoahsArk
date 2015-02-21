@@ -65,8 +65,10 @@
         </div>
         {% endif %}
         <div class="tools">
-          <span class="activity-time">{{ each.created | friendly_time('Y年M月d日 HH:mm') }}</span> | 
-          <a href="javascript:void(0)" data-url="{{ url_for('goal.activity', gid=each.goal.id, aid=each.id) }}" data-id="{{ each.id }}" class="deleteActivityBtn">{{ _('Delete') }}</a>
+          <span class="activity-time">{{ each.created | friendly_time('Y年M月d日 HH:mm') }}</span>
+          {% if each.author.id == current_user.id %}
+          | <a href="javascript:void(0)" data-url="{{ url_for('goal.activity', gid=each.goal.id, aid=each.id) }}" data-id="{{ each.id }}" class="deleteActivityBtn">{{ _('Delete') }}</a>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
