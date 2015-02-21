@@ -3,7 +3,7 @@ from datetime import datetime
 
 from flask.ext.babel import lazy_gettext as _
 from flask.ext.sqlalchemy import BaseQuery
-from sqlalchemy import func, select
+from sqlalchemy import func, select, and_
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from ark import settings
@@ -194,8 +194,8 @@ class Account(db.Model):
 
     @goals_count.expression
     def goals_count(cls):
-        return (select([func.count(GoalLikeLog.id)])
-                .where(GoalLikeLog.id==Goal.id)
+        return (select([func.count(Goal.id)])
+                .where(and_(Goal.id==Goal.id, Goal.is_deleted==False))
                 .label('goal_log_count'))
 
     @hybrid_property
