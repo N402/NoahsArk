@@ -278,7 +278,7 @@ msgstr "我的"
 
 #: templates/layout.html:84
 msgid "Chasers"
-msgstr "追逐者"
+msgstr "逐梦者"
 
 #: templates/layout.html:85
 msgid "Dreams Wall"

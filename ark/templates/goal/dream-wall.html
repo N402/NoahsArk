@@ -9,7 +9,7 @@
   <div class="wrapper">
     <ul>
       {% for each in goals %}
-      <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail_limit_width(250)}}')">
+      <li class="cards-container normal-card" style="background-image: url('{{each.image.get_thumbnail_limit_width(250)}}');background-color: #fff">
         <a class="card" href="{{ url_for('goal.view_goal', uid=each.author.id, gid=each.id) }}">
           <div class="card-title">{{ each.title }}</div>
           <div class="card-author"><img src="{{ each.author.avatar_url }}" class="avatar" /> {{ each.author.username }}</div>
