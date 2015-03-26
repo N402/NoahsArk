@@ -21,7 +21,7 @@
         <td>{{ goal.id }}</td>
         <td>{{ goal.title }}</td>
         <td>{{ goal.author.username }}</td>
-        <td>{{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
+        <td>{% if goal and goal.create %}{{ goal.created | format_datetime('Y-M-d HH:mm:SS') }}{% endif %}</td>
         <td>{{ goal.last_activity.created | format_datetime('Y-M-d HH:mm:SS') }}</td>
         <td><a href="{{ url_for('dashboard.goal', gid=goal.id) }}" class="btn btn-info">Detail</a></td>
       </tr>
