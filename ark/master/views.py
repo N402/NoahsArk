@@ -2,7 +2,7 @@ from flask import (Blueprint, render_template,
                    jsonify, request, redirect, url_for)
 from flask.ext.login import login_required, current_user
 
-from ark.utils.qiniu import gen_upload_token, hash_save_key, encodedEntryURI
+from ark.utils.qiniu import gen_upload_token, hash_save_key, encode_entry_URI
 from ark.account.forms import SignInForm, SignUpForm
 
 
@@ -56,7 +56,7 @@ def uptoken_avatar_crop():
     h = request.args.get('h', 0)
     tw = request.args.get('tw', 0)
     th = request.args.get('th', 0)
-    save_as = encodedEntryURI(hash_key)
+    save_as = encode_entry_URI(hash_key)
     persistentOps = ('thumbnail/%sx%s|c2rop/!%sx%sa%sa%s|saveas/%s' %
                      (tw, th, w, h, x, y, save_as))
     data = {
